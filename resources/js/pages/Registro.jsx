@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+
+const RegistroForm = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleRegister = async () => {
+        try {
+            const response = await axios.post('/api/v1/auth/register', {
+                name: name,
+                email: email,
+                password: password,
+            });
+            console.log(response.data);
+
+            setName('');
+            setEmail('');
+            setPassword('');
+        }catch(error) {
+            console.error('Error', error);
+        }
+    };
+
+    return (
+        <div className='container'>
+            <form>
+                <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Nombre</label>
+                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Correo Electrónico</label>
+                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Contraseña</label>
+                    <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <button type="button" className="btn btn-success" onClick={handleRegister}>Registrarse</button>
+            </form>
+        </div>
+    )
+}
+
+export default RegistroForm;
