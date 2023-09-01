@@ -23,7 +23,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/public/index', [PrincipalController::class, 'index'])->name('index');
 
     //Rutas de logeo
-    Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/auth/registrarAdmin', [AuthController::class, 'registrarAdmin'])->name('registrarAdmin');
+    Route::post('/auth/registrarNutriologo', [AuthController::class, 'registrarNutriologo'])->name('registrarNutriologo');
     Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
 
     //Rutas privadas
