@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\PrincipalController;
+use App\Http\Controllers\Api\ArticulosController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\Cliente\ClienteController;
+use App\Http\Controllers\Api\Paciente\PacienteController;
 use App\Http\Controllers\Api\Administrador\AdministradorController;
+use App\Http\Controllers\Api\Nutriologo\NutriologoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,20 +21,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     //Rutas publicas
-    Route::get('/public/index', [PrincipalController::class, 'index'])->name('index');
+    Route::get('/', [ArticulosController::class, 'index'])->name('index');
+    Route::get('/articulo/{id}', [ArticulosController::class, 'show'])->name('show');
 
-    //Rutas de logeo
+    //Rutas de registro y logeo
     Route::post('/auth/registrarAdmin', [AuthController::class, 'registrarAdmin'])->name('registrarAdmin');
     Route::post('/auth/registrarNutriologo', [AuthController::class, 'registrarNutriologo'])->name('registrarNutriologo');
-    Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/auth/registrarPaciente', [AuthController::class, 'registrarPaciente'])->name('registrarPaciente');
+
+    Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
+
+    Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
 
     //Rutas privadas
     Route::group(['middleware' => 'auth:sanctum'], function () {
         //Rutas de logeo
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-        //Rutas de cliente
-        Route::apiResource('/cliente', ClienteController::class);
+        //Rutas de paciente
+        Route::apiResource('/paciente', PacienteController::class);
+
+        //Rutas de nutriologo
+        Route::apiResource('/nutriologo', NutriologoController::class);
+        // Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
 
         //Rutas de administrador
         Route::apiResource('/administrador', AdministradorController::class);

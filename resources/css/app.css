@@ -2,3 +2,7 @@
     width: 50%;
     height: auto;
 }
+
+.texto-justificado {
+    text-align: justify;
+}

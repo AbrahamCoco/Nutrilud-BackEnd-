@@ -17,6 +17,6 @@ class Tarticulos extends Model
 
     public function nutriologo()
     {
-        return $this->belongsTo(User::class, 'nutriologo_id', 'id');
+        return $this->belongsTo(Tusuario_nutriologo::class, 'nutriologo_id');
     }
 }
