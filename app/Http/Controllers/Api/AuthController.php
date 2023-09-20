@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -61,6 +62,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Usuario creado con éxito',
+                'user' => $user,
                 'admin' => $admin,
                 'token' => $user->createToken('Nutrilud')->plainTextToken,
             ], 200);
@@ -122,6 +124,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Usuario creado con éxito',
+                'user' => $user,
                 'nutriologo' => $nutriologo,
                 'token' => $user->createToken('Nutrilud')->plainTextToken,
             ], 200);
@@ -182,6 +185,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Usuario creado con éxito',
+                'user' => $user,
                 'paciente' => $paciente,
                 'token' => $user->createToken('Nutrilud')->plainTextToken,
             ], 200);
@@ -221,8 +225,13 @@ class AuthController extends Controller
                 // Devolver una respuesta exitosa
                 return response()->json([
                     'status' => true,
-                    'mesagge' => 'Usuario logueado con éxito',
+                    'message' => 'Inicio de sesión exitoso',
                     'token' => $token,
+                    'user' => $user->id,
+                    'admin_id' => $user->admin->id ?? null,
+                    'nutriologo_id' => $user->nutriologo->id ?? null,
+                    'paciente_id' => $user->paciente->id ?? null,
+                    'trol_id' => $user->trol_id,
                 ], 200);
             } else {
                 // Las credenciales no son correctas, devolver error
@@ -239,25 +248,33 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (Auth::check()) {
-            Auth::logout();
+        try {
+            $user = $request->user();
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Sesión cerrada con éxito'
-            ], 200);
-        } else {
+            if ($user) {
+                $user->tokens->each(function ($token, $key) {
+                    $token->delete();
+                });
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Sesión cerrada con éxito'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No hay ninguna sesión activa'
+                ], 400);
+            }
+        } catch (\Exception $exception) {
+            logger()->error($exception->getMessage());
+
             return response()->json([
                 'status' => false,
-                'message' => 'Fallo al cerrar sesión'
-            ], 400);
+                'message' => 'Ocurrió un error al cerrar la sesión'
+            ], 500);
         }
-
-        return response()->json([
-            'status' => false,
-            'message' => 'No hay ninguna sesión activa'
-        ], 400);
     }
 }

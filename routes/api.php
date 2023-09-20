@@ -29,12 +29,15 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/registrarNutriologo', [AuthController::class, 'registrarNutriologo'])->name('registrarNutriologo');
     Route::post('/auth/registrarPaciente', [AuthController::class, 'registrarPaciente'])->name('registrarPaciente');
 
+    // Route::post('/auth/loginAdmin', [AuthController::class, 'loginAdmin'])->name('loginAdmin');
+    // Route::post('/auth/loginNutriologo', [AuthController::class, 'loginNutriologo'])->name('loginNutriologo');
+    // Route::post('/auth/loginPaciente', [AuthController::class, 'loginPaciente'])->name('loginPaciente');
     Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
 
     //Rutas privadas
-    Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::middleware('auth:sanctum')->group(function () {
         //Rutas de logeo
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 

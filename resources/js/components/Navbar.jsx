@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal } from "react-bootstrap";
 import axios from "axios";
-import { set } from "date-fns";
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const handleLogin = () => {
         const usuario = document.getElementById('usuario').value;
         const contrasenia = document.getElementById('contrasenia').value;
@@ -17,6 +17,11 @@ const Navbar = () => {
         })
             .then(response => {
                 console.log(response.data);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('admin_id', response.data.admin_id ?? null);
+                localStorage.setItem('nutriologo_id', response.data.nutriologo_id ?? null);
+                localStorage.setItem('paciente_id', response.data.paciente_id ?? null);
+                localStorage.setItem('trol_id', response.data.trol_id);
                 closeModal();
                 setIsLoggedIn(true);
             })
@@ -25,19 +30,27 @@ const Navbar = () => {
             });
     };
 
-    const handleLogout = () => {
-        axios.post('/api/v1/auth/logout', {}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                setIsLoggedIn(false);
-            })
-            .catch(error => {
-                console.log('Error no cerro sesion', error);
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('/api/v1/auth/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
             });
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('nutriologo_id');
+            setIsLoggedIn(false);
+            console.log('Cerro sesion correctamente');
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                // El token es inválido
+                console.log('El token es inválido. Necesita iniciar sesión nuevamente');
+            } else {
+                // Otro error
+                console.log('Error no cerro sesion', error);
+            }
+        }
     };
 
     const [showModal, setShowModal] = useState(false);
