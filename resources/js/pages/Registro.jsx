@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/app.css';
 import axios from 'axios';
+import { set } from 'date-fns';
 
 const RegistroForm = () => {
     const [nombre, setNombre] = useState('');
     const [primer_apellido, setPrimerApellido] = useState('');
     const [segundo_apellido, setSegundoApellido] = useState('');
+    const [usuario, setUsuario] = useState('');
     const [correo, setCorreo] = useState('');
     const [contrasenia, setContrasenia] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [descripcion, setDescripcion] = useState('');
     const [telefono, setTelefono] = useState('');
     const [direccion, setDireccion] = useState('');
     const [cedula_profesional, setCedulaProfesional] = useState('');
-    const [selectedRole, setSelectedRole] = useState(null);
+    const [trol_id, setTrolId] = useState(null);
     const [id_paciente, setIdPaciente] = useState(null);
     const [fecha_nacimiento, setFechaNacimiento] = useState('');
     const [sexo, setSexo] = useState('');
@@ -30,32 +33,120 @@ const RegistroForm = () => {
 
         if (file) {
             reader.readAsDataURL(file);
+            setSelectedFile(file);
         }
     };
 
     const handleRoleChange = (event) => {
-        setSelectedRole(parseInt(event.target.value));
+        setTrolId(parseInt(event.target.value));
+    };
+
+    const uploadImage = async () => {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+
+        try {
+            const response = await axios.post('/api/v1/upload/image', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            });
+
+            console.log(response.data);
+            console.log('URL de la Imagen: ', response.data.url);
+            return response.data.url;
+        } catch (error) {
+            console.error('Error al subir la imagen', error);
+            return ("image.jpg");
+        }
     };
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('/api/v1/auth/register', {
-                nombre,
-                primer_apellido,
-                segundo_apellido,
-                correo,
-                contrasenia,
-            });
-            console.log(response.data);
+            const userData = {
+                trol_id: trol_id,
+                nombre: nombre,
+                primer_apellido: primer_apellido,
+                segundo_apellido: segundo_apellido,
+                usuario: usuario,
+                correo: correo,
+                contrasenia: contrasenia,
+            };
 
+            let tipoUsuarioData = null;
+
+            // Agregamos los datos del tipo de usuario al objeto userData
+            switch (trol_id) {
+                case 1:
+                    tipoUsuarioData = {
+                        descripcion: descripcion,
+                        foto: await uploadImage(selectedImage),
+                        telefono: telefono,
+                    };
+                    break;
+                case 2:
+                    tipoUsuarioData = {
+                        descripcion: descripcion,
+                        foto: await uploadImage(selectedImage),
+                        telefono: telefono,
+                        direccion: direccion,
+                        cedula_profesional: cedula_profesional,
+                    };
+                    break;
+                case 3:
+                    tipoUsuarioData = {
+                        foto: await uploadImage(selectedImage),
+                        telefono: telefono,
+                        id_paciente: id_paciente,
+                        fecha_nacimiento: fecha_nacimiento,
+                        sexo: sexo,
+                        alergias: alergias,
+                    };
+                    break;
+            }
+
+            console.log(`Datos a enviar: ${JSON.stringify({ ...userData, ...tipoUsuarioData, })}`);
+
+            const response = await axios.post("/api/v1/auth/register", JSON.stringify({ ...userData, ...tipoUsuarioData, }), {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log('Error al guardar el usuario', error.response.data);
+                });
+
+            setTrolId(null);
             setNombre('');
             setPrimerApellido('');
             setSegundoApellido('');
+            setUsuario('');
             setCorreo('');
             setContrasenia('');
 
-            setSelectedRole(null);
-        }catch(error) {
+            if (trol_id === 1) {
+                setDescripcion('');
+                setSelectedImage(null);
+                setTelefono('');
+            } else if (trol_id === 2) {
+                setDescripcion('');
+                setSelectedImage(null);
+                setTelefono('');
+                setDireccion('');
+                setCedulaProfesional('');
+            } else if (trol_id === 3) {
+                setSelectedImage(null);
+                setTelefono('');
+                setIdPaciente('');
+                setFechaNacimiento('');
+                setSexo('');
+                setAlergias('');
+            }
+
+        } catch (error) {
             console.error('Error', error);
         }
     };
@@ -88,6 +179,10 @@ const RegistroForm = () => {
                             <label htmlFor="segundo_apellido" className="form-label">Segundo Apellido</label>
                             <input type="text" className="form-control" id="segundo_apellido" value={segundo_apellido} onChange={(e) => setSegundoApellido(e.target.value)} />
                         </div>
+                        <div className="mb-2">
+                            <label htmlFor="usuario" className="form-label">Usuario</label>
+                            <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+                        </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="mb-2">
@@ -102,66 +197,68 @@ const RegistroForm = () => {
                         <div className="mb-2">
                             <div className="form-check-inline">
                                 <label htmlFor="admin-bill" className="form-check-label">
-                                    <input type="radio" className='form-check-input bill' name='bill' id='admin-bill' value={1} checked={selectedRole === 1} onChange={handleRoleChange}/>Administrador
+                                    <input type="radio" className='form-check-input bill' name='bill' id='admin-bill' value={1} checked={trol_id === 1} onChange={handleRoleChange} />Administrador
                                 </label>
                             </div>
                             <div className="form-check-inline">
                                 <label htmlFor="nutriologo-bill" className="form-check-label">
-                                    <input type="radio" className='form-check-input bill' name='bill' id='nutriologo-bill' value={2} checked={selectedRole === 2} onChange={handleRoleChange} />Nutriologo
+                                    <input type="radio" className='form-check-input bill' name='bill' id='nutriologo-bill' value={2} checked={trol_id === 2} onChange={handleRoleChange} />Nutriologo
                                 </label>
                             </div>
                             <div className="form-check-inline">
                                 <label htmlFor="paciente-bill" className="form-check-label">
-                                    <input type="radio" className='form-check-input bill' name='bill' id='paciente-bill' value={3} checked={selectedRole === 3} onChange={handleRoleChange} />Paciente
+                                    <input type="radio" className='form-check-input bill' name='bill' id='paciente-bill' value={3} checked={trol_id === 3} onChange={handleRoleChange} />Paciente
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
-                    {selectedRole === 1 && (
-                        <div id='admin' className='row mb-2'>
-                            <div className="col-sm-6">
-                                <label htmlFor="descripcion" className='form-label'>Descripcion</label>
-                                <input type="text" className='form-control' id='descripcion' value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor="telefono" className='form-label'>Telefono</label>
-                                <input type="text" className='form-control' id='telefono' value={telefono} onChange={(e) => setTelefono(e.target.value)} />
-                            </div>
+                {trol_id === 1 && (
+                    <div id='admin' className='row mb-2'>
+                        <div className="col-sm-6">
+                            <label htmlFor="descripcion" className='form-label'>Descripcion</label>
+                            <input type="text" className='form-control' id='descripcion' value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
                         </div>
-                    )}
-                    {selectedRole === 2 && (
-                        <div id="nutriologo" className='row mb-2'>
-                            <div className="col-sm-6">
-                                <label htmlFor="descripcion" className='form-label'>Descripcion</label>
-                                <input type="text" className='form-control' id='descripcion' value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
-                                <label htmlFor="direccion" className='form-label'>Direccion</label>
-                                <input type="text" className='form-control' id='direccion' value={direccion} onChange={(e) => setDireccion(e.target.value)} />
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor="telefono" className='form-label'>Telefono</label>
-                                <input type="text" className='form-control' id='telefono' value={telefono} onChange={(e) => setTelefono(e.target.value)} />
-                                <label htmlFor="cedula_profesional" className='form-label'>Cedula Profesional</label>
-                                <input type="text" className='form-control' id='cedula_profesional' value={cedula_profesional} onChange={(e) => setCedulaProfesional(e.target.value)} />
-                            </div>
-                        </div>    
-                    )}
-                    {selectedRole === 3 && (
-                        <div id="paciente" className='row mb-2'>
-                            <div className="col-sm-6">
-                                <label htmlFor="id_paciente" className='form-label'>ID Paciente</label>
-                                <input type="text" className='form-control' id='id_paciente' value={id_paciente} onChange={(e) => setIdPaciente(e.target.value)} />
-                                <label htmlFor="fecha_nacimiento" className='form-label'>Fecha de Nacimiento</label>
-                                <input type="date" className='form-control' id='fecha_nacimiento' value={fecha_nacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
-                            </div>
-                            <div className="col-sm-6">
-                                <label htmlFor="sexo" className='form-label'>Sexo</label>
-                                <input type="text" className='form-control' id='sexo' value={sexo} onChange={(e) => setSexo(e.target.value)} />
-                                <label htmlFor="alergias" className='form-label'>Alergias</label>
-                                <input type="text" className='form-control' id='alergias' value={alergias} onChange={(e) => setAlergias(e.target.value)} />
-                            </div>
+                        <div className="col-sm-6">
+                            <label htmlFor="telefono" className='form-label'>Telefono</label>
+                            <input type="text" className='form-control' id='telefono' value={telefono} onChange={(e) => setTelefono(e.target.value)} />
                         </div>
-                    )}
+                    </div>
+                )}
+                {trol_id === 2 && (
+                    <div id="nutriologo" className='row mb-2'>
+                        <div className="col-sm-6">
+                            <label htmlFor="descripcion" className='form-label'>Descripcion</label>
+                            <input type="text" className='form-control' id='descripcion' value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                            <label htmlFor="direccion" className='form-label'>Direccion</label>
+                            <input type="text" className='form-control' id='direccion' value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+                        </div>
+                        <div className="col-sm-6">
+                            <label htmlFor="telefono" className='form-label'>Telefono</label>
+                            <input type="text" className='form-control' id='telefono' value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                            <label htmlFor="cedula_profesional" className='form-label'>Cedula Profesional</label>
+                            <input type="text" className='form-control' id='cedula_profesional' value={cedula_profesional} onChange={(e) => setCedulaProfesional(e.target.value)} />
+                        </div>
+                    </div>
+                )}
+                {trol_id === 3 && (
+                    <div id="paciente" className='row mb-2'>
+                        <div className="col-sm-6">
+                            <label htmlFor="id_paciente" className='form-label'>ID Paciente</label>
+                            <input type="text" className='form-control' id='id_paciente' value={id_paciente} onChange={(e) => setIdPaciente(e.target.value)} />
+                            <label htmlFor="fecha_nacimiento" className='form-label'>Fecha de Nacimiento</label>
+                            <input type="date" className='form-control' id='fecha_nacimiento' value={fecha_nacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
+                            <label htmlFor="telefono" className='form-label'>Telefono</label>
+                            <input type="text" className='form-control' id='telefono' value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                        </div>
+                        <div className="col-sm-6">
+                            <label htmlFor="sexo" className='form-label'>Sexo</label>
+                            <input type="text" className='form-control' id='sexo' value={sexo} onChange={(e) => setSexo(e.target.value)} />
+                            <label htmlFor="alergias" className='form-label'>Alergias</label>
+                            <input type="text" className='form-control' id='alergias' value={alergias} onChange={(e) => setAlergias(e.target.value)} />
+                        </div>
+                    </div>
+                )}
                 <button type="button" className="btn btn-success" onClick={handleRegister}>Registrarse</button>
             </form>
         </div>

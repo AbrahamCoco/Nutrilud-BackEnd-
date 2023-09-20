@@ -40,15 +40,17 @@ const Navbar = () => {
 
             localStorage.removeItem('token');
             localStorage.removeItem('nutriologo_id');
+            localStorage.removeItem('admin_id');
+            localStorage.removeItem('paciente_id');
             setIsLoggedIn(false);
-            console.log('Cerro sesion correctamente');
+            console.log('Cerró sesión correctamente');
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 // El token es inválido
                 console.log('El token es inválido. Necesita iniciar sesión nuevamente');
             } else {
                 // Otro error
-                console.log('Error no cerro sesion', error);
+                console.log('Error no cerró sesión', error);
             }
         }
     };

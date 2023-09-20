@@ -25,13 +25,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/articulo/{id}', [ArticulosController::class, 'show'])->name('show');
 
     //Rutas de registro y logeo
-    Route::post('/auth/registrarAdmin', [AuthController::class, 'registrarAdmin'])->name('registrarAdmin');
-    Route::post('/auth/registrarNutriologo', [AuthController::class, 'registrarNutriologo'])->name('registrarNutriologo');
-    Route::post('/auth/registrarPaciente', [AuthController::class, 'registrarPaciente'])->name('registrarPaciente');
-
-    // Route::post('/auth/loginAdmin', [AuthController::class, 'loginAdmin'])->name('loginAdmin');
-    // Route::post('/auth/loginNutriologo', [AuthController::class, 'loginNutriologo'])->name('loginNutriologo');
-    // Route::post('/auth/loginPaciente', [AuthController::class, 'loginPaciente'])->name('loginPaciente');
+    Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/upload/image', [AuthController::class, 'upload'])->name('upload');
     Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');

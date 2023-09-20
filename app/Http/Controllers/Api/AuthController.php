@@ -4,92 +4,53 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Sanctum\HasApiTokens;
 
 class AuthController extends Controller
 {
-    public function registrarAdmin(Request $request)
+    public function upload(Request $request)
     {
-        // Validar los campos ingresados
-        $validator = Validator::make($request->all(), [
-            // 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:10000',
-            'nombre' => 'required|string|max:255',
-            'primer_apellido' => 'required|string|max:255',
-            'segundo_apellido' => 'required|string|max:255',
-            'usuario' => 'required|string|max:255|unique:users',
-            'correo' => 'required|string|email|max:255|unique:users',
-            'contrasenia' => 'required|string|min:8',
-            'descripcion' => 'required|string|max:255',
-            'telefono' => 'required|int|min:10',
-            'trol_id' => 'required|int'
-        ]);
+        Log::info('Request: ', $request->all());
 
-        // Si la validacion falla, devolver un mensaje de error
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Fallo al validar los datos',
-                'errors' => $validator->errors()
-            ], 400);
-        }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $imageUrl = asset('images/' . $imageName);
 
-        // Crear un nuevo usuario
-        $user = User::create([
-            'trol_id' => $request->trol_id,
-            'nombre' => $request->nombre,
-            'primer_apellido' => $request->primer_apellido,
-            'segundo_apellido' => $request->segundo_apellido,
-            'usuario' => $request->usuario,
-            'correo' => $request->correo,
-            'contrasenia' => Hash::make($request->contrasenia),
-            'estado' => 1,
-        ]);
+            // Aquí puedes guardar $imageUrl en tu base de datos
 
-        if ($user) {
-
-            $admin = $user->admin()->create([
-                'descripcion' => $request->descripcion,
-                'foto' => $request->foto, // 'foto' => $request->file('foto')->store('uploads'),
-                'telefono' => $request->telefono,
-            ]);
-
-            // Devolver una respuesta exitosa
             return response()->json([
                 'status' => true,
-                'message' => 'Usuario creado con éxito',
-                'user' => $user,
-                'admin' => $admin,
-                'token' => $user->createToken('Nutrilud')->plainTextToken,
+                'message' => 'Imagen subida con éxito',
+                'url' => $imageUrl,
             ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Fallo al crear el usuario',
-            ], 400);
         }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No se ha subido ninguna imagen',
+        ], 400);
     }
 
-    public function registrarNutriologo(Request $request)
+    public function register(Request $request)
     {
+        // Validar los datos
         $validator = Validator::make($request->all(), [
-            // 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:10000',
             'nombre' => 'required|string|max:255',
             'primer_apellido' => 'required|string|max:255',
             'segundo_apellido' => 'required|string|max:255',
             'usuario' => 'required|string|max:255|unique:users',
             'correo' => 'required|string|email|max:255|unique:users',
             'contrasenia' => 'required|string|min:8',
-            'descripcion' => 'required|string|max:255',
-            'telefono' => 'required|int|min:10',
-            'trol_id' => 'required|int'
+            'trol_id' => 'required|int',
         ]);
 
-        // Si la validacion falla, devolver un mensaje de error
+        // Si la validación falla, devolver un mensaje de error
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -110,91 +71,51 @@ class AuthController extends Controller
             'estado' => 1,
         ]);
 
-        if ($user) {
+        // Variable para almacenar los datos del tipo de usuario creado
+        $tipoUsuarioData = null;
 
-            $nutriologo = $user->nutriologo()->create([
-                'descripcion' => $request->descripcion,
-                'foto' => $request->foto,
-                'direccion' => $request->direccion,
-                'telefono' => $request->telefono,
-                'cedula_profesional' => $request->cedula_profesional,
-            ]);
-
-            // Devolver una respuesta exitosa
-            return response()->json([
-                'status' => true,
-                'message' => 'Usuario creado con éxito',
-                'user' => $user,
-                'nutriologo' => $nutriologo,
-                'token' => $user->createToken('Nutrilud')->plainTextToken,
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Fallo al crear el usuario',
-            ], 400);
-        }
-    }
-
-    public function registrarPaciente(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            // 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:10000',
-            'nombre' => 'required|string|max:255',
-            'primer_apellido' => 'required|string|max:255',
-            'segundo_apellido' => 'required|string|max:255',
-            'usuario' => 'required|string|max:255|unique:users',
-            'correo' => 'required|string|email|max:255|unique:users',
-            'contrasenia' => 'required|string|min:8',
-            'fecha_nacimiento' => 'required|date',
-            'telefono' => 'required|int|min:10',
-            'trol_id' => 'required|int'
-        ]);
-
-        // Si la validacion falla, devolver un mensaje de error
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Fallo al validar los datos',
-                'errors' => $validator->errors()
-            ], 400);
+        // Agregar el tipo de usuario al usuario
+        switch ($request->trol_id) {
+            case 1:
+                $tipoUsuarioData = $user->admin()->create([
+                    'descripcion' => $request->descripcion,
+                    'foto' => $request->foto,
+                    'telefono' => $request->telefono,
+                ]);
+                break;
+            case 2:
+                $tipoUsuarioData = $user->nutriologo()->create([
+                    'descripcion' => $request->descripcion,
+                    'foto' => $request->foto,
+                    'direccion' => $request->direccion,
+                    'telefono' => $request->telefono,
+                    'cedula_profesional' => $request->cedula_profesional,
+                ]);
+                break;
+            case 3:
+                $tipoUsuarioData = $user->paciente()->create([
+                    'foto' => $request->foto,
+                    'telefono' => $request->telefono,
+                    'fecha_nacimiento' => $request->fecha_nacimiento,
+                    'sexo' => $request->sexo,
+                    'alergias' => $request->alergias,
+                ]);
+                break;
+            default:
+                throw new Exception('Tipo de usuario no válido');
         }
 
-        // Crear un nuevo usuario
-        $user = User::create([
-            'trol_id' => $request->trol_id,
-            'nombre' => $request->nombre,
-            'primer_apellido' => $request->primer_apellido,
-            'segundo_apellido' => $request->segundo_apellido,
-            'usuario' => $request->usuario,
-            'correo' => $request->correo,
-            'contrasenia' => Hash::make($request->contrasenia),
-            'estado' => 1,
-        ]);
+        // Generar un token para el usuario
+        $token = $user->createToken('Nutrilud')->plainTextToken;
 
-        if ($user) {
-
-            $paciente = $user->paciente()->create([
-                'foto' => $request->foto,
-                'telefono' => $request->telefono,
-                'fecha_nacimiento' => $request->fecha_nacimiento,
-                'sexo' => $request->sexo,
-                'alergias' => $request->alergias,
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Usuario creado con éxito',
-                'user' => $user,
-                'paciente' => $paciente,
-                'token' => $user->createToken('Nutrilud')->plainTextToken,
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Fallo al crear el usuario',
-            ], 400);
-        }
+        // Devolver una respuesta exitosa
+        return response()->json([
+            'status' => true,
+            'message' => 'Usuario creado con éxito',
+            'token' => $token,
+            'user' => $user,
+            'tipo_usuario' => $tipoUsuarioData, // Agrega los datos del tipo de usuario aquí
+        ], 200);
     }
 
     public function login(Request $request)

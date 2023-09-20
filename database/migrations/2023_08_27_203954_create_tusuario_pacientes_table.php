@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tusuario_pacientes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('foto');
+            $table->text('foto');
             $table->string('telefono');
             $table->datetime('fecha_nacimiento');
             $table->string('sexo');

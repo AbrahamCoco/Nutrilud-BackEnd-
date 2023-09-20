@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('descripcion');
-            $table->string('foto');
+            $table->text('foto');
             $table->string('direccion');
             $table->string('telefono');
             $table->integer('cedula_profesional');
