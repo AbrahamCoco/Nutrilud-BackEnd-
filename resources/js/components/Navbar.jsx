@@ -86,7 +86,7 @@ const Navbar = () => {
                                             </button>
                                             <ul className="dropdown-menu">
                                                 <li><Link to="/agregar-articulo" className="dropdown-item">Agregar articulo</Link></li>
-                                                <li><a className="dropdown-item" href="#">Opcion 2</a></li>
+                                                <li><Link to="/calendar" className="dropdown-item" >Calendario de citas</Link></li>
                                                 <li><a className="dropdown-item" href="#">Opcion 3</a></li>
                                                 <li><hr className="dropdown-divider" /></li>
                                                 <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar Sesión</a></li>

@@ -7,6 +7,9 @@ import Home from './pages/Home.jsx';
 import RegistroForm from './pages/Registro.jsx';
 import DetalleArticulo from './pages/DetalleArticulo.jsx';
 import AgregarArticulo from './pages/AgregarArticulo.jsx';
+import Perfil from './pages/Perfil.jsx';
+import Contacto from './pages/Contacto.jsx';
+import Calendar from './pages/Calendar.jsx';
 
 const App = () => {
     return (
@@ -15,8 +18,11 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/registro" element={<RegistroForm />} />
+                <Route path="/perfil" element={<Perfil />} />
                 <Route path="/agregar-articulo" element={<AgregarArticulo />} />
+                <Route path="/calendar" element={<Calendar />} />
                 <Route path='/articulo/:id' element={<DetalleArticulo />} />
+                <Route path='/contacto' element={<Contacto />} />
             </Routes>
         </>
     );

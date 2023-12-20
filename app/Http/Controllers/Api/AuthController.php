@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tusuario_nutriologo;
+use App\Models\Tusuario_paciente;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -195,6 +197,26 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Ocurrió un error al cerrar la sesión'
+            ], 500);
+        }
+    }
+
+    public function showDatos($id)
+    {
+        try {
+            $nutriologoData = Tusuario_nutriologo::with('user')->find($id);
+
+            // Utiliza response()->json() para enviar la respuesta JSON
+            return response()->json([
+                'success' => true,
+                'message' => 'Datos del nutriologo',
+                'data' => $nutriologoData
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener los datos del nutriologo',
+                'data' => $th
             ], 500);
         }
     }

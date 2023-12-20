@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
     Route::post('/upload/image', [AuthController::class, 'upload'])->name('upload');
     Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/auth/user/{id}', [AuthController::class, 'showDatos'])->name('showDatos');
 
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
 
@@ -37,11 +38,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
         //Rutas de paciente
-        Route::apiResource('/paciente', PacienteController::class);
+        //Route::apiResource('/paciente', [PacienteController::class]);
 
         //Rutas de nutriologo
-        Route::apiResource('/nutriologo', NutriologoController::class);
-        // Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
+        // Route::get('/nutriologo/datosPerfil/{id}', [NutriologoController::class, 'showDatos'])->name('showDatos');
 
         //Rutas de administrador
         Route::apiResource('/administrador', AdministradorController::class);
