@@ -10,7 +10,6 @@ class Tdatos_consulta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'usuario_paciente_id',
         'fecha_medicion',
         'peso',
         'estatura',
@@ -21,10 +20,11 @@ class Tdatos_consulta extends Model
         'circunferencia_cadera',
         'pliegue_bicipital',
         'pliegue_tricipital',
+        'siguiente_consulta',
     ];
 
     public function consulta()
     {
-        return $this->belongsTo(User::class, 'usuario_paciente_id', 'id');
+        return $this->belongsTo(Tusuario_paciente::class, 'paciente_id', 'id');
     }
 }

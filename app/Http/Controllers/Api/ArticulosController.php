@@ -26,7 +26,7 @@ class ArticulosController extends Controller
         if (is_null($articulo)) {
             return response()->json([
                 'message' => 'Articulo no encontrado'
-            ], 404);
+            ], 400);
         }
 
         return response()->json([

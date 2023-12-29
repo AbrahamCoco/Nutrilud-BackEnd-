@@ -31,6 +31,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/user/{id}', [AuthController::class, 'showDatos'])->name('showDatos');
 
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
+    Route::get('/pacientes', [NutriologoController::class, 'show'])->name('show');
+    Route::get('/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
+    Route::get('/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
+    Route::post('/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
 
     //Rutas privadas
     Route::middleware('auth:sanctum')->group(function () {

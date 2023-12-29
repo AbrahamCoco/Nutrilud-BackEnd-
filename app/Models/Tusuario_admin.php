@@ -17,6 +17,6 @@ class Tusuario_admin extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_admin', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

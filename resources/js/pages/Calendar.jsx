@@ -40,9 +40,6 @@ const Calendar = (props) => {
                     themeSystem="bootstrap4"
                 />
             </div>
-            <Col md={12}>
-                <h1>Hola mundo 2</h1>
-            </Col>
         </Container>
     );
 };

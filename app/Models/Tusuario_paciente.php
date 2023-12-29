@@ -10,7 +10,7 @@ class Tusuario_paciente extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_paciente',
+        'paciente_id',
         'foto',
         'telefono',
         'fecha_nacimiento',
@@ -20,6 +20,11 @@ class Tusuario_paciente extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_paciente', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function consulta()
+    {
+        return $this->hasMany(Tdatos_consulta::class, 'paciente_id', 'id');
     }
 }

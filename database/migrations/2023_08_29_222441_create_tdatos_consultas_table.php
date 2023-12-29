@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('pliegue_bicipital');
             $table->float('pliegue_tricipital');
             $table->datetime('fecha_medicion');
+            $table->datetime('siguiente_consulta');
             $table->foreign('paciente_id')->references('id')->on('tusuario_pacientes');
             $table->timestamps();
         });

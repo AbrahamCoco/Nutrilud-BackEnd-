@@ -259,7 +259,7 @@ const RegistroForm = () => {
                         </div>
                     </div>
                 )}
-                <button type="button" className="btn btn-success" onClick={handleRegister}>Registrarse</button>
+                <button type="button" className="btn btn-success my-2" onClick={handleRegister}>Registrarse</button>
             </form>
         </div>
     )

@@ -85,9 +85,9 @@ const Navbar = () => {
                                                 Opciones
                                             </button>
                                             <ul className="dropdown-menu">
-                                                <li><Link to="/agregar-articulo" className="dropdown-item">Agregar articulo</Link></li>
-                                                <li><Link to="/calendar" className="dropdown-item" >Calendario de citas</Link></li>
-                                                <li><a className="dropdown-item" href="#">Opcion 3</a></li>
+                                                <li><Link to="/nutriologo/agregar-articulo" className="dropdown-item">Agregar articulo</Link></li>
+                                                <li><Link to="/nutriologo/agenda" className="dropdown-item" >Agenda</Link></li>
+                                                <li><Link to="/nutriologo/pacientes" className="dropdown-item" >Pacientes</Link></li>
                                                 <li><hr className="dropdown-divider" /></li>
                                                 <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar Sesión</a></li>
                                             </ul>
@@ -100,11 +100,11 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <li className="nav-item ms-2">
-                                        <button className="btn btn-primary">
-                                            <Link to="/registro" className="text-white text-decoration-none">
+                                        <Link to="/registro" className="text-white text-decoration-none">
+                                            <button className="btn btn-primary">
                                                 Registrarse
-                                            </Link>
-                                        </button>
+                                            </button>
+                                        </Link>
                                     </li>
                                     <li className="nav-item ms-2">
                                         <button className="btn btn-primary" onClick={openModal}>Iniciar Sesión</button>
