@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
     Route::get('/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
     Route::post('/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
+    Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
 
     //Rutas privadas
     Route::middleware('auth:sanctum')->group(function () {

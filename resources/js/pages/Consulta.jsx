@@ -186,8 +186,6 @@ const Consulta = () => {
                         <input type="number" step="0.001" className="form-control" name="estatura" value={datosFormulario.estatura} onChange={(e) => setDatosFormulario({ ...datosFormulario, estatura: e.target.value })} />
                         <label htmlFor="circunferencia_cintura" className="form-label">Circunferencia de cintura</label>
                         <input type="number" step="0.001" className="form-control" name="circunferencia_cintura" value={datosFormulario.circunferencia_cintura} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cintura: e.target.value })} />
-                        <label htmlFor="fecha_medicion" className="form-label">Fecha de medicion</label>
-                        <input type="date" className="form-control" name="fecha_medicion" value={datosFormulario.fecha_medicion} onChange={(e) => setDatosFormulario({ ...datosFormulario, fecha_medicion: e.target.value })} />
                     </div>
                     <div className="col-sm-3">
                         {/* <label htmlFor="porcentaje_grasa" className="form-label">Porcentaje de grasa</label>
@@ -195,13 +193,15 @@ const Consulta = () => {
                         <label htmlFor="circunferencia_cadera" className="form-label">Circunferencia de cadera</label>
                         <input type="number" step="0.001" className="form-control" name="circunferencia_cadera" value={datosFormulario.circunferencia_cadera} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cadera: e.target.value })} />
                         <label htmlFor="fecha_siguiente_consulta" className="form-label">Fecha de siguiente consulta</label>
-                        <input type="date" className="form-control" name="siguiente_consulta" value={datosFormulario.siguiente_consulta} onChange={(e) => setDatosFormulario({ ...datosFormulario, siguiente_consulta: e.target.value })} />
+                        <input type="datetime-local" className="form-control" name="siguiente_consulta" value={datosFormulario.siguiente_consulta} onChange={(e) => setDatosFormulario({ ...datosFormulario, siguiente_consulta: e.target.value })} />
                     </div>
                     <div className="col-sm-3">
                         {/* <label htmlFor="porcentaje_musculo" className="form-label">Porcentaje de músculo</label>
                         <input type="number" step="0.001" className="form-control" name="porcentaje_musculo" value={datosFormulario.porcentaje_musculo} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_musculo: e.target.value })} /> */}
                         <label htmlFor="pliegue_bicipital" className="form-label">Pliegue bicipital</label>
                         <input type="number" step="0.001" className="form-control" name="pliegue_bicipital" value={datosFormulario.pliegue_bicipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_bicipital: e.target.value })} />
+                        <label htmlFor="fecha_medicion" className="form-label">Fecha de medicion</label>
+                        <input type="date" className="form-control" name="fecha_medicion" value={datosFormulario.fecha_medicion} onChange={(e) => setDatosFormulario({ ...datosFormulario, fecha_medicion: e.target.value })} />
                         <div className="text-center my-4">
                             <button className="btn btn-primary" type="submit">Guardar datos</button>
                         </div>

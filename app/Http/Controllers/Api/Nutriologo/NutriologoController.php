@@ -124,4 +124,37 @@ class NutriologoController extends Controller
             ], 500);
         }
     }
+
+    public function agenda()
+    {
+        try {
+            $pacientes = Tusuario_paciente::with('user')->get();
+
+            if ($pacientes->isEmpty()) {
+                return response()->json([
+                    'message' => 'No se encontraron pacientes'
+                ], 400);
+            }
+
+            $pacientesIds = $pacientes->pluck('id');
+
+            $agenda = Tdatos_consulta::whereIn('paciente_id', $pacientesIds)->with('consulta.user')->get();
+
+            if ($agenda->isEmpty()) {
+                return response()->json([
+                    'message' => 'No se encontraron datos para agenda'
+                ], 400);
+            }
+
+            return response()->json([
+                'message' => 'Datos para agendar encontrados',
+                'agenda' => $agenda
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al obtener la agenda',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
