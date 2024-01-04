@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { format } from "date-fns";
 
 const DetalleArticulo = () => {
     const { id } = useParams();
@@ -19,11 +18,6 @@ const DetalleArticulo = () => {
         }
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return format(date, "dd 'de' MMMM 'de' yyyy");
-    };
-
     if (!articulo) {
         return (
             <div className="container">
@@ -39,7 +33,7 @@ const DetalleArticulo = () => {
                     <h1>{articulo.titulo}</h1>
                     <p>{articulo.contenido}</p>
                     <p>Nutriólogo: <strong>{articulo.nutriologo.user.nombre} {articulo.nutriologo.user.primer_apellido} {articulo.nutriologo.user.segundo_apellido}</strong></p>
-                    <p>Fecha de publicación: {formatDate(articulo.created_at)}</p>
+                    <p>Fecha de publicación: {new Date(articulo.created_at.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
             </div>
         </div>

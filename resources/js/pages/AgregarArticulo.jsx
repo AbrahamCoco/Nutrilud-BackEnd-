@@ -28,6 +28,8 @@ const AgregarArticulo = () => {
         })
             .then(response => {
                 console.log(response.data);
+                document.getElementById('titulo').value = '';
+                document.getElementById('contenido').value = '';
             })
             .catch(error => {
                 // Paso 3: Manejo de errores en el servidor

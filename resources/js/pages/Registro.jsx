@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/app.css';
 import axios from 'axios';
-import { set } from 'date-fns';
 
 const RegistroForm = () => {
     const [nombre, setNombre] = useState('');

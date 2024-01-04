@@ -176,8 +176,8 @@ const Consulta = () => {
                     <div className="col-sm-3">
                         <label htmlFor="peso" className="form-label">Peso</label>
                         <input type="number" step="0.001" className="form-control" name="peso" value={datosFormulario.peso} onChange={(e) => setDatosFormulario({ ...datosFormulario, peso: e.target.value })} />
-                        <label htmlFor="imc" className="form-label">IMC</label>
-                        <input type="number" step="0.001" className="form-control" name="imc" value={datosFormulario.imc} onChange={(e) => setDatosFormulario({ ...datosFormulario, imc: e.target.value })} />
+                        {/* <label htmlFor="imc" className="form-label">IMC</label>
+                        <input type="number" step="0.001" className="form-control" name="imc" value={datosFormulario.imc} onChange={(e) => setDatosFormulario({ ...datosFormulario, imc: e.target.value })} /> */}
                         <label htmlFor="pliegue_tricipital" className="form-label">Pliegue tricipital</label>
                         <input type="number" step="0.001" className="form-control" name="pliegue_tricipital" value={datosFormulario.pliegue_tricipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_tricipital: e.target.value })} />
                     </div>
@@ -190,16 +190,16 @@ const Consulta = () => {
                         <input type="date" className="form-control" name="fecha_medicion" value={datosFormulario.fecha_medicion} onChange={(e) => setDatosFormulario({ ...datosFormulario, fecha_medicion: e.target.value })} />
                     </div>
                     <div className="col-sm-3">
-                        <label htmlFor="porcentaje_grasa" className="form-label">Porcentaje de grasa</label>
-                        <input type="number" step="0.001" className="form-control" name="porcentaje_grasa" value={datosFormulario.porcentaje_grasa} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_grasa: e.target.value })} />
+                        {/* <label htmlFor="porcentaje_grasa" className="form-label">Porcentaje de grasa</label>
+                        <input type="number" step="0.001" className="form-control" name="porcentaje_grasa" value={datosFormulario.porcentaje_grasa} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_grasa: e.target.value })} /> */}
                         <label htmlFor="circunferencia_cadera" className="form-label">Circunferencia de cadera</label>
                         <input type="number" step="0.001" className="form-control" name="circunferencia_cadera" value={datosFormulario.circunferencia_cadera} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cadera: e.target.value })} />
                         <label htmlFor="fecha_siguiente_consulta" className="form-label">Fecha de siguiente consulta</label>
                         <input type="date" className="form-control" name="siguiente_consulta" value={datosFormulario.siguiente_consulta} onChange={(e) => setDatosFormulario({ ...datosFormulario, siguiente_consulta: e.target.value })} />
                     </div>
                     <div className="col-sm-3">
-                        <label htmlFor="porcentaje_musculo" className="form-label">Porcentaje de músculo</label>
-                        <input type="number" step="0.001" className="form-control" name="porcentaje_musculo" value={datosFormulario.porcentaje_musculo} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_musculo: e.target.value })} />
+                        {/* <label htmlFor="porcentaje_musculo" className="form-label">Porcentaje de músculo</label>
+                        <input type="number" step="0.001" className="form-control" name="porcentaje_musculo" value={datosFormulario.porcentaje_musculo} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_musculo: e.target.value })} /> */}
                         <label htmlFor="pliegue_bicipital" className="form-label">Pliegue bicipital</label>
                         <input type="number" step="0.001" className="form-control" name="pliegue_bicipital" value={datosFormulario.pliegue_bicipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_bicipital: e.target.value })} />
                         <div className="text-center my-4">

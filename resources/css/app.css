@@ -6,3 +6,8 @@
 .texto-justificado {
     text-align: justify;
 }
+
+.modal-custom {
+    max-width: 800px;
+    margin: auto;
+}
