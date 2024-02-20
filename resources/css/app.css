@@ -1,0 +1,13 @@
+.imagen {
+    width: 50%;
+    height: auto;
+}
+
+.texto-justificado {
+    text-align: justify;
+}
+
+.modal-custom {
+    max-width: 800px;
+    margin: auto;
+}

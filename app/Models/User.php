@@ -18,9 +18,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'trol_id',
+        'nombre',
+        'primer_apellido',
+        'segundo_apellido',
+        'usuario',
+        'correo',
+        'contrasenia',
+        'estado',
+    ];
+
+    protected $atributes = [
+        'estado' => 1,
     ];
 
     /**
@@ -42,4 +51,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function admin()
+    {
+        return $this->hasOne(Tusuario_admin::class, 'user_id', 'id');
+    }
+
+    public function nutriologo()
+    {
+        return $this->hasOne(Tusuario_nutriologo::class, 'user_id', 'id');
+    }
+
+    public function paciente()
+    {
+        return $this->hasOne(Tusuario_paciente::class, 'user_id', 'id');
+    }
+
+    public function articulos()
+    {
+        return $this->hasMany(Tarticulos::class, 'nutriologo_id', 'id');
+    }
+
+    public function consulta()
+    {
+        return $this->hasMany(Tdatos_consulta::class, 'usuario_paciente_id', 'id');
+    }
 }

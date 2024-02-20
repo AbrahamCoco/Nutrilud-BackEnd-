@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\PrincipalController;
+use App\Http\Controllers\Api\ArticulosController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\Cliente\ClienteController;
+use App\Http\Controllers\Api\Paciente\PacienteController;
 use App\Http\Controllers\Api\Administrador\AdministradorController;
+use App\Http\Controllers\Api\Nutriologo\NutriologoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,19 +21,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     //Rutas publicas
-    Route::get('/public/index', [PrincipalController::class, 'index'])->name('index');
+    Route::get('/', [ArticulosController::class, 'index'])->name('index');
+    Route::get('/articulo/{id}', [ArticulosController::class, 'show'])->name('show');
 
-    //Rutas de logeo
+    //Rutas de registro y logeo
     Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
-    Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/upload/image', [AuthController::class, 'upload'])->name('upload');
+    Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/auth/user/{id}', [AuthController::class, 'showDatos'])->name('showDatos');
+
+    Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
+    Route::get('/pacientes', [NutriologoController::class, 'show'])->name('show');
+    Route::get('/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
+    Route::get('/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
+    Route::post('/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
+    Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
 
     //Rutas privadas
-    Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::middleware('auth:sanctum')->group(function () {
         //Rutas de logeo
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-        //Rutas de cliente
-        Route::apiResource('/cliente', ClienteController::class);
+        //Rutas de paciente
+        //Route::apiResource('/paciente', [PacienteController::class]);
+
+        //Rutas de nutriologo
+        // Route::get('/nutriologo/datosPerfil/{id}', [NutriologoController::class, 'showDatos'])->name('showDatos');
 
         //Rutas de administrador
         Route::apiResource('/administrador', AdministradorController::class);
