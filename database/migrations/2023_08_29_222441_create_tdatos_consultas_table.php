@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('imc');
             $table->float('circunferencia_cintura');
             $table->float('circunferencia_cadera');
+            $table->float('circunferencia_brazo');
             $table->float('pliegue_bicipital');
             $table->float('pliegue_tricipital');
             $table->datetime('fecha_medicion');

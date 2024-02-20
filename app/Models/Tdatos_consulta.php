@@ -18,6 +18,7 @@ class Tdatos_consulta extends Model
         'porcentaje_musculo',
         'circunferencia_cintura',
         'circunferencia_cadera',
+        'circunferencia_brazo',
         'pliegue_bicipital',
         'pliegue_tricipital',
         'siguiente_consulta',

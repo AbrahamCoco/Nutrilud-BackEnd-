@@ -105,6 +105,7 @@ class NutriologoController extends Controller
                 'porcentaje_musculo' => $request->input('porcentaje_musculo'),
                 'circunferencia_cintura' => $request->input('circunferencia_cintura'),
                 'circunferencia_cadera' => $request->input('circunferencia_cadera'),
+                'circunferencia_brazo' => $request->input('circunferencia_brazo'),
                 'pliegue_bicipital' => $request->input('pliegue_bicipital'),
                 'pliegue_tricipital' => $request->input('pliegue_tricipital'),
                 'fecha_medicion' => $request->input('fecha_medicion'),

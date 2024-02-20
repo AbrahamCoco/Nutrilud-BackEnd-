@@ -16,6 +16,7 @@ const Consulta = () => {
         pliegue_bicipital: '',
         circunferencia_cintura: '',
         circunferencia_cadera: '',
+        circunferencia_brazo: '',
         fecha_medicion: '',
         siguiente_consulta: ''
     });
@@ -29,7 +30,7 @@ const Consulta = () => {
         try {
             const response = await axios.get(`/api/v1/paciente/${id}`);
             setPaciente(response.data.paciente);
-            console.log(response.data.paciente);
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -52,7 +53,6 @@ const Consulta = () => {
             const response = await axios.get(`/api/v1/consultadatos/${id}`);
             console.log(response.data);
             setConsulta(response.data.consulta || []);
-            console.log(response.data.consulta);
         } catch (error) {
             console.log(error);
         }
@@ -60,6 +60,46 @@ const Consulta = () => {
 
     const handleGuardarDatos = async (event) => {
         event.preventDefault();
+
+        const peso = parseFloat(datosFormulario.peso);
+        const estatura = parseFloat(datosFormulario.estatura);
+        const sexo = paciente.sexo;
+        const edad = calcularEdad(paciente.fecha_nacimiento);
+
+        if (!isNaN(peso) && !isNaN(estatura && estatura !== 0)) {
+            //Logica para calcular el IMC
+            const imc = peso / (estatura * estatura);
+
+            //Logica para calcular el porcentaje de grasa
+            let porcentajeGrasa = 0;
+            if (sexo === 'Masculino') {
+                porcentajeGrasa = (1.2 * imc) + (0.23 * edad) - 16.2;
+            } else if (sexo === 'Femenino') {
+                porcentajeGrasa = (1.2 * imc) + (0.23 * edad) - 5.4;
+            }
+
+            //Para sacar el porcentaje de musculo se necesita sacar el area muscular del brazo
+            //Logica para calcular el area muscular del brazo
+            let areaMuscularBrazo = 0;
+            if (!isNaN(datosFormulario.circunferencia_brazo) && !isNaN(datosFormulario.pliegue_tricipital)) {
+                areaMuscularBrazo = (datosFormulario.circunferencia_brazo - (Math.PI * datosFormulario.pliegue_tricipital)) / (4 * Math.PI);
+            }
+
+            //Logica para calcular el porcentaje de musculo
+            let porcentajeMusculo = 0;
+            if (!isNaN(areaMuscularBrazo) && !isNaN(datosFormulario.peso)) {
+                porcentajeMusculo = (areaMuscularBrazo / datosFormulario.peso) * 100;
+            }
+
+            //Logica para mandar los datos faltantes al formulario
+            setDatosFormulario((prevDatosFormulario) => ({
+                ...prevDatosFormulario,
+                imc: imc.toFixed(3),
+                porcentaje_grasa: porcentajeGrasa.toFixed(3),
+                porcentaje_musculo: porcentajeMusculo.toFixed(3),
+            }));
+        }
+
         try {
             const response = await axios.post(`/api/v1/insertardatos/${id}`, datosFormulario, {
                 headers: {
@@ -78,9 +118,11 @@ const Consulta = () => {
                 pliegue_bicipital: '',
                 circunferencia_cintura: '',
                 circunferencia_cadera: '',
+                circunferencia_brazo: '',
                 fecha_medicion: '',
                 siguiente_consulta: ''
             });
+            loadDatosConsulta();
         } catch (error) {
             console.log(error);
         }
@@ -126,7 +168,7 @@ const Consulta = () => {
                     </div>
                 </div>
             </div>
-            <h2>Datos de consultas anteriores</h2>
+            <h2>Datos de consultas previos</h2>
             <div className="row">
                 <div className="col-sm-12">
                     <div className="table-responsive">
@@ -136,16 +178,17 @@ const Consulta = () => {
                                     <th rowSpan={2}>Fecha de medicion</th>
                                     <th rowSpan={2}>Peso</th>
                                     <th rowSpan={2}>Estatura</th>
-                                    <th colSpan={2}>Porcentaje</th>
                                     <th rowSpan={2}>IMC</th>
-                                    <th colSpan={2}>Circunferencia</th>
+                                    <th colSpan={2}>Porcentaje</th>
+                                    <th colSpan={3}>Circunferencia</th>
                                     <th colSpan={2}>Pliegue</th>
                                 </tr>
                                 <tr>
-                                    <th>Grasa</th>
+                                    <th>Grasa Corporal</th>
                                     <th>Musculo</th>
                                     <th>Cintura</th>
                                     <th>Cadera</th>
+                                    <th>Brazo</th>
                                     <th>Bicipital</th>
                                     <th>Tricipital</th>
                                 </tr>
@@ -153,16 +196,17 @@ const Consulta = () => {
                             <tbody>
                                 {Array.isArray(consulta) && consulta.slice(-3).map((datos) => (
                                     <tr key={datos.id}>
-                                        <td>{new Date(datos.fecha_medicion.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                                        <td>{datos.peso} kg</td>
-                                        <td>{datos.estatura} cm</td>
-                                        <td>{datos.porcentaje_grasa} %</td>
-                                        <td>{datos.porcentaje_musculo} %</td>
-                                        <td>{datos.imc}</td>
-                                        <td>{datos.circunferencia_cintura} cm</td>
-                                        <td>{datos.circunferencia_cadera} cm</td>
-                                        <td>{datos.pliegue_bicipital}</td>
-                                        <td>{datos.pliegue_tricipital}</td>
+                                        <td>{new Date(new Date(datos.fecha_medicion.split(' ')[0]).getTime() + 86400000).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                                        <td>{datos.peso.toFixed(2)} kg</td>
+                                        <td>{datos.estatura.toFixed(2)} m</td>
+                                        <td>{datos.imc.toFixed(2)} kg/m²</td>
+                                        <td>{datos.porcentaje_grasa.toFixed(2)} %</td>
+                                        <td>{datos.porcentaje_musculo.toFixed(2)} %</td>
+                                        <td>{datos.circunferencia_cintura.toFixed(2)} cm</td>
+                                        <td>{datos.circunferencia_cadera.toFixed(2)} cm</td>
+                                        <td>{datos.circunferencia_brazo.toFixed(2)} cm</td>
+                                        <td>{datos.pliegue_bicipital.toFixed(2)} mm</td>
+                                        <td>{datos.pliegue_tricipital.toFixed(2)} mm</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -176,32 +220,28 @@ const Consulta = () => {
                     <div className="col-sm-3">
                         <label htmlFor="peso" className="form-label">Peso</label>
                         <input type="number" step="0.001" className="form-control" name="peso" value={datosFormulario.peso} onChange={(e) => setDatosFormulario({ ...datosFormulario, peso: e.target.value })} />
-                        {/* <label htmlFor="imc" className="form-label">IMC</label>
-                        <input type="number" step="0.001" className="form-control" name="imc" value={datosFormulario.imc} onChange={(e) => setDatosFormulario({ ...datosFormulario, imc: e.target.value })} /> */}
+                        <label htmlFor="estatura" className="form-label">Estatura</label>
+                        <input type="number" step="0.001" className="form-control" name="estatura" value={datosFormulario.estatura} onChange={(e) => setDatosFormulario({ ...datosFormulario, estatura: e.target.value })} />
+                    </div>
+                    <div className="col-sm-3">
+                        <label htmlFor="circunferencia_cintura" className="form-label">Circunferencia de cintura</label>
+                        <input type="number" step="0.001" className="form-control" name="circunferencia_cintura" value={datosFormulario.circunferencia_cintura} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cintura: e.target.value })} />
+                        <label htmlFor="circunferencia_cadera" className="form-label">Circunferencia de cadera</label>
+                        <input type="number" step="0.001" className="form-control" name="circunferencia_cadera" value={datosFormulario.circunferencia_cadera} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cadera: e.target.value })} />
+                        <label htmlFor="circunferencia_brazo" className="form-label">Circunferencia de brazo</label>
+                        <input type="number" step="0.001" className="form-control" name="circunferencia_brazo" value={datosFormulario.circunferencia_brazo} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_brazo: e.target.value })} />
+                    </div>
+                    <div className="col-sm-3">
+                        <label htmlFor="pliegue_bicipital" className="form-label">Pliegue bicipital</label>
+                        <input type="number" step="0.001" className="form-control" name="pliegue_bicipital" value={datosFormulario.pliegue_bicipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_bicipital: e.target.value })} />
                         <label htmlFor="pliegue_tricipital" className="form-label">Pliegue tricipital</label>
                         <input type="number" step="0.001" className="form-control" name="pliegue_tricipital" value={datosFormulario.pliegue_tricipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_tricipital: e.target.value })} />
                     </div>
                     <div className="col-sm-3">
-                        <label htmlFor="estatura" className="form-label">Estatura</label>
-                        <input type="number" step="0.001" className="form-control" name="estatura" value={datosFormulario.estatura} onChange={(e) => setDatosFormulario({ ...datosFormulario, estatura: e.target.value })} />
-                        <label htmlFor="circunferencia_cintura" className="form-label">Circunferencia de cintura</label>
-                        <input type="number" step="0.001" className="form-control" name="circunferencia_cintura" value={datosFormulario.circunferencia_cintura} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cintura: e.target.value })} />
-                    </div>
-                    <div className="col-sm-3">
-                        {/* <label htmlFor="porcentaje_grasa" className="form-label">Porcentaje de grasa</label>
-                        <input type="number" step="0.001" className="form-control" name="porcentaje_grasa" value={datosFormulario.porcentaje_grasa} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_grasa: e.target.value })} /> */}
-                        <label htmlFor="circunferencia_cadera" className="form-label">Circunferencia de cadera</label>
-                        <input type="number" step="0.001" className="form-control" name="circunferencia_cadera" value={datosFormulario.circunferencia_cadera} onChange={(e) => setDatosFormulario({ ...datosFormulario, circunferencia_cadera: e.target.value })} />
-                        <label htmlFor="fecha_siguiente_consulta" className="form-label">Fecha de siguiente consulta</label>
-                        <input type="datetime-local" className="form-control" name="siguiente_consulta" value={datosFormulario.siguiente_consulta} onChange={(e) => setDatosFormulario({ ...datosFormulario, siguiente_consulta: e.target.value })} />
-                    </div>
-                    <div className="col-sm-3">
-                        {/* <label htmlFor="porcentaje_musculo" className="form-label">Porcentaje de músculo</label>
-                        <input type="number" step="0.001" className="form-control" name="porcentaje_musculo" value={datosFormulario.porcentaje_musculo} onChange={(e) => setDatosFormulario({ ...datosFormulario, porcentaje_musculo: e.target.value })} /> */}
-                        <label htmlFor="pliegue_bicipital" className="form-label">Pliegue bicipital</label>
-                        <input type="number" step="0.001" className="form-control" name="pliegue_bicipital" value={datosFormulario.pliegue_bicipital} onChange={(e) => setDatosFormulario({ ...datosFormulario, pliegue_bicipital: e.target.value })} />
                         <label htmlFor="fecha_medicion" className="form-label">Fecha de medicion</label>
                         <input type="date" className="form-control" name="fecha_medicion" value={datosFormulario.fecha_medicion} onChange={(e) => setDatosFormulario({ ...datosFormulario, fecha_medicion: e.target.value })} />
+                        <label htmlFor="fecha_siguiente_consulta" className="form-label">Fecha de siguiente consulta</label>
+                        <input type="datetime-local" className="form-control" name="siguiente_consulta" value={datosFormulario.siguiente_consulta} onChange={(e) => setDatosFormulario({ ...datosFormulario, siguiente_consulta: e.target.value })} />
                         <div className="text-center my-4">
                             <button className="btn btn-primary" type="submit">Guardar datos</button>
                         </div>
