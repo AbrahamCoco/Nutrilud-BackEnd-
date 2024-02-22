@@ -11,50 +11,106 @@ class ArticulosController extends Controller
 {
     public function index()
     {
-        $articulos = Tarticulos::with(['nutriologo.user'])->get();
+        try {
+            $articulos = Tarticulos::with(['nutriologo.user'])->get();
 
-        return response()->json([
-            'message' => 'Lista de articulos',
-            'articulos' => $articulos
-        ], 200);
+            if ($articulos->isEmpty()) {
+                return response()->json([
+                    'message' => 'No se encontraron articulos',
+                    'status' => 400,
+                    'path' => '/api/v1/articulos',
+                    'timestamp' => now()->toDateTimeString(),
+                    'articulos' => null
+                ], 400);
+            }
+
+            return response()->json([
+                'message' => 'Lista de articulos',
+                'articulos' => $articulos,
+                'status' => 200,
+                'path' => '/api/v1/articulos',
+                'timestamp' => now()->toDateTimeString()
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al obtener los articulos',
+                'status' => 500,
+                'path' => '/api/v1/articulos',
+                'timestamp' => now()->toDateTimeString(),
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function show($id)
     {
-        $articulo = Tarticulos::with(['nutriologo.user'])->find($id);
+        try {
+            $articulo = Tarticulos::with(['nutriologo.user'])->find($id);
 
-        if (is_null($articulo)) {
+            if (is_null($articulo)) {
+                return response()->json([
+                    'message' => 'Articulo no encontrado',
+                    'status' => 400,
+                    'path' => "/api/v1/articulo/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'articulo' => null
+                ], 400);
+            }
+
             return response()->json([
-                'message' => 'Articulo no encontrado'
-            ], 400);
+                'message' => 'Articulo encontrado',
+                'status' => 200,
+                'path' => "/api/v1/articulo/{$id}",
+                'timestamp' => now()->toDateTimeString(),
+                'articulo' => $articulo
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al obtener el articulo',
+                'status' => 500,
+                'path' => "/api/v1/articulo/{$id}",
+                'timestamp' => now()->toDateTimeString(),
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'message' => 'Articulo encontrado',
-            'articulo' => $articulo
-        ], 200);
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string',
-            'contenido' => 'required|string',
-            'nutriologo_id' => 'required|integer',
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'titulo' => 'required|string',
+                'contenido' => 'required|string',
+                'nutriologo_id' => 'required|integer',
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Error de validacion',
+                    'status' => 400,
+                    'path' => '/api/v1/nutriologo/articulos',
+                    'timestamp' => now()->toDateTimeString(),
+                    'errors' => $validator->errors()
+                ], 400);
+            }
+
+            $articulo = Tarticulos::create($request->all());
+
             return response()->json([
-                'message' => 'Error de validacion',
-                'errors' => $validator->errors()
-            ], 400);
+                'message' => 'Articulo creado correctamente',
+                'status' => 201,
+                'path' => '/api/v1/nutriologo/articulos',
+                'timestamp' => now()->toDateTimeString(),
+                'articulo' => $articulo
+            ], 201);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al crear el articulo',
+                'status' => 500,
+                'path' => '/api/v1/nutriologo/articulos',
+                'timestamp' => now()->toDateTimeString(),
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $articulo = Tarticulos::create($request->all());
-
-        return response()->json([
-            'message' => 'Articulo creado correctamente',
-            'articulo' => $articulo
-        ], 200);
     }
 }
