@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal } from "react-bootstrap";
 import axios from "axios";
+import LogoNutrilud from "../../../public/images/LogoNutrilud.jpg";
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -67,43 +68,42 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-success bg-success">
-                <div className="container">
+            <nav className="navbar navbar-expand-lg navbar-success bg-success bg-gradient">
+                <div className="container-fluid">
                     <div className="row lg-6">
                         <ul className="nav">
-                            <Link to="/" className="nav-link text-white">Nutrilud</Link>
-                            <Link to="/contacto" className="nav-link text-white">Contacto</Link>
+                            <img src={LogoNutrilud} alt="Logo Nutrilud" className="fluid rounded-circle ms-4" width={42} />
+                            <li className="nav-item"><Link to="/" className="nav-link text-white">Nutrilud</Link></li>
+                            <li className="nav-item"><Link to="/contacto" className="nav-link text-white">Contacto</Link></li>
                         </ul>
                     </div>
                     <div className="row lg-6">
-                        <ul className="nav flex-row-reverse">
+                        <ul className="nav">
                             {isLoggedIn ? (
                                 <>
-                                    <li className="nav-item ms-2">
+                                    <li className="nav-item">
+                                        <Link to="/perfil" className="nav-link text-white">Perfil</Link>
+                                    </li>
+                                    <li className="nav-item">
                                         <div className="btn-group">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Opciones
                                             </button>
-                                            <ul className="dropdown-menu">
+                                            <ul className="dropdown-menu dropdown-menu-end">
                                                 <li><Link to="/nutriologo/agregar-articulo" className="dropdown-item">Agregar articulo</Link></li>
-                                                <li><Link to="/nutriologo/agenda" className="dropdown-item" >Agenda</Link></li>
-                                                <li><Link to="/nutriologo/pacientes" className="dropdown-item" >Pacientes</Link></li>
+                                                <li><Link to="/nutriologo/agenda" className="dropdown-item">Agenda</Link></li>
+                                                <li><Link to="/nutriologo/pacientes" className="dropdown-item">Pacientes</Link></li>
                                                 <li><hr className="dropdown-divider" /></li>
                                                 <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar Sesión</a></li>
                                             </ul>
                                         </div>
-                                    </li>
-                                    <li className="nav-item ms-2">
-                                        <Link to="/perfil" className="nav-link text-white">Perfil</Link>
                                     </li>
                                 </>
                             ) : (
                                 <>
                                     <li className="nav-item ms-2">
                                         <Link to="/registro" className="text-white text-decoration-none">
-                                            <button className="btn btn-primary">
-                                                Registrarse
-                                            </button>
+                                            <button className="btn btn-primary">Registrarse</button>
                                         </Link>
                                     </li>
                                     <li className="nav-item ms-2">

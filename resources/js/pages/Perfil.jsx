@@ -91,8 +91,6 @@ const Perfil = () => {
                     <h5>{perfilData.direccion}</h5>
                 </Col>
                 <Col md={6}>
-                    <h4>Telefono</h4>
-                    <h5>{perfilData.telefono}</h5>
                     <h4>Cedula profesional</h4>
                     <h5>{perfilData.cedula_profesional}</h5>
                 </Col>
