@@ -19,26 +19,61 @@ const Home = () => {
         }
     }
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return format(date, "dd 'de' MMMM 'de' yyyy");
-    };
-
     return (
-        <div className='container'>
-            <h1>Articulos</h1>
-            <div className="row">
-                <div className="col-sm-8 texto-justificado">
-                    <ul>
-                        {articulos.map((articulo) => (
-                            <li key={articulo.id}>
-                                <h3><Link to={`/articulo/${articulo.id}`}>{articulo.titulo}</Link></h3>
-                            </li>
-                        ))}
-                    </ul>
+        <>
+            <div className="carousel slide" id='carouselExampleCaptions'>
+                <div className="carousel-indicators">
+                    {articulos.map((articulo, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide-to={index}
+                            className={index === 0 ? 'active' : ''}
+                            aria-current={index === 0 ? 'true' : 'false'}
+                            aria-label={`Slide ${index + 1}`}
+                        ></button>
+                    ))}
+                </div>
+                <div className="carousel-inner">
+                    {articulos.map((articulo, index) => (
+                        <div key={articulo.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                            <Link to={`/articulo/${articulo.id}`}>
+                                <img src={`https://via.placeholder.com/800x400?text=Slide+${index + 1}`} className="d-block w-100" alt="..." />
+                                <div className="carousel-caption d-none d-md-block">
+                                    <h5>{articulo.titulo}</h5>
+                                    <p><small className="text-muted">Publicado el {new Date(articulo.created_at.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small></p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+                <button type="button" className='carousel-control-prev' data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span className='carousel-control-prev-icon' aria-hidden='true'></span>
+                    <span className='visually-hidden'>Anterior</span>
+                </button>
+                <button type="button" className='carousel-control-next' data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span className='carousel-control-next-icon' aria-hidden='true'></span>
+                    <span className='visually-hidden'>Siguiente</span>
+                </button>
+            </div>
+            <div className='container'>
+                <h1>Artículos Nutricionales</h1>
+                <div className="row">
+                    {articulos.map((articulo) => (
+                        <div className="col-md-4 mb-4" key={articulo.id}>
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title"><Link to={`/articulo/${articulo.id}`}>{articulo.titulo}</Link></h5>
+                                    <p className="card-text">{articulo.descripcion}</p>
+                                    <p className="card-text"><small className="text-muted">Publicado el {new Date(articulo.created_at.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

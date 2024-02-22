@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Modal, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FaEdit, FaFolderOpen, FaTrash } from "react-icons/fa";
 
 const Pacientes = () => {
     const [pacientes, setPacientes] = useState([]);
@@ -136,21 +137,27 @@ const Pacientes = () => {
                                     <td className="text-center">
                                         <Link to={`/nutriologo/consulta/${paciente.id}`}>
                                             <div>
-                                                <button className="btn btn-success">Consulta</button>
+                                                <button className="btn btn-success pb-2">
+                                                    <FaFolderOpen />
+                                                </button>
                                             </div>
                                         </Link>
                                     </td>
                                     <td className="text-center">
                                         <Link to={`/modificar-paciente/${paciente.id}`}>
                                             <div>
-                                                <button className="btn btn-primary">Modificar</button>
+                                                <button className="btn btn-primary pb-2">
+                                                    <FaEdit />
+                                                </button>
                                             </div>
                                         </Link>
                                     </td>
                                     <td className="text-center">
                                         <Link to={`/eliminar-paciente/paciente=${paciente.id}`}>
                                             <div>
-                                                <button className="btn btn-danger">Eliminar</button>
+                                                <button className="btn btn-danger pb-2">
+                                                    <FaTrash />
+                                                </button>
                                             </div>
                                         </Link>
                                     </td>
