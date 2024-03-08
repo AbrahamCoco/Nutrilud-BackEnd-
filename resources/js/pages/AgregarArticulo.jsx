@@ -8,11 +8,9 @@ const AgregarArticulo = () => {
     const [titulo, setTitulo] = useState("");
     const [contenido, setContenido] = useState("");
     const [error, setError] = useState("");
-    const [fileName, setFileName] = useState("");
-    const [dragging, setDragging] = useState(false);
     const [imagePrevisualizada, setImagePrevisualizada] = useState(null);
-
-
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [dragging, setDragging] = useState(false);
 
     const handleDragEnter = (e) => {
         e.preventDefault();
@@ -26,20 +24,39 @@ const AgregarArticulo = () => {
     const handleDrop = (e) => {
         e.preventDefault();
         setDragging(false);
-        // Manejar el archivo que se soltó aquí
         const file = e.dataTransfer.files[0];
         handleFileChange(file);
     };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImagePrevisualizada(reader.result);
+        }
+
         if (file) {
-            setFileName(file.name);
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImagenPrevisualizada(reader.result);
-            };
             reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
+
+    const uploadImage = async () => {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        try {
+            const response = await axios.post('/api/v1/upload/image', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            });
+            console.log(response.data);
+            console.log('URL de la Imagen: ', response.data.url);
+            return response.data.url;
+        } catch (error) {
+            console.error('Error al subir la imagen', error);
+            return ("image.jpg");
         }
     };
 
@@ -48,6 +65,7 @@ const AgregarArticulo = () => {
             const response = await axios.post('/api/v1/nutriologo/articulos', {
                 titulo: titulo,
                 contenido: contenido,
+                foto: await uploadImage(),
                 nutriologo_id: localStorage.getItem('nutriologo_id')
             }, {
                 headers: {
@@ -101,7 +119,7 @@ const AgregarArticulo = () => {
                                     className="sr-only"
                                     id="file-update"
                                     name="file-update"
-                                    onChange={handleFileChange}
+                                    onChange={handleImageChange}
                                 />
                                 <label htmlFor="file-update" className="px-2">O</label>
                                 <label htmlFor="file-update" className="text-center">Arrastra aquí el archivo</label>

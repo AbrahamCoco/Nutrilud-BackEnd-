@@ -43,14 +43,12 @@ const RegistroForm = () => {
     const uploadImage = async () => {
         const formData = new FormData();
         formData.append('image', selectedFile);
-
         try {
             const response = await axios.post('/api/v1/upload/image', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 }
             });
-
             console.log(response.data);
             console.log('URL de la Imagen: ', response.data.url);
             return response.data.url;
@@ -151,11 +149,13 @@ const RegistroForm = () => {
     };
 
     return (
-        <div className='container'>
+        <div className='container my-4'>
             <form>
                 <div className="row">
                     <div className="col-sm-3">
-                        {selectedImage && <img src={selectedImage} className='img-fluid imagen' alt='Previsualización' />}
+                        {selectedImage &&
+                            <img src={selectedImage} className='img-fluid imagen' alt='Previsualización' />
+                        }
                     </div>
                     <div className="col-sm-9">
                         <div className="mb-2">
@@ -196,12 +196,12 @@ const RegistroForm = () => {
                         <div className="mb-2">
                             <div className="form-check-inline">
                                 <label htmlFor="admin-bill" className="form-check-label">
-                                    <input type="radio" className='form-check-input bill' name='bill' id='admin-bill' value={1} checked={trol_id === 1} onChange={handleRoleChange} />Administrador
+                                    <input type="radio" className='form-check-input bill' name='bill' id='admin-bill' value={1} checked={trol_id === 1} onChange={handleRoleChange} disabled />Administrador
                                 </label>
                             </div>
                             <div className="form-check-inline">
                                 <label htmlFor="nutriologo-bill" className="form-check-label">
-                                    <input type="radio" className='form-check-input bill' name='bill' id='nutriologo-bill' value={2} checked={trol_id === 2} onChange={handleRoleChange} />Nutriologo
+                                    <input type="radio" className='form-check-input bill' name='bill' id='nutriologo-bill' value={2} checked={trol_id === 2} onChange={handleRoleChange} disabled />Nutriologo
                                 </label>
                             </div>
                             <div className="form-check-inline">
@@ -252,7 +252,18 @@ const RegistroForm = () => {
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor="sexo" className='form-label'>Sexo</label>
-                            <input type="text" className='form-control' id='sexo' value={sexo} onChange={(e) => setSexo(e.target.value)} />
+                            <div className="mb-2">
+                                <div className="form-check-inline">
+                                    <label htmlFor="masculino" className="form-check-label">
+                                        <input type="radio" className='form-check-input' name='sexo' id='masculino' value='Masculino' checked={sexo === 'Masculino'} onChange={(e) => setSexo(e.target.value)} />Masculino
+                                    </label>
+                                </div>
+                                <div className="form-check-inline">
+                                    <label htmlFor="femenino" className="form-check-label">
+                                        <input type="radio" className='form-check-input' name='sexo' id='femenino' value='Femenino' checked={sexo === 'Femenino'} onChange={(e) => setSexo(e.target.value)} />Femenino
+                                    </label>
+                                </div>
+                            </div>
                             <label htmlFor="alergias" className='form-label'>Alergias</label>
                             <input type="text" className='form-control' id='alergias' value={alergias} onChange={(e) => setAlergias(e.target.value)} />
                         </div>

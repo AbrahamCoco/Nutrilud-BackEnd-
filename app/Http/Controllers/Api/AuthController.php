@@ -93,6 +93,7 @@ class AuthController extends Controller
             switch ($request->trol_id) {
                 case 1:
                     $tipoUsuarioData = $user->admin()->create([
+                        'tusuario_admin_id' => 1,
                         'descripcion' => $request->descripcion,
                         'foto' => $request->foto,
                         'telefono' => $request->telefono,
@@ -100,6 +101,7 @@ class AuthController extends Controller
                     break;
                 case 2:
                     $tipoUsuarioData = $user->nutriologo()->create([
+                        'tusuario_nutriologo_id' => 2,
                         'descripcion' => $request->descripcion,
                         'foto' => $request->foto,
                         'direccion' => $request->direccion,
@@ -109,6 +111,7 @@ class AuthController extends Controller
                     break;
                 case 3:
                     $tipoUsuarioData = $user->paciente()->create([
+                        'tusuario_paciente_id' => 3,
                         'foto' => $request->foto,
                         'telefono' => $request->telefono,
                         'fecha_nacimiento' => $request->fecha_nacimiento,
