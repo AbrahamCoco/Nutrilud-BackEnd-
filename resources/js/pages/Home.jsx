@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import ReactQuill from "react-quill";
 
 const Home = () => {
     const [articulos, setArticulos] = useState([]);
@@ -39,9 +39,15 @@ const Home = () => {
                     {articulos.map((articulo, index) => (
                         <div key={articulo.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                             <Link to={`/articulo/${articulo.id}`}>
-                                <img src={`https://via.placeholder.com/800x400?text=Slide+${index + 1}`} className="d-block w-100" alt="..." />
+                                <img src={articulo.foto} className="d-block w-100" alt={articulo.titulo} />
                                 <div className="carousel-caption d-none d-md-block">
-                                    <h5>{articulo.titulo}</h5>
+                                    <ReactQuill
+                                        value={articulo.titulo}
+                                        readOnly={true}
+                                        theme="bubble"
+                                        className="title-article"
+                                        style={{ fontSize: '1em', color: 'black', textAlign: 'center !important' }}
+                                    />
                                     <p><small className="text-muted">Publicado el {new Date(articulo.created_at.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small></p>
                                 </div>
                             </Link>
@@ -64,8 +70,15 @@ const Home = () => {
                         <div className="col-md-4 mb-4" key={articulo.id}>
                             <div className="card">
                                 <div className="card-body">
-                                    <h5 className="card-title"><Link to={`/articulo/${articulo.id}`}>{articulo.titulo}</Link></h5>
-                                    <p className="card-text">{articulo.descripcion}</p>
+                                    <Link to={`/articulo/${articulo.id}`}>
+                                        <ReactQuill
+                                            value={articulo.titulo}
+                                            readOnly={true}
+                                            theme="bubble"
+                                            className="title-article"
+                                            style={{ fontSize: '0.7em' }}
+                                        />
+                                    </Link>
                                     <p className="card-text"><small className="text-muted">Publicado el {new Date(articulo.created_at.split(' ')[0]).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small></p>
                                 </div>
                             </div>

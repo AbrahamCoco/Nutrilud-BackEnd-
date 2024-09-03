@@ -2,17 +2,61 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { FaImage } from "react-icons/fa";
 
 const AgregarArticulo = () => {
     const [titulo, setTitulo] = useState("");
     const [contenido, setContenido] = useState("");
     const [error, setError] = useState("");
-    const [fileName, setFileName] = useState("");
+    const [imagePrevisualizada, setImagePrevisualizada] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [dragging, setDragging] = useState(false);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
+    const handleDragEnter = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files[0];
+        handleFileChange(file);
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImagePrevisualizada(reader.result);
+        }
+
         if (file) {
-            setFileName(file.name);
+            reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
+
+    const uploadImage = async () => {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        try {
+            const response = await axios.post('/api/v1/upload/image', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            });
+            console.log(response.data);
+            console.log('URL de la Imagen: ', response.data.url);
+            return response.data.url;
+        } catch (error) {
+            console.error('Error al subir la imagen', error);
+            return ("image.jpg");
         }
     };
 
@@ -21,6 +65,7 @@ const AgregarArticulo = () => {
             const response = await axios.post('/api/v1/nutriologo/articulos', {
                 titulo: titulo,
                 contenido: contenido,
+                foto: await uploadImage(),
                 nutriologo_id: localStorage.getItem('nutriologo_id')
             }, {
                 headers: {
@@ -51,23 +96,33 @@ const AgregarArticulo = () => {
                     />
                 </div>
                 <div className="col-sm-6 my-1">
-                    <div className="card">
-                        <div className="card-body">
-                            <label htmlFor="cover-photo" className="form-label">Subir imagen</label>
-                            <div className="mt-2">
-                                <div className="d-flex justify-content-center align-items-center">
-                                    <svg className="mb-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                        <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
-                                    </svg>
-                                    <div className="mb-3">
-                                        <label htmlFor="file-upload" className="form-label d-block">
-                                            <span>Subir archivo</span>
-                                            <input id="file-upload" name="file-upload" type="file" className="form-control-file" />
-                                        </label>
-                                        <p className="text-center">o arrastrar y soltar</p>
-                                    </div>
-                                    <p className="text-muted text-center">PNG, JPG, GIF hasta 10MB</p>
-                                </div>
+                    <label htmlFor="">Subir imagen</label>
+                    <div
+                        className={`container bg-cardimage rounded ${dragging ? "drag-over" : ""}`}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDragEnter={handleDragEnter}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
+                    >
+                        <div className="row">
+                            <div className="col-sm-4">
+                                {imagePrevisualizada ? (
+                                    <img src={imagePrevisualizada} alt="Previsualizacion de la imagen" style={{ width: "100px", height: "100px" }} />
+                                ) : (
+                                    <FaImage size={100} />
+                                )}
+                            </div>
+                            <div className="col-sm-8 pt-4 text-center">
+                                <label htmlFor="file-update" className="file-upload-label text-center">Elegir archivo</label>
+                                <input
+                                    type="file"
+                                    className="sr-only"
+                                    id="file-update"
+                                    name="file-update"
+                                    onChange={handleImageChange}
+                                />
+                                <label htmlFor="file-update" className="px-2">O</label>
+                                <label htmlFor="file-update" className="text-center">Arrastra aquí el archivo</label>
                             </div>
                         </div>
                     </div>

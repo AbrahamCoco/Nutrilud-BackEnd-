@@ -29,14 +29,16 @@ const DetalleArticulo = () => {
     }
 
     return (
-        <div className='container'>
+        <div className='container my-4'>
             <div className="row">
                 <div className="col-sm-8 texto-justificado">
+                    <img src={articulo.foto} className="d-block w-100" alt={articulo.titulo} />
                     <ReactQuill
                         value={articulo.titulo}
                         readOnly={true}
                         theme="bubble"
                         className="title-article"
+                        style={{ fontSize: '2em' }}
                     />
                     <ReactQuill
                         value={articulo.contenido}

@@ -12,7 +12,8 @@ class Tarticulos extends Model
     protected $fillable = [
         'nutriologo_id',
         'titulo',
-        'contenido'
+        'contenido',
+        'foto'
     ];
 
     public function nutriologo()
