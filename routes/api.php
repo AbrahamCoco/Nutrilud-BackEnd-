@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Ruta para obtener el token CSRF
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['message' => 'CSRF token generated']);
+});
+
 Route::prefix('v1')->group(function () {
     //Rutas publicas
     Route::get('/', [ArticulosController::class, 'index'])->name('index');
