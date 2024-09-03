@@ -82,13 +82,21 @@ const Consulta = () => {
             //Logica para calcular el area muscular del brazo
             let areaMuscularBrazo = 0;
             if (!isNaN(datosFormulario.circunferencia_brazo) && !isNaN(datosFormulario.pliegue_tricipital)) {
-                areaMuscularBrazo = (datosFormulario.circunferencia_brazo - (Math.PI * datosFormulario.pliegue_tricipital)) / (4 * Math.PI);
+                // Define el valor del área del brazo según el género
+                let genero = 0;
+                if (datosFormulario.sexo === 'Masculino') {
+                    genero = 10;
+                } else if (datosFormulario.sexo === 'Femenino') {
+                    genero = 6.5;
+                }
+                // Calcula el área muscular del brazo
+                areaMuscularBrazo = (Math.pow(datosFormulario.circunferencia_brazo - (datosFormulario.pliegue_tricipital * Math.PI), 2) / (4 * Math.PI)) - genero;
             }
 
             //Logica para calcular el porcentaje de musculo
             let porcentajeMusculo = 0;
-            if (!isNaN(areaMuscularBrazo) && !isNaN(datosFormulario.peso)) {
-                porcentajeMusculo = (areaMuscularBrazo / datosFormulario.peso) * 100;
+            if (!isNaN(areaMuscularBrazo)) {
+                porcentajeMusculo = datosFormulario.estatura * (0.0264 + (0.0029 * areaMuscularBrazo))
             }
 
             //Logica para mandar los datos faltantes al formulario
@@ -99,6 +107,8 @@ const Consulta = () => {
                 porcentaje_musculo: porcentajeMusculo.toFixed(3),
             }));
         }
+
+        console.log(datosFormulario);
 
         try {
             const response = await axios.post(`/api/v1/insertardatos/${id}`, datosFormulario, {
@@ -154,7 +164,7 @@ const Consulta = () => {
                                     <th>Telefono</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="text-center">
                                 <tr>
                                     <td><strong>{paciente.user.nombre} {paciente.user.primer_apellido} {paciente.user.segundo_apellido}</strong></td>
                                     <td>{paciente.alergias}</td>
@@ -179,13 +189,12 @@ const Consulta = () => {
                                     <th rowSpan={2}>Peso</th>
                                     <th rowSpan={2}>Estatura</th>
                                     <th rowSpan={2}>IMC</th>
-                                    <th colSpan={2}>Porcentaje</th>
+                                    <th rowSpan={2}>Porcentaje Grasa Corporal</th>
+                                    <th rowSpan={2}>Masa Muscular Total</th>
                                     <th colSpan={3}>Circunferencia</th>
                                     <th colSpan={2}>Pliegue</th>
                                 </tr>
                                 <tr>
-                                    <th>Grasa Corporal</th>
-                                    <th>Musculo</th>
                                     <th>Cintura</th>
                                     <th>Cadera</th>
                                     <th>Brazo</th>
@@ -193,18 +202,18 @@ const Consulta = () => {
                                     <th>Tricipital</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="text-center">
                                 {Array.isArray(consulta) && consulta.slice(-3).map((datos) => (
                                     <tr key={datos.id}>
                                         <td>{new Date(new Date(datos.fecha_medicion.split(' ')[0]).getTime() + 86400000).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                                        <td>{datos.peso.toFixed(2)} kg</td>
+                                        <td>{datos.peso.toFixed(3)} kg</td>
                                         <td>{datos.estatura.toFixed(2)} m</td>
-                                        <td>{datos.imc.toFixed(2)} kg/m²</td>
+                                        <td>{datos.imc.toFixed(3)} kg/m²</td>
                                         <td>{datos.porcentaje_grasa.toFixed(2)} %</td>
-                                        <td>{datos.porcentaje_musculo.toFixed(2)} %</td>
+                                        <td>{datos.porcentaje_musculo.toFixed(3)} kg</td>
                                         <td>{datos.circunferencia_cintura.toFixed(2)} cm</td>
                                         <td>{datos.circunferencia_cadera.toFixed(2)} cm</td>
-                                        <td>{datos.circunferencia_brazo.toFixed(2)} cm</td>
+                                        <td>{datos.circunferencia_brazo.toFixed(2)} cm²</td>
                                         <td>{datos.pliegue_bicipital.toFixed(2)} mm</td>
                                         <td>{datos.pliegue_tricipital.toFixed(2)} mm</td>
                                     </tr>

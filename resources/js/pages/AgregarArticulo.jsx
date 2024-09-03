@@ -1,63 +1,156 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { FaImage } from "react-icons/fa";
 
 const AgregarArticulo = () => {
-    const handleAgregarArticulo = () => {
-        const titulo = document.getElementById('titulo').value;
-        const contenido = document.getElementById('contenido').value;
+    const [titulo, setTitulo] = useState("");
+    const [contenido, setContenido] = useState("");
+    const [error, setError] = useState("");
+    const [imagePrevisualizada, setImagePrevisualizada] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [dragging, setDragging] = useState(false);
 
-        // Paso 1: Verifica los datos de la solicitud
-        console.log(`Titulo: ${titulo}`);
-        console.log(`Contenido: ${contenido}`);
-        console.log(`Nutriologo ID: ${localStorage.getItem('nutriologo_id')}`);
+    const handleDragEnter = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
 
-        // Paso 2: Verifica cómo se envían los datos
-        const datos = {
-            titulo: titulo,
-            contenido: contenido,
-            nutriologo_id: localStorage.getItem('nutriologo_id')
-        };
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
 
-        console.log(`Datos a enviar: ${JSON.stringify(datos)}`);
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files[0];
+        handleFileChange(file);
+    };
 
-        axios.post('/api/v1/nutriologo/articulos', JSON.stringify(datos), {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                document.getElementById('titulo').value = '';
-                document.getElementById('contenido').value = '';
-            })
-            .catch(error => {
-                // Paso 3: Manejo de errores en el servidor
-                console.log('Error al guardar el articulo', error.response.data);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImagePrevisualizada(reader.result);
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
+
+    const uploadImage = async () => {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        try {
+            const response = await axios.post('/api/v1/upload/image', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
             });
+            console.log(response.data);
+            console.log('URL de la Imagen: ', response.data.url);
+            return response.data.url;
+        } catch (error) {
+            console.error('Error al subir la imagen', error);
+            return ("image.jpg");
+        }
+    };
+
+    const handleAgregarArticulo = async () => {
+        try {
+            const response = await axios.post('/api/v1/nutriologo/articulos', {
+                titulo: titulo,
+                contenido: contenido,
+                foto: await uploadImage(),
+                nutriologo_id: localStorage.getItem('nutriologo_id')
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(response.data);
+            setTitulo("");
+            setContenido("");
+        } catch (error) {
+            console.log('Error al guardar el artículo', error.response.data);
+            setError("Error al guardar el artículo. Por favor, inténtalo de nuevo.");
+        }
     };
 
     return (
         <div className="container">
-            <h1>Agregar Articulo</h1>
+            <h1>Agregar Artículo</h1>
             <div className="row my-2">
                 <div className="col-sm-6 my-1">
-                    <label htmlFor="titulo">Agrega titulo al articulo</label>
-                    <input type="text" className="form-control" id="titulo" />
+                    <label htmlFor="titulo">Título del Artículo</label>
+                    <ReactQuill
+                        value={titulo}
+                        onChange={(value) => setTitulo(value)}
+                        theme="snow"
+                    />
+                </div>
+                <div className="col-sm-6 my-1">
+                    <label htmlFor="">Subir imagen</label>
+                    <div
+                        className={`container bg-cardimage rounded ${dragging ? "drag-over" : ""}`}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDragEnter={handleDragEnter}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
+                    >
+                        <div className="row">
+                            <div className="col-sm-4">
+                                {imagePrevisualizada ? (
+                                    <img src={imagePrevisualizada} alt="Previsualizacion de la imagen" style={{ width: "100px", height: "100px" }} />
+                                ) : (
+                                    <FaImage size={100} />
+                                )}
+                            </div>
+                            <div className="col-sm-8 pt-4 text-center">
+                                <label htmlFor="file-update" className="file-upload-label text-center">Elegir archivo</label>
+                                <input
+                                    type="file"
+                                    className="sr-only"
+                                    id="file-update"
+                                    name="file-update"
+                                    onChange={handleImageChange}
+                                />
+                                <label htmlFor="file-update" className="px-2">O</label>
+                                <label htmlFor="file-update" className="text-center">Arrastra aquí el archivo</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="row my-2">
                 <div className="col-sm-12 my-1">
-                    <label htmlFor="contenido">Agrega el contenido del articulo</label>
-                    <textarea className="form-control" id="contenido" rows="12"></textarea>
+                    <label htmlFor="contenido">Contenido del Artículo</label>
+                    <ReactQuill
+                        theme="snow"
+                        value={contenido}
+                        onChange={setContenido}
+                    />
                 </div>
             </div>
             <div className="row  flex-row-reverse">
                 <div className="col-sm-12 my-1">
-                    <button className="btn btn-primary mx-2" onClick={handleAgregarArticulo}>Agregar Articulo</button>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={handleAgregarArticulo}
+                        disabled={!titulo || !contenido}
+                    >
+                        Agregar Artículo
+                    </button>
                     <button className="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
+            {error && <div className="alert alert-danger mt-3" role="alert">{error}</div>}
         </div>
     );
 };

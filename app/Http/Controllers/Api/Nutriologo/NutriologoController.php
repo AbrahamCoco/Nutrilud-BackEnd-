@@ -16,17 +16,27 @@ class NutriologoController extends Controller
 
             if ($pacientes->isEmpty()) {
                 return response()->json([
-                    'message' => 'No se encontraron pacientes'
+                    'message' => 'No se encontraron pacientes',
+                    'status' => 400,
+                    'path' => '/api/v1/pacientes',
+                    'timestamp' => now()->toDateTimeString(),
+                    'pacientes' => null
                 ], 400);
             }
 
             return response()->json([
                 'message' => 'Pacientes encontrados',
-                'pacientes' => $pacientes
+                'pacientes' => $pacientes,
+                'status' => 200,
+                'path' => '/api/v1/pacientes',
+                'timestamp' => now()->toDateTimeString()
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener los pacientes',
+                'status' => 500,
+                'path' => '/api/v1/pacientes',
+                'timestamp' => now()->toDateTimeString(),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -39,17 +49,27 @@ class NutriologoController extends Controller
 
             if ($paciente === null) {
                 return response()->json([
-                    'message' => 'Paciente no encontrado'
+                    'message' => 'Paciente no encontrado',
+                    'status' => 400,
+                    'path' => "/api/v1/paciente/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'paciente' => null
                 ], 400);
             }
 
             return response()->json([
                 'message' => 'Paciente encontrado',
-                'paciente' => $paciente
+                'paciente' => $paciente,
+                'status' => 200,
+                'path' => "/api/v1/paciente/{$id}",
+                'timestamp' => now()->toDateTimeString()
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener el paciente',
+                'status' => 500,
+                'path' => "/api/v1/paciente/{$id}",
+                'timestamp' => now()->toDateTimeString(),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -61,7 +81,11 @@ class NutriologoController extends Controller
             $paciente = Tusuario_paciente::with('user')->find($id);
             if ($paciente === null) {
                 return response()->json([
-                    'message' => 'Paciente no encontrado'
+                    'message' => 'Paciente no encontrado',
+                    "status" => 400,
+                    'path' => "/api/v1/consultadatos/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'consulta' => null
                 ], 400);
             }
 
@@ -69,17 +93,28 @@ class NutriologoController extends Controller
 
             if ($consulta->isEmpty()) {
                 return response()->json([
-                    'message' => 'No se encontraron datos de consulta'
+                    'message' => 'No se encontraron datos de consulta',
+                    "status" => 400,
+                    'path' => "/api/v1/consultadatos/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'consulta' => null
                 ], 400);
             }
 
             return response()->json([
                 'message' => 'Datos de consulta encontrados',
+                'status' => 200,
+                'path' => "/api/v1/consultadatos/{$id}",
+                'timestamp' => now()->toDateTimeString(),
                 'consulta' => $consulta
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener los datos de consulta',
+                'status' => 500,
+                'path' => "/api/v1/consultadatos/{$id}",
+                'timestamp' => now()->toDateTimeString(),
+                'consulta' => null,
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -92,7 +127,11 @@ class NutriologoController extends Controller
 
             if ($paciente === null) {
                 return response()->json([
-                    'message' => 'Paciente no encontrado'
+                    'message' => 'Paciente no encontrado',
+                    'status' => 400,
+                    'path' => "/api/v1/insertardatos/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'consulta' => null
                 ], 400);
             }
 
@@ -116,11 +155,17 @@ class NutriologoController extends Controller
 
             return response()->json([
                 'message' => 'Datos de consulta guardados',
-                'nuevaConsulta' => $nuevaConsulta
+                'nuevaConsulta' => $nuevaConsulta,
+                'status' => 201,
+                'path' => "/api/v1/insertardatos/{$id}",
+                'timestamp' => now()->toDateTimeString()
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al guardar los datos de consulta',
+                'status' => 500,
+                'path' => "/api/v1/insertardatos/{$id}",
+                'timestamp' => now()->toDateTimeString(),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -133,7 +178,11 @@ class NutriologoController extends Controller
 
             if ($pacientes->isEmpty()) {
                 return response()->json([
-                    'message' => 'No se encontraron pacientes'
+                    'message' => 'No se encontraron pacientes',
+                    'status' => 400,
+                    'path' => '/api/v1/nutriologo/agenda',
+                    'timestamp' => now()->toDateTimeString(),
+                    'agenda' => null
                 ], 400);
             }
 
@@ -143,17 +192,27 @@ class NutriologoController extends Controller
 
             if ($agenda->isEmpty()) {
                 return response()->json([
-                    'message' => 'No se encontraron datos para agenda'
+                    'message' => 'No se encontraron datos para agenda',
+                    'status' => 400,
+                    'path' => '/api/v1/nutriologo/agenda',
+                    'timestamp' => now()->toDateTimeString(),
+                    'agenda' => null
                 ], 400);
             }
 
             return response()->json([
                 'message' => 'Datos para agendar encontrados',
-                'agenda' => $agenda
+                'agenda' => $agenda,
+                'status' => 200,
+                'path' => '/api/v1/nutriologo/agenda',
+                'timestamp' => now()->toDateTimeString()
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener la agenda',
+                'status' => 500,
+                'path' => '/api/v1/nutriologo/agenda',
+                'timestamp' => now()->toDateTimeString(),
                 'error' => $e->getMessage()
             ], 500);
         }
