@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tusuario_nutriologo;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -17,7 +17,10 @@ class AuthController extends Controller
         try {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $primerApelido = Str::substr($request->primer_apellido, 0, 4);
+                $segundoApelido = Str::substr($request->segundo_apellido, 0, 4);
+                $name = $request->nombre . $primerApelido . $segundoApelido;
+                $imageName = $name . time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imageName);
                 $imageUrl = asset('images/' . $imageName);
 
@@ -246,11 +249,11 @@ class AuthController extends Controller
     public function showDatos($id)
     {
         try {
-            $nutriologoData = Tusuario_nutriologo::with('user')->find($id);
+            $userData = User::with(['admin', 'nutriologo', 'paciente'])->find($id);
 
-            if ($nutriologoData === null) {
+            if ($userData === null) {
                 return response()->json([
-                    'message' => 'Nutriologo no encontrado',
+                    'message' => 'Usuario no encontrado',
                     'status' => 400,
                     'path' => "/api/v1/auth/user/{$id}",
                     'timestamp' => now()->toDateTimeString(),
@@ -260,19 +263,20 @@ class AuthController extends Controller
 
             // Utiliza response()->json() para enviar la respuesta JSON
             return response()->json([
-                'message' => 'Datos del nutriologo',
+                'message' => 'Datos del Usuario',
                 'status' => 200,
                 'path' => "/api/v1/auth/user/{$id}",
                 'timestamp' => now()->toDateTimeString(),
-                'data' => $nutriologoData
+                'data' => $userData
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                'message' => 'Error al obtener los datos del nutriologo',
+                'message' => 'Error al obtener los datos del usuario',
                 'status' => 500,
                 'path' => "/api/v1/auth/user/{$id}",
                 'timestamp' => now()->toDateTimeString(),
-                'data' => $e->getMessage()
+                'data' => null,
+                'error' => $e->getMessage()
             ], 500);
         }
     }
