@@ -1,29 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\Cliente;
+namespace App\Http\Controllers\Api\Paciente;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class PacienteController extends Controller
 {
-    public function index()
-    {
-    }
+    public function index() {}
 
-    public function store(Request $request)
-    {
-    }
+    public function store(Request $request) {}
 
-    public function show($id)
-    {
-    }
+    public function show($id) {}
 
-    public function update(Request $request, $id)
-    {
-    }
+    public function update(Request $request, $id) {}
 
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
 }

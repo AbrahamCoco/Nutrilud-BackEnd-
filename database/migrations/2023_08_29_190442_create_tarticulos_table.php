@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tarticulos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('nutriologo_id');
-            $table->string('titulo');
             $table->text('contenido');
             $table->text('foto');
             $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
