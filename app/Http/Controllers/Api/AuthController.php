@@ -249,7 +249,7 @@ class AuthController extends Controller
     public function showDatos($id)
     {
         try {
-            $userData = User::with(['admin', 'nutriologo', 'paciente'])->find($id);
+            $userData = User::with(['admin', 'nutriologo', 'paciente.consulta'])->find($id);
 
             if ($userData === null) {
                 return response()->json([
