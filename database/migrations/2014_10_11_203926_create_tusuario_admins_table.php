@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('tusuario_admins', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('descripcion');
             $table->text('foto');
             $table->string('telefono');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

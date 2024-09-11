@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('tusuario_nutriologos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('descripcion');
             $table->text('foto');
             $table->string('direccion');
             $table->string('telefono');
             $table->integer('cedula_profesional');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
