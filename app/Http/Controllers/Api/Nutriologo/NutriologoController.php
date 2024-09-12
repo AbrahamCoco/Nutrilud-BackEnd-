@@ -128,27 +128,44 @@ class NutriologoController extends Controller
             if ($paciente === null) {
                 return response()->json([
                     'message' => 'Paciente no encontrado',
-                    'status' => 400,
+                    'status' => 404,
                     'path' => "/api/v1/insertardatos/{$id}",
                     'timestamp' => now()->toDateTimeString(),
                     'consulta' => null
-                ], 400);
+                ], 404);
             }
 
+            $validatedData = $request->validate([
+                'nutriologo_id' => 'required|integer',
+                'peso' => 'required|numeric',
+                'estatura' => 'required|numeric',
+                'imc' => 'required|numeric',
+                'porcentaje_grasa' => 'required|numeric',
+                'porcentaje_musculo' => 'required|numeric',
+                'circunferencia_cintura' => 'required|numeric',
+                'circunferencia_cadera' => 'required|numeric',
+                'circunferencia_brazo' => 'required|numeric',
+                'pliegue_bicipital' => 'required|numeric',
+                'pliegue_tricipital' => 'required|numeric',
+                'fecha_medicion' => 'required|date',
+                'siguiente_consulta' => 'required|date',
+            ]);
+
             $nuevaConsulta = new Tdatos_consulta([
+                'nutriologo_id' => $validatedData['nutriologo_id'],
                 'paciente_id' => $paciente->id,
-                'peso' => $request->input('peso'),
-                'estatura' => $request->input('estatura'),
-                'imc' => $request->input('imc'),
-                'porcentaje_grasa' => $request->input('porcentaje_grasa'),
-                'porcentaje_musculo' => $request->input('porcentaje_musculo'),
-                'circunferencia_cintura' => $request->input('circunferencia_cintura'),
-                'circunferencia_cadera' => $request->input('circunferencia_cadera'),
-                'circunferencia_brazo' => $request->input('circunferencia_brazo'),
-                'pliegue_bicipital' => $request->input('pliegue_bicipital'),
-                'pliegue_tricipital' => $request->input('pliegue_tricipital'),
-                'fecha_medicion' => $request->input('fecha_medicion'),
-                'siguiente_consulta' => $request->input('siguiente_consulta'),
+                'peso' => $validatedData['peso'],
+                'estatura' => $validatedData['estatura'],
+                'imc' => $validatedData['imc'],
+                'porcentaje_grasa' => $validatedData['porcentaje_grasa'],
+                'porcentaje_musculo' => $validatedData['porcentaje_musculo'],
+                'circunferencia_cintura' => $validatedData['circunferencia_cintura'],
+                'circunferencia_cadera' => $validatedData['circunferencia_cadera'],
+                'circunferencia_brazo' => $validatedData['circunferencia_brazo'],
+                'pliegue_bicipital' => $validatedData['pliegue_bicipital'],
+                'pliegue_tricipital' => $validatedData['pliegue_tricipital'],
+                'fecha_medicion' => $validatedData['fecha_medicion'],
+                'siguiente_consulta' => $validatedData['siguiente_consulta'],
             ]);
 
             $paciente->consulta()->save($nuevaConsulta);
@@ -188,7 +205,7 @@ class NutriologoController extends Controller
 
             $pacientesIds = $pacientes->pluck('id');
 
-            $agenda = Tdatos_consulta::whereIn('paciente_id', $pacientesIds)->with('consulta.user')->get();
+            $agenda = Tdatos_consulta::whereIn('paciente_id', $pacientesIds)->with('paciente.user')->get();
 
             if ($agenda->isEmpty()) {
                 return response()->json([

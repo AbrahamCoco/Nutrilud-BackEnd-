@@ -54,17 +54,17 @@ class User extends Authenticatable
 
     public function admin()
     {
-        return $this->hasOne(Tusuario_admin::class, 'user_id', 'id');
+        return $this->belongsTo(Tusuario_admin::class, 'tusuario_admin_id', 'id');
     }
 
     public function nutriologo()
     {
-        return $this->hasOne(Tusuario_nutriologo::class, 'user_id', 'id');
+        return $this->belongsTo(Tusuario_nutriologo::class, 'tusuario_nutriologo_id', 'id');
     }
 
     public function paciente()
     {
-        return $this->hasOne(Tusuario_paciente::class, 'user_id', 'id');
+        return $this->belongsTo(Tusuario_paciente::class, 'tusuario_paciente_id', 'id');
     }
 
     public function articulos()
@@ -74,6 +74,7 @@ class User extends Authenticatable
 
     public function consulta()
     {
-        return $this->hasMany(Tdatos_consulta::class, 'usuario_paciente_id', 'id');
+        return $this->hasMany(Tdatos_consulta::class, 'nutriologo_id', 'id');
+        return $this->hasMany(Tdatos_consulta::class, 'paciente_id', 'id');
     }
 }
