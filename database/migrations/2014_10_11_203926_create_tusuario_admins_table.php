@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tusuario_admins', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
-            $table->text('foto');
+            $table->text('foto')->nullable();
             $table->string('telefono');
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tdatos_consultas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('nutriologo_id');
             $table->unsignedBigInteger('paciente_id');
             $table->float('peso');
             $table->float('estatura');
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->float('pliegue_tricipital');
             $table->datetime('fecha_medicion');
             $table->datetime('siguiente_consulta');
+            $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
             $table->foreign('paciente_id')->references('id')->on('tusuario_pacientes');
             $table->timestamps();
         });

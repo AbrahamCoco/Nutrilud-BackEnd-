@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tarticulos;
+use App\Models\Trol;
 use App\Models\Tusuario_admin;
 use App\Models\Tusuario_nutriologo;
 use App\Models\Tusuario_paciente;
@@ -19,7 +20,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Crear un usuario nutriólogo primero
+        Trol::create([
+            'rol' => 'Administrador',
+            'estado' => 1,
+        ]);
+
+        Trol::create([
+            'rol' => 'Nutriologo',
+            'estado' => 1,
+        ]);
+
+        Trol::create([
+            'rol' => 'Paciente',
+            'estado' => 1,
+        ]);
+
         $nutriologo = Tusuario_nutriologo::create([
             'descripcion' => 'Nutriologa',
             'foto' => null,
@@ -28,9 +43,8 @@ class DatabaseSeeder extends Seeder
             'cedula_profesional' => '20242271',
         ]);
 
-        // Luego, crear el usuario asociado a ese nutriólogo
         User::create([
-            'trol_id' => 2, // Asumiendo que 2 es el ID del rol de nutriólogo
+            'trol_id' => 2,
             'tusuario_nutriologo_id' => $nutriologo->id,
             'nombre' => 'Karina',
             'primer_apellido' => 'Netzahualcoyotl',
@@ -104,7 +118,7 @@ class DatabaseSeeder extends Seeder
  <li><strong>Cocinar en Casa</strong>: Preparar comidas en casa permite controlar los ingredientes y las porciones, asegurando una dieta m&aacute;s saludable.</li>
  </ul>
  <p>Adoptar h&aacute;bitos de alimentaci&oacute;n saludable no solo mejora la salud f&iacute;sica, sino tambi&eacute;n la mental y emocional. &iexcl;Empieza hoy a hacer peque&ntilde;os cambios en tu dieta y disfruta de los beneficios a largo plazo!</p>',
-            'foto' => null,
+            'foto' => "http://127.0.0.1:8000/images/1725556518.jpeg",
         ]);
     }
 }
