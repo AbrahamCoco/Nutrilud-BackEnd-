@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
             'primer_apellido' => 'Perez',
             'segundo_apellido' => 'Gonzalez',
             'usuario' => 'juan',
-            'correo' => 'juan@gamil.com',
+            'correo' => 'juan@gmail.com',
             'contrasenia' => Hash::make('juan1996'),
             'estado' => 1,
         ]);
@@ -120,5 +120,26 @@ class DatabaseSeeder extends Seeder
  <p>Adoptar h&aacute;bitos de alimentaci&oacute;n saludable no solo mejora la salud f&iacute;sica, sino tambi&eacute;n la mental y emocional. &iexcl;Empieza hoy a hacer peque&ntilde;os cambios en tu dieta y disfruta de los beneficios a largo plazo!</p>',
             'foto' => "http://127.0.0.1:8000/images/1725556518.jpeg",
         ]);
+
+        Tusuario_paciente::factory(50)->create()->each(function ($paciente) {
+            User::factory()->create([
+                'trol_id' => 3,
+                'tusuario_paciente_id' => $paciente->id,
+            ]);
+        });
+
+        Tusuario_nutriologo::factory(20)->create()->each(function ($nutriologo) {
+            User::factory()->create([
+                'trol_id' => 2,
+                'tusuario_nutriologo_id' => $nutriologo->id,
+            ]);
+        });
+
+        Tusuario_admin::factory(3)->create()->each(function ($admin) {
+            User::factory()->create([
+                'trol_id' => 1,
+                'tusuario_admin_id' => $admin->id,
+            ]);
+        });
     }
 }
