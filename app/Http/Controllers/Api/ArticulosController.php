@@ -80,7 +80,7 @@ class ArticulosController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'contenido' => 'required|string',
-                'foto' => 'required|string',
+                // 'foto' => 'required|string',
                 'nutriologo_id' => 'required|integer',
             ]);
 
