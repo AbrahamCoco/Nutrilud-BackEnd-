@@ -77,4 +77,10 @@ class User extends Authenticatable
         return $this->hasMany(Tdatos_consulta::class, 'nutriologo_id', 'id');
         return $this->hasMany(Tdatos_consulta::class, 'paciente_id', 'id');
     }
+
+    public function recordatorio()
+    {
+        return $this->hasMany(TRecordatorios::class, 'nutriologo_id', 'id');
+        return $this->hasMany(TRecordatorios::class, 'paciente_id', 'id');
+    }
 }

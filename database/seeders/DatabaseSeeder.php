@@ -118,7 +118,7 @@ class DatabaseSeeder extends Seeder
  <li><strong>Cocinar en Casa</strong>: Preparar comidas en casa permite controlar los ingredientes y las porciones, asegurando una dieta m&aacute;s saludable.</li>
  </ul>
  <p>Adoptar h&aacute;bitos de alimentaci&oacute;n saludable no solo mejora la salud f&iacute;sica, sino tambi&eacute;n la mental y emocional. &iexcl;Empieza hoy a hacer peque&ntilde;os cambios en tu dieta y disfruta de los beneficios a largo plazo!</p>',
-            'foto' => "http://127.0.0.1:8000/images/1725556518.jpeg",
+            'foto' => "http://127.0.0.1:8000/images/1728103278.jpg",
         ]);
 
         Tusuario_paciente::factory(50)->create()->each(function ($paciente) {
