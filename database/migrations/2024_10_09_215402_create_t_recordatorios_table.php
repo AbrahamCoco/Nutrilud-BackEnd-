@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('nutriologo_id');
             $table->unsignedBigInteger('paciente_id');
             $table->string('recordatorioPdf');
-            $table->datetime('fecha_recordatorio');
             $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
             $table->foreign('paciente_id')->references('id')->on('tusuario_pacientes');
             $table->timestamps();

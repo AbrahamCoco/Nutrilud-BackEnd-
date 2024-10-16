@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Nutriologo;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tdatos_consulta;
+use App\Models\TRecordatorios;
 use App\Models\Tusuario_paciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NutriologoController extends Controller
 {
@@ -231,6 +233,64 @@ class NutriologoController extends Controller
                 'path' => '/api/v1/nutriologo/agenda',
                 'timestamp' => now()->toDateTimeString(),
                 'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function saveReminder(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'nutriologo_id' => 'required|integer',
+                'paciente_id' => 'required|integer',
+                'recordatorioPdf' => 'required|file|mimes:pdf',
+            ]);
+
+            $paciente = Tusuario_paciente::with('user')->find($validatedData['paciente_id']);
+
+            if (!$paciente) {
+                return response()->json([
+                    'message' => 'Paciente no encontrado',
+                    'status' => 404,
+                    'path' => '/api/v1/nutriologo/recordatorio',
+                    'timestamp' => now()->toDateTimeString()
+                ], 404);
+            }
+
+            $nombrePaciente = $paciente->user->nombre . '' . $paciente->user->primer_apellido . '' . $paciente->user->segundo_apellido;
+
+            $file = $request->file('recordatorioPdf');
+
+            $fecha = now();
+            $fileName = 'Recordatorio_' . $validatedData['paciente_id'] . '_' . $nombrePaciente . '_' . $fecha->format('d_m_Y_H_i_s') . '.pdf';
+
+            $filePath = $file->storeAs('public/reminders', $fileName);
+
+            $publicPath = Storage::url($filePath);
+
+            $recordatorio = TRecordatorios::create([
+                'nutriologo_id' => $validatedData['nutriologo_id'],
+                'paciente_id' => $validatedData['paciente_id'],
+                'recordatorioPdf' => $publicPath,
+            ]);
+
+            return response()->json([
+                'message' => 'Recordatorio guardado exitosamente',
+                'status' => 201,
+                'data' => [
+                    'id' => $recordatorio->id,
+                    'filePath' => $publicPath
+                ],
+                'path' => '/api/v1/nutriologo/recordatorio',
+                'timestamp' => now()->toDateTimeString()
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Error al guardar el recordatorio',
+                'status' => 500,
+                'path' => '/api/v1/nutriologo/recordatorio',
+                'timestamp' => now()->toDateTimeString(),
+                'error' => $th->getMessage()
             ], 500);
         }
     }

@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/nutriologo/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
     Route::post('/nutriologo/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
     Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
+    Route::post('/nutriologo/insertarRecordatorio', [NutriologoController::class, 'saveReminder'])->name('saveReminder');
 
     //Rutas privadas
     Route::middleware('auth:sanctum')->group(function () {
