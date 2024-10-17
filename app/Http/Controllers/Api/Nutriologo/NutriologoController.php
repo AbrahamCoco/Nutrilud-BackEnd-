@@ -298,7 +298,7 @@ class NutriologoController extends Controller
     public function getReminders($id)
     {
         try {
-            $recordatorio = TRecordatorios::where('nutriologo_id', $id)->orderBy('created_at', 'desc')->get();
+            $recordatorio = TRecordatorios::where('paciente_id', $id)->orderBy('created_at', 'desc')->get();
 
             if ($recordatorio === null) {
                 return response()->json([
@@ -322,33 +322,6 @@ class NutriologoController extends Controller
                 'message' => 'Error al obtener el recordatorio',
                 'status' => 500,
                 'path' => "/api/v1/nutriologo/recordatorio/{$id}",
-                'timestamp' => now()->toDateTimeString(),
-                'error' => $th->getMessage()
-            ], 500);
-        }
-    }
-
-    public function pathReminder($path)
-    {
-        try {
-            $path = storage_path('app/public/reminders/' . $path);
-
-            if (!file_exists($path)) {
-                return response()->json([
-                    'message' => 'Archivo no encontrado',
-                    'status' => 404,
-                    'path' => "/api/v1/nutriologo/recordatorio/{$path}",
-                    'timestamp' => now()->toDateTimeString(),
-                    'recordatorio' => null
-                ], 404);
-            }
-
-            return response()->file($path);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Error al obtener el recordatorio',
-                'status' => 500,
-                'path' => "/api/v1/nutriologo/recordatorio/{$path}",
                 'timestamp' => now()->toDateTimeString(),
                 'error' => $th->getMessage()
             ], 500);

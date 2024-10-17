@@ -43,7 +43,6 @@ Route::prefix('v1')->group(function () {
     Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
     Route::post('/nutriologo/insertarRecordatorio', [NutriologoController::class, 'saveReminder'])->name('saveReminder');
     Route::get('/nutriologo/recordatorios/{id}', [NutriologoController::class, 'getReminders'])->name('getReminders');
-    Route::get('/nutriologo/recordatorio/{path}', [NutriologoController::class, 'pathReminder'])->name('pathReminder');
 
     //Rutas privadas
     Route::middleware('auth:sanctum')->group(function () {
