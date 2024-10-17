@@ -20,7 +20,7 @@ class Tusuario_paciente extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class, 'tusuario_paciente_id', 'id');
     }
 
     public function consulta()

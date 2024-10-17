@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('nutriologo_id');
             $table->text('contenido');
-            $table->text('foto');
+            $table->text('foto')->nullable();
             $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
             $table->timestamps();
         });

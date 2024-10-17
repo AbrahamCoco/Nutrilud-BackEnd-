@@ -26,8 +26,8 @@ Route::get('/sanctum/csrf-cookie', function () {
 
 Route::prefix('v1')->group(function () {
     //Rutas publicas
-    Route::get('/', [ArticulosController::class, 'index'])->name('index');
-    Route::get('/articulo/{id}', [ArticulosController::class, 'show'])->name('show');
+    Route::get('/nutriologo', [ArticulosController::class, 'index'])->name('index');
+    Route::get('/nutriologo/articulo/{id}', [ArticulosController::class, 'show'])->name('show');
 
     //Rutas de registro y logeo
     Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
@@ -36,11 +36,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/user/{id}', [AuthController::class, 'showDatos'])->name('showDatos');
 
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
-    Route::get('/pacientes', [NutriologoController::class, 'show'])->name('show');
-    Route::get('/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
-    Route::get('/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
-    Route::post('/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
+    Route::get('/nutriologo/pacientes', [NutriologoController::class, 'show'])->name('show');
+    Route::get('/nutriologo/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
+    Route::get('/nutriologo/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
+    Route::post('/nutriologo/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
     Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
+    Route::post('/nutriologo/insertarRecordatorio', [NutriologoController::class, 'saveReminder'])->name('saveReminder');
+    Route::get('/nutriologo/recordatorios/{id}', [NutriologoController::class, 'getReminders'])->name('getReminders');
 
     //Rutas privadas
     Route::middleware('auth:sanctum')->group(function () {
