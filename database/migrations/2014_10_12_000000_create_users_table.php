@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('trol_id');
-            $table->integer('tusuario_admin_id')->nullable();
-            $table->integer('tusuario_nutriologo_id')->nullable();
-            $table->integer('tusuario_paciente_id')->nullable();
+            $table->unsignedBigInteger('trol_id');
+            $table->unsignedBigInteger('tusuario_admin_id')->nullable();
+            $table->unsignedBigInteger('tusuario_nutriologo_id')->nullable();
+            $table->unsignedBigInteger('tusuario_paciente_id')->nullable();
             $table->string('nombre');
             $table->string('primer_apellido');
             $table->string('segundo_apellido');
@@ -25,6 +25,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('contrasenia');
             $table->integer('estado');
+            $table->foreign('trol_id')->references('id')->on('trols');
+            $table->foreign('tusuario_admin_id')->references('id')->on('tusuario_admins');
+            $table->foreign('tusuario_nutriologo_id')->references('id')->on('tusuario_nutriologos');
+            $table->foreign('tusuario_paciente_id')->references('id')->on('tusuario_pacientes');
             $table->rememberToken();
             $table->timestamps();
         });

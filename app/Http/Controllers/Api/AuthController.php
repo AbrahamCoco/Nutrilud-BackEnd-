@@ -171,7 +171,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $user = User::where('usuario', $request->usuario)->first();
+            $user = User::with(['admin', 'nutriologo', 'paciente'])->where('usuario', $request->usuario)->first();
 
             if ($user && Hash::check($request->contrasenia, $user->contrasenia)) {
                 // Las credenciales son correctas, generar token
@@ -182,11 +182,7 @@ class AuthController extends Controller
                     'status' => 200,
                     'message' => 'Inicio de sesión exitoso',
                     'token' => $token,
-                    'user' => $user->id,
-                    'admin_id' => $user->admin->id ?? null,
-                    'nutriologo_id' => $user->nutriologo->id ?? null,
-                    'paciente_id' => $user->paciente->id ?? null,
-                    'trol_id' => $user->trol_id,
+                    'user' => $user,
                     'path' => '/api/v1/auth/login',
                     'timestamp' => now()->toDateTimeString()
                 ], 200);

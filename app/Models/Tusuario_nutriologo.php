@@ -19,6 +19,6 @@ class Tusuario_nutriologo extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class, 'tusuario_nutriologo_id', 'id');
     }
 }

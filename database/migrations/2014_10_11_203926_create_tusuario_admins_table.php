@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tusuario_pacientes', function (Blueprint $table) {
+        Schema::create('tusuario_admins', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('descripcion');
             $table->text('foto')->nullable();
             $table->string('telefono');
-            $table->datetime('fecha_nacimiento');
-            $table->string('sexo');
-            $table->string('alergias');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tusuario_pacientes');
+        Schema::dropIfExists('tusuario_admins');
     }
 };
