@@ -20,8 +20,8 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          # Usa * para copiar todo el contenido en lugar de "."
-          scp -o StrictHostKeyChecking=no -r ./ * ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/www/html
+          # Encuentra y copia todos los archivos y carpetas en el directorio actual
+          find . -type f -exec scp -o StrictHostKeyChecking=no {} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/www/html/ \;
           
       - name: Install dependencies on EC2
         run: |
