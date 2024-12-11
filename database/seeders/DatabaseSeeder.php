@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tarticulos;
+use App\Models\Tdatos_consulta;
 use App\Models\Trol;
 use App\Models\Tusuario_admin;
 use App\Models\Tusuario_nutriologo;
@@ -80,6 +81,55 @@ class DatabaseSeeder extends Seeder
             'sexo' => 'Masculino',
             'alergias' => 'Ninguna',
         ]);
+
+        $consultas = [
+            [
+                'fecha' => '2021-09-01',
+                'peso' => 70,
+                'imc' => 24.22,
+                'grasa_corporal' => 20.5,
+                'cintura' => 90,
+                'cadera' => 100,
+                'glucosa' => 90,
+                'colesterol' => 150,
+                'trigliceridos' => 120,
+                'presion_arterial' => '120/80',
+                'observaciones' => 'Paciente con sobrepeso, se recomienda una dieta balanceada y ejercicio regular.',
+            ],
+            [
+                'fecha' => '2021-09-15',
+                'peso' => 68,
+                'imc' => 23.53,
+                'grasa_corporal' => 18.5,
+                'cintura' => 85,
+                'cadera' => 95,
+                'glucosa' => 85,
+                'colesterol' => 140,
+                'trigliceridos' => 110,
+                'presion_arterial' => '110/70',
+                'observaciones' => 'Paciente con peso normal, se recomienda mantener una dieta saludable y actividad física.',
+            ],
+            [
+                'fecha' => '2021-10-01',
+                'peso' => 65,
+                'imc' => 22.49,
+                'grasa_corporal' => 15.5,
+                'cintura' => 80,
+                'cadera' => 90,
+                'glucosa' => 80,
+                'colesterol' => 130,
+                'trigliceridos' => 100,
+                'presion_arterial' => '100/60',
+                'observaciones' => 'Paciente con peso normal, se recomienda mantener una dieta saludable y actividad física.',
+            ],
+        ];
+
+        foreach ($consultas as $consulta) {
+            Tdatos_consulta::create(array_merge($consulta, [
+                'tusuario_paciente_id' => $paciente->id,
+                'tusuario_nutriologo_id' => $nutriologo->id,
+            ]));
+        }
 
         User::create([
             'trol_id' => 3,

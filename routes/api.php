@@ -63,3 +63,24 @@ Route::prefix('v1')->group(function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::middleware('auth:sanctum')->group(function () {
+//     //Rutas de logeo
+//     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+
+//     //Rutas de paciente
+//     Route::middleware('role:paciente')->group(function () {
+//         Route::apiResource('/paciente', PacienteController::class);
+//     });
+
+//     //Rutas de nutriologo
+//     Route::middleware('role:nutriologo')->group(function () {
+//         Route::get('/nutriologo/datosPerfil/{id}', [NutriologoController::class, 'showDatos'])->name('showDatos');
+//         // ...otras rutas de nutriologo...
+//     });
+
+//     //Rutas de administrador
+//     Route::middleware('role:administrador')->group(function () {
+//         Route::apiResource('/administrador', AdministradorController::class);
+//     });
+// });

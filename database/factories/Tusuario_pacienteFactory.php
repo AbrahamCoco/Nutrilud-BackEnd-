@@ -18,7 +18,7 @@ class Tusuario_pacienteFactory extends Factory
     {
         return [
             'foto' => $this->faker->imageUrl(),
-            'telefono' => $this->faker->phoneNumber(),
+            'telefono' => $this->faker->regexify('[2-9]{1}[0-9]{9}'),
             'fecha_nacimiento' => $this->faker->date(),
             'sexo' => $this->faker->randomElement(['Masculino', 'Femenino']),
             'alergias' => $this->faker->text(100),
