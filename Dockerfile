@@ -1,5 +1,5 @@
 # Usa una imagen oficial de PHP con extensiones necesarias
-FROM php:8.1-fpm
+FROM php:8.2-cli
 
 # Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
