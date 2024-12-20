@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         $admin = Tusuario_admin::create([
             'descripcion' => 'Administrador',
             'foto' => null,
-            'telefono' => '246 465 7890',
+            'telefono' => '2464657890',
         ]);
 
         User::create([
@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
 
         $paciente = Tusuario_paciente::create([
             'foto' => null,
-            'telefono' => '246 465 7890',
+            'telefono' => '2464657890',
             'fecha_nacimiento' => '1996-08-27',
             'sexo' => 'Masculino',
             'alergias' => 'Ninguna',
@@ -84,50 +84,101 @@ class DatabaseSeeder extends Seeder
 
         $consultas = [
             [
-                'fecha' => '2021-09-01',
+                'siguiente_consulta' => '2021-09-01',
                 'peso' => 70,
-                'imc' => 24.22,
-                'grasa_corporal' => 20.5,
-                'cintura' => 90,
-                'cadera' => 100,
+                'estatura' => 1.75,
+                'porcentaje_grasa' => 20,
+                'porcentaje_musculo' => 30,
+                'imc' => 22.86,
+                'circunferencia_cintura' => 90,
+                'circunferencia_cadera' => 100,
+                'circunferencia_brazo' => 30,
+                'pliegue_bicipital' => 10,
+                'pliegue_tricipital' => 12,
                 'glucosa' => 90,
                 'colesterol' => 150,
                 'trigliceridos' => 120,
                 'presion_arterial' => '120/80',
-                'observaciones' => 'Paciente con sobrepeso, se recomienda una dieta balanceada y ejercicio regular.',
+                'fecha_medicion' => '2021-08-01 10:00:00',
             ],
             [
-                'fecha' => '2021-09-15',
+                'siguiente_consulta' => '2021-09-15',
                 'peso' => 68,
-                'imc' => 23.53,
-                'grasa_corporal' => 18.5,
-                'cintura' => 85,
-                'cadera' => 95,
+                'estatura' => 1.75,
+                'porcentaje_grasa' => 19,
+                'porcentaje_musculo' => 31,
+                'imc' => 22.2,
+                'circunferencia_cintura' => 85,
+                'circunferencia_cadera' => 95,
+                'circunferencia_brazo' => 29,
+                'pliegue_bicipital' => 9,
+                'pliegue_tricipital' => 11,
                 'glucosa' => 85,
                 'colesterol' => 140,
                 'trigliceridos' => 110,
                 'presion_arterial' => '110/70',
-                'observaciones' => 'Paciente con peso normal, se recomienda mantener una dieta saludable y actividad física.',
+                'fecha_medicion' => '2021-08-15 10:00:00',
             ],
             [
-                'fecha' => '2021-10-01',
+                'siguiente_consulta' => '2021-10-01',
                 'peso' => 65,
-                'imc' => 22.49,
-                'grasa_corporal' => 15.5,
-                'cintura' => 80,
-                'cadera' => 90,
+                'estatura' => 1.75,
+                'porcentaje_grasa' => 18,
+                'porcentaje_musculo' => 32,
+                'imc' => 21.22,
+                'circunferencia_cintura' => 80,
+                'circunferencia_cadera' => 90,
+                'circunferencia_brazo' => 28,
+                'pliegue_bicipital' => 8,
+                'pliegue_tricipital' => 10,
                 'glucosa' => 80,
                 'colesterol' => 130,
                 'trigliceridos' => 100,
                 'presion_arterial' => '100/60',
-                'observaciones' => 'Paciente con peso normal, se recomienda mantener una dieta saludable y actividad física.',
+                'fecha_medicion' => '2021-09-01 10:00:00',
+            ],
+            [
+                'siguiente_consulta' => '2021-10-15',
+                'peso' => 63,
+                'estatura' => 1.75,
+                'porcentaje_grasa' => 17,
+                'porcentaje_musculo' => 33,
+                'imc' => 20.57,
+                'circunferencia_cintura' => 78,
+                'circunferencia_cadera' => 88,
+                'circunferencia_brazo' => 27,
+                'pliegue_bicipital' => 7,
+                'pliegue_tricipital' => 9,
+                'glucosa' => 78,
+                'colesterol' => 125,
+                'trigliceridos' => 95,
+                'presion_arterial' => '98/58',
+                'fecha_medicion' => '2021-09-15 10:00:00',
+            ],
+            [
+                'siguiente_consulta' => '2021-11-01',
+                'peso' => 60,
+                'estatura' => 1.75,
+                'porcentaje_grasa' => 16,
+                'porcentaje_musculo' => 34,
+                'imc' => 19.59,
+                'circunferencia_cintura' => 75,
+                'circunferencia_cadera' => 85,
+                'circunferencia_brazo' => 26,
+                'pliegue_bicipital' => 6,
+                'pliegue_tricipital' => 8,
+                'glucosa' => 75,
+                'colesterol' => 120,
+                'trigliceridos' => 90,
+                'presion_arterial' => '95/55',
+                'fecha_medicion' => '2021-10-01 10:00:00',
             ],
         ];
 
         foreach ($consultas as $consulta) {
             Tdatos_consulta::create(array_merge($consulta, [
-                'tusuario_paciente_id' => $paciente->id,
-                'tusuario_nutriologo_id' => $nutriologo->id,
+                'paciente_id' => $paciente->id,
+                'nutriologo_id' => $nutriologo->id,
             ]));
         }
 
@@ -171,14 +222,14 @@ class DatabaseSeeder extends Seeder
             'foto' => "http://127.0.0.1:8000/images/1728103278.jpg",
         ]);
 
-        Tusuario_paciente::factory(50)->create()->each(function ($paciente) {
+        Tusuario_paciente::factory(100)->create()->each(function ($paciente) {
             User::factory()->create([
                 'trol_id' => 3,
                 'tusuario_paciente_id' => $paciente->id,
             ]);
         });
 
-        Tusuario_nutriologo::factory(20)->create()->each(function ($nutriologo) {
+        Tusuario_nutriologo::factory(30)->create()->each(function ($nutriologo) {
             User::factory()->create([
                 'trol_id' => 2,
                 'tusuario_nutriologo_id' => $nutriologo->id,

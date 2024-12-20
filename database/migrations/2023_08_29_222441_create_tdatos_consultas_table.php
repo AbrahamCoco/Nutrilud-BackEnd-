@@ -25,6 +25,10 @@ return new class extends Migration
             $table->float('circunferencia_brazo');
             $table->float('pliegue_bicipital');
             $table->float('pliegue_tricipital');
+            $table->float('glucosa');
+            $table->float('colesterol');
+            $table->float('trigliceridos');
+            $table->string('presion_arterial');
             $table->datetime('fecha_medicion');
             $table->datetime('siguiente_consulta');
             $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
