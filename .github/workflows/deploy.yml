@@ -1,35 +1,53 @@
-name: Nutrilud
+name: Laravel Backend CI/CD
 
 on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: nutrilud
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: zac033
+        ports:
+          - 3306:3306
+
     steps:
+      # Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # Configurar Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-      - name: Copy files to EC2
+      # Construir la imagen de Docker
+      - name: Build Docker image
         run: |
-          # Encuentra y copia todos los archivos y carpetas en el directorio actual
-          find . -type f -exec scp -o StrictHostKeyChecking=no {} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/www/html/ \;
-          
-      - name: Install dependencies on EC2
+          docker build -t laravel-backend .
+
+      # Instalar dependencias con Composer
+      - name: Install dependencies
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
-          cd /var/www/html
-          composer install --no-interaction --prefer-dist --optimize-autoloader
-          php artisan migrate --force
-          php artisan config:cache
-          php artisan route:cache
-          sudo systemctl restart httpd
-          EOF
+          docker run --rm -v $(pwd):/var/www laravel-backend composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      # Correr migraciones
+      - name: Run migrations
+        run: |
+          docker run --rm --env-file .env -v $(pwd):/var/www laravel-backend php artisan migrate
+
+      # Correr pruebas
+      - name: Run tests
+        run: |
+          docker run --rm -v $(pwd):/var/www laravel-backend php artisan test

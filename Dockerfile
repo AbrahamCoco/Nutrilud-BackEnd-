@@ -1,27 +1,26 @@
+# Usa una imagen oficial de PHP con extensiones necesarias
 FROM php:8.1-fpm
 
-WORKDIR /var/www/html
-
-# Instalar dependencias de Laravel
+# Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libzip-dev \
-    && docker-php-ext-install zip pdo pdo_mysql
+    zip unzip git curl libpng-dev libonig-dev libxml2-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Instalar Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instala Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar archivos del proyecto
-COPY . .
+# Copia los archivos del proyecto
+COPY . /var/www
 
-# Instalar dependencias de PHP
-RUN composer install
+# Configuración de permisos
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Configurar Laravel (puedes necesitar más comandos aquí, dependiendo de tu configuración)
-RUN php artisan key:generate
-RUN php artisan config:cache
+# Establece el directorio de trabajo
+WORKDIR /var/www
 
-EXPOSE 8000
+# Exponer el puerto
+EXPOSE 9000
 
-CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port", "8000"]
+# Comando por defecto
+CMD ["php-fpm"]
