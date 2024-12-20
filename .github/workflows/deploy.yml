@@ -52,7 +52,7 @@ jobs:
             --env DB_USERNAME=${{ secrets.DB_USERNAME }} \
             --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
             -v $(pwd):/var/www \
-            laravel-backend php artisan migrate
+            laravel-backend php artisan migrate --force
 
       # Correr pruebas
       - name: Run tests
