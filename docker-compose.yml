@@ -1,11 +1,10 @@
-version: "3.8"
 services:
     app:
         build:
             context: .
             dockerfile: Dockerfile
         ports:
-            - "8000:9000"
+            - "8000:8000"
         volumes:
             - .:/var/www
         networks:
@@ -16,10 +15,8 @@ services:
     db:
         image: mysql:8.0
         environment:
-            MYSQL_DATABASE: nutrilud
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
             MYSQL_ROOT_PASSWORD: zac033
+            MYSQL_DATABASE: nutrilud
         ports:
             - "3306:3306"
         networks:
