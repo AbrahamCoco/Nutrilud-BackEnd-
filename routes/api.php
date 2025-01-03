@@ -45,24 +45,24 @@ Route::prefix('v1')->group(function () {
     Route::get('/nutriologo/recordatorios/{id}', [NutriologoController::class, 'getReminders'])->name('getReminders');
 
     //Rutas privadas
-    Route::middleware('auth:sanctum')->group(function () {
-        //Rutas de logeo
-        Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+    // Route::middleware('auth:sanctum')->group(function () {
+    //     //Rutas de logeo
+    //     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-        //Rutas de paciente
-        //Route::apiResource('/paciente', [PacienteController::class]);
+    //     //Rutas de paciente
+    //     //Route::apiResource('/paciente', [PacienteController::class]);
 
-        //Rutas de nutriologo
-        // Route::get('/nutriologo/datosPerfil/{id}', [NutriologoController::class, 'showDatos'])->name('showDatos');
+    //     //Rutas de nutriologo
+    //     // Route::get('/nutriologo/datosPerfil/{id}', [NutriologoController::class, 'showDatos'])->name('showDatos');
 
-        //Rutas de administrador
-        Route::apiResource('/administrador', AdministradorController::class);
-    });
+    //     //Rutas de administrador
+    //     Route::apiResource('/administrador', AdministradorController::class);
+    // });
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route::middleware('auth:sanctum')->group(function () {
 //     //Rutas de logeo
