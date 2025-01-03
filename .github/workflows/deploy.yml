@@ -20,7 +20,7 @@ jobs:
       # Crear archivo temporal para la clave PEM
       - name: Create PEM file
         run: |
-          echo "${{ secrets.PEM_FILE }}" > key.pem
+          echo "${{ secrets.PEM_FILE }}" | tr -d '\r' > key.pem
           chmod 600 key.pem
 
       # Desplegar a EC2
