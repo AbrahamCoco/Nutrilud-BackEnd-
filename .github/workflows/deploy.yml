@@ -17,12 +17,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Crear archivo temporal para la clave PEM
+      - name: Create PEM file
+        run: |
+          echo "${{ secrets.PEM_FILE }}" > key.pem
+          chmod 600 key.pem
+
       # Desplegar a EC2
       - name: Deploy to EC2
         env:
           EC2_IP: ${{ secrets.EC2_IP }}
           EC2_USER: ${{ secrets.EC2_USER }}
-          PEM_FILE: ${{ secrets.PEM_FILE }}
         run: |
-          scp -o StrictHostKeyChecking=no -i $PEM_FILE -r $(pwd) $EC2_USER@$EC2_IP:/var/www/Nutrilud-BackEnd-
-          ssh -o StrictHostKeyChecking=no -i $PEM_FILE $EC2_USER@$EC2_IP "cd /var/www/Nutrilud-BackEnd- && composer install --no-interaction --prefer-dist --optimize-autoloader && php artisan config:cache && php artisan route:cache && php artisan view:cache"
+          scp -o StrictHostKeyChecking=no -i key.pem -r $(pwd) $EC2_USER@$EC2_IP:/var/www/Nutrilud-BackEnd-
+          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_IP "cd /var/www/Nutrilud-BackEnd- && composer install --no-interaction --prefer-dist --optimize-autoloader && php artisan config:cache && php artisan route:cache && php artisan view:cache"
+
+      # Eliminar archivo temporal de la clave PEM
+      - name: Remove PEM file
+        run: rm key.pem
