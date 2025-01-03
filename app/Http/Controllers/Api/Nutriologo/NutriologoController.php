@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class NutriologoController extends Controller
 {
-    public function show()
+    public function showPacientes()
     {
         try {
             $pacientes = Tusuario_paciente::with('user')->get();
