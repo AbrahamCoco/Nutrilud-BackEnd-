@@ -1,4 +1,4 @@
-name: Nutrilud-BackEnd-
+name: Deploy Nutrilud-BackEnd- to EC2
 
 on:
   push:
@@ -6,32 +6,50 @@ on:
       - master
   pull_request:
     branches:
-      - master
+      - master # Puedes cambiarlo según la rama que uses para producción
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout del código
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Paso 1: Verificar el código y descargar dependencias
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      # Crear archivo temporal para la clave PEM
-      - name: Create PEM file
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, bcmath, curl, xml, zip
+
+      - name: Install Composer
         run: |
-          echo "${{ secrets.PEM_FILE }}" | tr -d '\r' > key.pem
-          chmod 600 key.pem
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+          composer --version
 
-      # Desplegar a EC2
+      # Paso 2: Configurar la clave SSH y permitir la conexión
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
+
+      # Paso 3: Subir los archivos al servidor EC2
       - name: Deploy to EC2
-        env:
-          EC2_IP: ${{ secrets.EC2_IP }}
-          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          scp -o StrictHostKeyChecking=no -i key.pem -r $(pwd) $EC2_USER@$EC2_IP:/var/www/Nutrilud-BackEnd-
-          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_IP "cd /var/www/Nutrilud-BackEnd- && composer install --no-interaction --prefer-dist --optimize-autoloader && php artisan config:cache && php artisan route:cache && php artisan view:cache"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /var/www/${{ secrets.PROJECT_PATH }}
+            git pull origin main
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            sudo systemctl restart apache2
+          EOF
 
-      # Eliminar archivo temporal de la clave PEM
-      - name: Remove PEM file
-        run: rm key.pem
+      # Paso 4: Limpiar las dependencias no necesarias (opcional)
+      - name: Clean up
+        run: |
+          rm -rf /var/www/${{ secrets.PROJECT_PATH }}/storage/*
+          rm -rf /var/www/${{ secrets.PROJECT_PATH }}/bootstrap/cache/*
