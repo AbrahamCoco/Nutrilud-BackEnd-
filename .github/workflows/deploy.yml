@@ -44,6 +44,15 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y git php-cli php-mbstring unzip curl apache2
 
+            # Instalar Composer si no está instalado
+            if ! command -v composer &> /dev/null; then
+              curl -sS https://getcomposer.org/installer | php
+              sudo mv composer.phar /usr/local/bin/composer
+            fi
+
+            # Verificar la instalación de Composer
+            composer --version
+
             # Crear la ruta del proyecto si no existe
             sudo mkdir -p /var/www/${{ secrets.PROJECT_PATH }}
             sudo chown -R ubuntu:ubuntu /var/www/${{ secrets.PROJECT_PATH }}
@@ -60,11 +69,11 @@ jobs:
             git pull origin master
 
             # Instalar dependencias de Composer
-            /usr/local/bin/composer install --no-dev --optimize-autoloader
+            composer install --no-dev --optimize-autoloader
 
             # Cachear configuración y rutas
-            /usr/bin/php artisan config:cache
-            /usr/bin/php artisan route:cache
+            php artisan config:cache
+            php artisan route:cache
 
             # Reiniciar Apache
             sudo systemctl restart apache2
