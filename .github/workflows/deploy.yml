@@ -45,7 +45,8 @@ jobs:
             sudo apt-get install -y git php-cli php-mbstring unzip curl apache2
 
             # Crear la ruta del proyecto si no existe
-            mkdir -p /var/www/${{ secrets.PROJECT_PATH }}
+            sudo mkdir -p /var/www/${{ secrets.PROJECT_PATH }}
+            sudo chown -R ubuntu:ubuntu /var/www/${{ secrets.PROJECT_PATH }}
 
             # Navegar a la ruta del proyecto
             cd /var/www/${{ secrets.PROJECT_PATH }}
@@ -59,11 +60,11 @@ jobs:
             git pull origin master
 
             # Instalar dependencias de Composer
-            composer install --no-dev --optimize-autoloader
+            /usr/local/bin/composer install --no-dev --optimize-autoloader
 
             # Cachear configuración y rutas
-            php artisan config:cache
-            php artisan route:cache
+            /usr/bin/php artisan config:cache
+            /usr/bin/php artisan route:cache
 
             # Reiniciar Apache
             sudo systemctl restart apache2
@@ -72,5 +73,5 @@ jobs:
       # Paso 4: Limpiar las dependencias no necesarias (opcional)
       - name: Clean up
         run: |
-          rm -rf /var/www/${{ secrets.PROJECT_PATH }}/storage/*
-          rm -rf /var/www/${{ secrets.PROJECT_PATH }}/bootstrap/cache/*
+          sudo rm -rf /var/www/${{ secrets.PROJECT_PATH }}/storage/*
+          sudo rm -rf /var/www/${{ secrets.PROJECT_PATH }}/bootstrap/cache/*
