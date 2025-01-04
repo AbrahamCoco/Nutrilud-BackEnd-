@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
     branches:
-      - master # Puedes cambiarlo según la rama que uses para producción
+      - master
 
 jobs:
   deploy:
@@ -40,11 +40,32 @@ jobs:
         run: |
           echo "Conectando a la instancia EC2..."
           ssh -o StrictHostKeyChecking=no -v ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # Asegurarse de que los comandos necesarios estén instalados
+            sudo apt-get update
+            sudo apt-get install -y git php-cli php-mbstring unzip curl apache2
+
+            # Crear la ruta del proyecto si no existe
+            mkdir -p /var/www/${{ secrets.PROJECT_PATH }}
+
+            # Navegar a la ruta del proyecto
             cd /var/www/${{ secrets.PROJECT_PATH }}
+
+            # Clonar el repositorio si no existe
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/AbrahamCoco/Nutrilud-BackEnd-.git .
+            fi
+
+            # Actualizar el repositorio
             git pull origin master
+
+            # Instalar dependencias de Composer
             composer install --no-dev --optimize-autoloader
+
+            # Cachear configuración y rutas
             php artisan config:cache
             php artisan route:cache
+
+            # Reiniciar Apache
             sudo systemctl restart apache2
           EOF
 
