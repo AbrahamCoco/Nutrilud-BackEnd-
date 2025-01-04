@@ -42,7 +42,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -v ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             # Asegurarse de que los comandos necesarios estén instalados
             sudo apt-get update
-            sudo apt-get install -y git php-cli php-mbstring unzip curl apache2
+            sudo apt-get install -y git php-cli php-mbstring php-xml unzip curl apache2
 
             # Instalar Composer si no está instalado
             if ! command -v composer &> /dev/null; then
