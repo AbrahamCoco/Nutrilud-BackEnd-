@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "personal_access_tokens")
 @NamedQueries({})
-public class Personal_access_tokensVO {
+public class Personal_access_tokenVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +44,10 @@ public class Personal_access_tokensVO {
     @Column
     private String updated_at;
 
-    public Personal_access_tokensVO() {
+    public Personal_access_tokenVO() {
     }
 
-    public Personal_access_tokensVO(Integer id, Integer tokenable_type, Integer tokenable_id, String name, String token,
+    public Personal_access_tokenVO(Integer id, Integer tokenable_type, Integer tokenable_id, String name, String token,
             String abilities, String last_used_at, String expires_at, String created_at, String updated_at) {
         this.id = id;
         this.tokenable_type = tokenable_type;
