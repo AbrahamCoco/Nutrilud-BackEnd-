@@ -6,7 +6,13 @@ public class TarticulosBuilder {
         TarticulosDTO destin = new TarticulosDTO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
+
+        destin.setNutriologo_id(origin.getTusuario_nutriologo().getId());
+        destin.setNutriologo_nombre(origin.getTusuario_nutriologo().getNombre());
+        destin.setNutriologo_primer_apellido(origin.getTusuario_nutriologo().getPrimer_apellido());
+        destin.setNutriologo_segundo_apellido(origin.getTusuario_nutriologo().getSegundo_apellido());
+        destin.setNutriologo_rol_id(origin.getTusuario_nutriologo().getTrol_id());
+
         destin.setContenido(origin.getContenido());
         destin.setFoto(origin.getFoto());
         destin.setCreated_at(origin.getCreated_at());
@@ -20,7 +26,7 @@ public class TarticulosBuilder {
         TarticulosVO destin = new TarticulosVO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
+        destin.setTusuario_nutriologo(new UsersVO());
         destin.setContenido(origin.getContenido());
         destin.setFoto(origin.getFoto());
         destin.setCreated_at(origin.getCreated_at());

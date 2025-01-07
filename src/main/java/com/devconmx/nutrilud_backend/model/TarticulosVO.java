@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.Table;
 
@@ -15,30 +17,25 @@ public class TarticulosVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false, name = "id")
     private Integer id;
 
-    @Column
-    private Integer nutriologo_id;
+    @ManyToOne
+    @JoinColumn(name = "nutriologo_id", referencedColumnName = "id")
+    private UsersVO Tusuario_nutriologo;
 
-    @Column
     private String contenido;
-
-    @Column
     private String foto;
-
-    @Column
     private String created_at;
-
-    @Column
     private String updated_at;
 
     public TarticulosVO() {
     }
 
-    public TarticulosVO(Integer id, Integer nutriologo_id, String contenido, String foto, String created_at,
+    public TarticulosVO(Integer id, UsersVO tusuario_nutriologo, String contenido, String foto, String created_at,
             String updated_at) {
         this.id = id;
-        this.nutriologo_id = nutriologo_id;
+        Tusuario_nutriologo = tusuario_nutriologo;
         this.contenido = contenido;
         this.foto = foto;
         this.created_at = created_at;
@@ -53,12 +50,12 @@ public class TarticulosVO {
         this.id = id;
     }
 
-    public Integer getNutriologo_id() {
-        return nutriologo_id;
+    public UsersVO getTusuario_nutriologo() {
+        return Tusuario_nutriologo;
     }
 
-    public void setNutriologo_id(Integer nutriologo_id) {
-        this.nutriologo_id = nutriologo_id;
+    public void setTusuario_nutriologo(UsersVO tusuario_nutriologo) {
+        Tusuario_nutriologo = tusuario_nutriologo;
     }
 
     public String getContenido() {
