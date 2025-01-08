@@ -12,7 +12,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tarticulos")
-@NamedQueries({})
+@NamedQueries({
+
+})
 public class TarticulosVO {
 
     @Id

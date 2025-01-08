@@ -7,4 +7,6 @@ import com.devconmx.nutrilud_backend.utils.exception.AppException;
 
 public interface TarticulosServices {
     List<TarticulosVO> findAll() throws AppException;
+
+    List<TarticulosVO> findById(Long id) throws AppException;
 }

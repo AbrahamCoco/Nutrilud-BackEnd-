@@ -31,4 +31,17 @@ public class TarticulosServiceImpl implements TarticulosServices {
         }
         return listTarticulosVOs;
     }
+
+    @Override
+    public List<TarticulosVO> findById(Long id) throws AppException {
+        LOG.info("FindById->Articulos");
+        List<TarticulosVO> listTarticulosVOs = null;
+        try {
+            listTarticulosVOs = tarticulosRepository.findById(id).stream().toList();
+        } catch (Exception e) {
+            Utils.raise(e, "Error al obtener los articulos");
+        }
+        LOG.info("FindById->Articulos: {}", listTarticulosVOs);
+        return listTarticulosVOs;
+    }
 }

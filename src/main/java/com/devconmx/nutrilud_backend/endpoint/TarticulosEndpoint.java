@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devconmx.nutrilud_backend.model.TarticulosVO;
@@ -41,6 +42,20 @@ public class TarticulosEndpoint {
             response = Utils.handle(e, "Error al obtener los articulos");
         }
         LOG.info("findAllArticles->response: {}", response);
+        return response;
+    }
+
+    @GetMapping("/findById")
+    public ResponseEntity<ResponseBean<List<TarticulosVO>>> findById(@RequestParam Long id) {
+        ResponseEntity<ResponseBean<List<TarticulosVO>>> response = null;
+        List<TarticulosVO> articulosVO = null;
+        try {
+            articulosVO = tarticulosServices.findById(id);
+            response = Utils.response200OK("Articulos encontrados", articulosVO);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al obtener los articulos");
+        }
+        LOG.info("findById->response: {}", response);
         return response;
     }
 }
