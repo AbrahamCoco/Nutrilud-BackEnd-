@@ -8,11 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-@NamedQueries({})
+@NamedQueries({
+        @NamedQuery(name = "UsersVO.verifyUserRepository", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario AND u.contrasenia = :contrasenia")
+})
 public class UsersVO {
 
     @Id
@@ -36,37 +39,16 @@ public class UsersVO {
     @JoinColumn(name = "tusuario_paciente_id", referencedColumnName = "id")
     private Tusuario_pacientesVO Tusuario_pacientes;
 
-    @Column
     private String nombre;
-
-    @Column
     private String primer_apellido;
-
-    @Column
     private String segundo_apellido;
-
-    @Column
     private String usuario;
-
-    @Column
     private String correo;
-
-    @Column
     private String email_verified_at;
-
-    @Column
     private String contrasenia;
-
-    @Column
     private Integer estado;
-
-    @Column
     private String remember_token;
-
-    @Column
     private String created_at;
-
-    @Column
     private String updated_at;
 
     public UsersVO() {
