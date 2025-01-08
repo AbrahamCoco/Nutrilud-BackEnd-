@@ -6,8 +6,8 @@ public class Tdatos_consultasBuilder {
         Tdatos_consultasDTO destin = new Tdatos_consultasDTO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
-        destin.setPaciente_id(origin.getPaciente_id());
+        destin.setNutriologo_id(origin.getTusuario_nutriologo().getId());
+        destin.setPaciente_id(origin.getTusuario_paciente().getId());
         destin.setPeso(origin.getPeso());
         destin.setEstatura(origin.getEstatura());
         destin.setPorcentaje_grasa(origin.getPorcentaje_grasa());
@@ -31,8 +31,8 @@ public class Tdatos_consultasBuilder {
         Tdatos_consultasVO destin = new Tdatos_consultasVO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
-        destin.setPaciente_id(origin.getPaciente_id());
+        destin.setTusuario_nutriologo(new UsersVO());
+        destin.setTusuario_paciente(new UsersVO());
         destin.setPeso(origin.getPeso());
         destin.setEstatura(origin.getEstatura());
         destin.setPorcentaje_grasa(origin.getPorcentaje_grasa());

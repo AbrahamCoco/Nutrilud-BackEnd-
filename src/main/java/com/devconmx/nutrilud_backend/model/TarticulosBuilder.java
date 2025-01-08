@@ -11,7 +11,7 @@ public class TarticulosBuilder {
         destin.setNutriologo_nombre(origin.getTusuario_nutriologo().getNombre());
         destin.setNutriologo_primer_apellido(origin.getTusuario_nutriologo().getPrimer_apellido());
         destin.setNutriologo_segundo_apellido(origin.getTusuario_nutriologo().getSegundo_apellido());
-        destin.setNutriologo_rol_id(origin.getTusuario_nutriologo().getTrol_id());
+        destin.setNutriologo_rol_id(origin.getTusuario_nutriologo().getTrols().getId());
 
         destin.setContenido(origin.getContenido());
         destin.setFoto(origin.getFoto());

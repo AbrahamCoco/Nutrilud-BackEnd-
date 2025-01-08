@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.Table;
 
@@ -17,11 +19,13 @@ public class T_recordatoriosVO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private Integer nutriologo_id;
+    @ManyToOne
+    @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
+    private UsersVO Tusuario_nutriologo;
 
-    @Column
-    private Integer paciente_id;
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
+    private UsersVO Tusuario_paciente;
 
     @Column
     private String recordatorioPdf;
@@ -35,11 +39,11 @@ public class T_recordatoriosVO {
     public T_recordatoriosVO() {
     }
 
-    public T_recordatoriosVO(Integer id, Integer nutriologo_id, Integer paciente_id, String recordatorioPdf,
+    public T_recordatoriosVO(Integer id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, String recordatorioPdf,
             String created_at, String updated_at) {
         this.id = id;
-        this.nutriologo_id = nutriologo_id;
-        this.paciente_id = paciente_id;
+        Tusuario_nutriologo = tusuario_nutriologo;
+        Tusuario_paciente = tusuario_paciente;
         this.recordatorioPdf = recordatorioPdf;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -53,20 +57,20 @@ public class T_recordatoriosVO {
         this.id = id;
     }
 
-    public Integer getNutriologo_id() {
-        return nutriologo_id;
+    public UsersVO getTusuario_nutriologo() {
+        return Tusuario_nutriologo;
     }
 
-    public void setNutriologo_id(Integer nutriologo_id) {
-        this.nutriologo_id = nutriologo_id;
+    public void setTusuario_nutriologo(UsersVO tusuario_nutriologo) {
+        Tusuario_nutriologo = tusuario_nutriologo;
     }
 
-    public Integer getPaciente_id() {
-        return paciente_id;
+    public UsersVO getTusuario_paciente() {
+        return Tusuario_paciente;
     }
 
-    public void setPaciente_id(Integer paciente_id) {
-        this.paciente_id = paciente_id;
+    public void setTusuario_paciente(UsersVO tusuario_paciente) {
+        Tusuario_paciente = tusuario_paciente;
     }
 
     public String getRecordatorioPdf() {

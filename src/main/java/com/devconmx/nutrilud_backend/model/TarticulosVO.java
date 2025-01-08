@@ -23,7 +23,7 @@ public class TarticulosVO {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "nutriologo_id", referencedColumnName = "id")
+    @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
     private UsersVO Tusuario_nutriologo;
 
     private String contenido;

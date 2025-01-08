@@ -6,10 +6,10 @@ public class UsersBuilder {
         UsersDTO destin = new UsersDTO();
 
         destin.setId(origin.getId());
-        destin.setRol_id(origin.getTrol_id());
-        destin.setTusuario_admin_id(origin.getTusuario_admin_id());
-        destin.setTusuario_nutriologo_id(origin.getTusuario_nutriologo_id());
-        destin.setTusuario_paciente_id(origin.getTusuario_paciente_id());
+        destin.setRol_id(origin.getTrols().getId());
+        destin.setTusuario_admin_id(origin.getTusuario_admins().getId());
+        destin.setTusuario_nutriologo_id(origin.getTusuario_nutriologos().getId());
+        destin.setTusuario_paciente_id(origin.getTusuario_pacientes().getId());
         destin.setNombre(origin.getNombre());
         destin.setPrimer_apellido(origin.getPrimer_apellido());
         destin.setSegundo_apellido(origin.getSegundo_apellido());
@@ -28,10 +28,10 @@ public class UsersBuilder {
         UsersVO destin = new UsersVO();
 
         destin.setId(origin.getId());
-        destin.setTrol_id(origin.getRol_id());
-        destin.setTusuario_admin_id(origin.getTusuario_admin_id());
-        destin.setTusuario_nutriologo_id(origin.getTusuario_nutriologo_id());
-        destin.setTusuario_paciente_id(origin.getTusuario_paciente_id());
+        destin.setTrols(new TrolsVO());
+        destin.setTusuario_admins(new Tusuario_adminsVO());
+        destin.setTusuario_nutriologos(new Tusuario_nutriologosVO());
+        destin.setTusuario_pacientes(new Tusuario_pacientesVO());
         destin.setNombre(origin.getNombre());
         destin.setPrimer_apellido(origin.getPrimer_apellido());
         destin.setSegundo_apellido(origin.getSegundo_apellido());

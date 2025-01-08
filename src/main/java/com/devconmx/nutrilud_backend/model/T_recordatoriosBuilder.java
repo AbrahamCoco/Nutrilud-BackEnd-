@@ -6,8 +6,8 @@ public class T_recordatoriosBuilder {
         T_recordatoriosDTO destin = new T_recordatoriosDTO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
-        destin.setPaciente_id(origin.getPaciente_id());
+        destin.setNutriologo_id(origin.getTusuario_nutriologo().getId());
+        destin.setPaciente_id(origin.getTusuario_paciente().getId());
         destin.setRecordatorioPdf(origin.getRecordatorioPdf());
         destin.setCreated_at(origin.getCreated_at());
         destin.setUpdated_at(origin.getUpdated_at());
@@ -20,8 +20,8 @@ public class T_recordatoriosBuilder {
         T_recordatoriosVO destin = new T_recordatoriosVO();
 
         destin.setId(origin.getId());
-        destin.setNutriologo_id(origin.getNutriologo_id());
-        destin.setPaciente_id(origin.getPaciente_id());
+        destin.setTusuario_nutriologo(new UsersVO());
+        destin.setTusuario_paciente(new UsersVO());
         destin.setRecordatorioPdf(origin.getRecordatorioPdf());
         destin.setCreated_at(origin.getCreated_at());
         destin.setUpdated_at(origin.getUpdated_at());

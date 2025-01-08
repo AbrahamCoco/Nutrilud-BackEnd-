@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.Table;
 
@@ -15,19 +17,24 @@ public class UsersVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false, name = "id")
     private Integer id;
 
-    @Column
-    private Integer trol_id;
+    @ManyToOne
+    @JoinColumn(name = "trol_id", referencedColumnName = "id")
+    private TrolsVO Trols;
 
-    @Column
-    private Integer tusuario_admin_id;
+    @ManyToOne
+    @JoinColumn(name = "tusuario_admin_id", referencedColumnName = "id")
+    private Tusuario_adminsVO Tusuario_admins;
 
-    @Column
-    private Integer tusuario_nutriologo_id;
+    @ManyToOne
+    @JoinColumn(name = "tusuario_nutriologo_id", referencedColumnName = "id")
+    private Tusuario_nutriologosVO Tusuario_nutriologos;
 
-    @Column
-    private Integer tusuario_paciente_id;
+    @ManyToOne
+    @JoinColumn(name = "tusuario_paciente_id", referencedColumnName = "id")
+    private Tusuario_pacientesVO Tusuario_pacientes;
 
     @Column
     private String nombre;
@@ -65,15 +72,15 @@ public class UsersVO {
     public UsersVO() {
     }
 
-    public UsersVO(Integer id, Integer trol_id, Integer tusuario_admin_id, Integer tusuario_nutriologo_id,
-            Integer tusuario_paciente_id, String nombre, String primer_apellido, String segundo_apellido,
-            String usuario, String correo, String email_verified_at, String contrasenia, Integer estado,
-            String remember_token, String created_at, String updated_at) {
+    public UsersVO(Integer id, TrolsVO trols, Tusuario_adminsVO tusuario_admins,
+            Tusuario_nutriologosVO tusuario_nutriologos, Tusuario_pacientesVO tusuario_pacientes, String nombre,
+            String primer_apellido, String segundo_apellido, String usuario, String correo, String email_verified_at,
+            String contrasenia, Integer estado, String remember_token, String created_at, String updated_at) {
         this.id = id;
-        this.trol_id = trol_id;
-        this.tusuario_admin_id = tusuario_admin_id;
-        this.tusuario_nutriologo_id = tusuario_nutriologo_id;
-        this.tusuario_paciente_id = tusuario_paciente_id;
+        Trols = trols;
+        Tusuario_admins = tusuario_admins;
+        Tusuario_nutriologos = tusuario_nutriologos;
+        Tusuario_pacientes = tusuario_pacientes;
         this.nombre = nombre;
         this.primer_apellido = primer_apellido;
         this.segundo_apellido = segundo_apellido;
@@ -95,36 +102,36 @@ public class UsersVO {
         this.id = id;
     }
 
-    public Integer getTrol_id() {
-        return trol_id;
+    public TrolsVO getTrols() {
+        return Trols;
     }
 
-    public void setTrol_id(Integer trol_id) {
-        this.trol_id = trol_id;
+    public void setTrols(TrolsVO trols) {
+        Trols = trols;
     }
 
-    public Integer getTusuario_admin_id() {
-        return tusuario_admin_id;
+    public Tusuario_adminsVO getTusuario_admins() {
+        return Tusuario_admins;
     }
 
-    public void setTusuario_admin_id(Integer tusuario_admin_id) {
-        this.tusuario_admin_id = tusuario_admin_id;
+    public void setTusuario_admins(Tusuario_adminsVO tusuario_admins) {
+        Tusuario_admins = tusuario_admins;
     }
 
-    public Integer getTusuario_nutriologo_id() {
-        return tusuario_nutriologo_id;
+    public Tusuario_nutriologosVO getTusuario_nutriologos() {
+        return Tusuario_nutriologos;
     }
 
-    public void setTusuario_nutriologo_id(Integer tusuario_nutriologo_id) {
-        this.tusuario_nutriologo_id = tusuario_nutriologo_id;
+    public void setTusuario_nutriologos(Tusuario_nutriologosVO tusuario_nutriologos) {
+        Tusuario_nutriologos = tusuario_nutriologos;
     }
 
-    public Integer getTusuario_paciente_id() {
-        return tusuario_paciente_id;
+    public Tusuario_pacientesVO getTusuario_pacientes() {
+        return Tusuario_pacientes;
     }
 
-    public void setTusuario_paciente_id(Integer tusuario_paciente_id) {
-        this.tusuario_paciente_id = tusuario_paciente_id;
+    public void setTusuario_pacientes(Tusuario_pacientesVO tusuario_pacientes) {
+        Tusuario_pacientes = tusuario_pacientes;
     }
 
     public String getNombre() {

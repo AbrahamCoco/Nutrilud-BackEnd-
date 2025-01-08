@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.Table;
 
@@ -17,11 +19,13 @@ public class Tdatos_consultasVO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private Integer nutriologo_id;
+    @ManyToOne
+    @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
+    private UsersVO Tusuario_nutriologo;
 
-    @Column
-    private Integer paciente_id;
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
+    private UsersVO Tusuario_paciente;
 
     @Column
     private double peso;
@@ -68,14 +72,14 @@ public class Tdatos_consultasVO {
     public Tdatos_consultasVO() {
     }
 
-    public Tdatos_consultasVO(Integer id, Integer nutriologo_id, Integer paciente_id, double peso, double estatura,
-            double porcentaje_grasa, double porcentaje_musculo, double imc, double circunferencia_cintura,
-            double circunferencia_cadera, double circunferencia_brazo, double pliegue_bicipital,
-            double pliegue_tricipital, String fecha_medicion, String siguiente_consulta, String created_at,
-            String updated_at) {
+    public Tdatos_consultasVO(Integer id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, double peso,
+            double estatura, double porcentaje_grasa, double porcentaje_musculo, double imc,
+            double circunferencia_cintura, double circunferencia_cadera, double circunferencia_brazo,
+            double pliegue_bicipital, double pliegue_tricipital, String fecha_medicion, String siguiente_consulta,
+            String created_at, String updated_at) {
         this.id = id;
-        this.nutriologo_id = nutriologo_id;
-        this.paciente_id = paciente_id;
+        Tusuario_nutriologo = tusuario_nutriologo;
+        Tusuario_paciente = tusuario_paciente;
         this.peso = peso;
         this.estatura = estatura;
         this.porcentaje_grasa = porcentaje_grasa;
@@ -100,20 +104,20 @@ public class Tdatos_consultasVO {
         this.id = id;
     }
 
-    public Integer getNutriologo_id() {
-        return nutriologo_id;
+    public UsersVO getTusuario_nutriologo() {
+        return Tusuario_nutriologo;
     }
 
-    public void setNutriologo_id(Integer nutriologo_id) {
-        this.nutriologo_id = nutriologo_id;
+    public void setTusuario_nutriologo(UsersVO tusuario_nutriologo) {
+        Tusuario_nutriologo = tusuario_nutriologo;
     }
 
-    public Integer getPaciente_id() {
-        return paciente_id;
+    public UsersVO getTusuario_paciente() {
+        return Tusuario_paciente;
     }
 
-    public void setPaciente_id(Integer paciente_id) {
-        this.paciente_id = paciente_id;
+    public void setTusuario_paciente(UsersVO tusuario_paciente) {
+        Tusuario_paciente = tusuario_paciente;
     }
 
     public double getPeso() {
