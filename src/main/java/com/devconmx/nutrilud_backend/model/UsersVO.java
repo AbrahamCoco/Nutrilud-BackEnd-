@@ -1,5 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +18,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "UsersVO.verifyUserRepository", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario AND u.contrasenia = :contrasenia")
 })
-public class UsersVO {
+public class UsersVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

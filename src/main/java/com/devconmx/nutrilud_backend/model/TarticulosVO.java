@@ -1,5 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import jakarta.persistence.Table;
 @NamedQueries({
 
 })
-public class TarticulosVO {
+public class TarticulosVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tusuario_nutriologos")
 @NamedQueries({})
-public class Tusuario_nutriologosVO {
+public class Tusuario_nutriologosVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,14 +1,23 @@
 package com.devconmx.nutrilud_backend.endpoint;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
 import com.devconmx.nutrilud_backend.repository.Tdatos_consultasRepository;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;
+import com.devconmx.nutrilud_backend.utils.ResponseBean;
+import com.devconmx.nutrilud_backend.utils.Utils;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("tdatos_consultas")
 @RestController()
@@ -21,4 +30,18 @@ public class Tdatos_consultasEndpoint {
 
     @Autowired
     private Tdatos_consultasServices tdatos_consultasServices;
+
+    @GetMapping("/findAgendaByNutriologo")
+    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findAgendaByNutriologo(@RequestParam int id) {
+        ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+        List<Tdatos_consultasVO> listaAgenda = null;
+        try {
+            listaAgenda = tdatos_consultasServices.findByNutriologo(id);
+            response = Utils.response200OK("Datos de agenda encontrados", listaAgenda);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al recuperar los datos de la agenda");
+        }
+        LOG.info("Response findAgendaByNutriologo: {}", response);
+        return response;
+    }
 }
