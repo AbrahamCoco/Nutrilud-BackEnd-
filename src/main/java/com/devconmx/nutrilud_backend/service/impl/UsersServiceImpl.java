@@ -35,19 +35,12 @@ public class UsersServiceImpl implements UsersServices {
 
             if (Objects.equals(usuarioInput, userVoList.get(0).getUsuario())
                     && Objects.equals(contraseniaInput, userVoList.get(0).getContrasenia())) {
-                LOG.info("Input usuario verificado: {}", usuarioInput);
-                LOG.info("Input contrasenia verificado: {}", contraseniaInput);
-                LOG.info("BD usuario verificado: {}", userVoList.get(0).getUsuario());
-                LOG.info("BD contrasenia verificado: {}", userVoList.get(0).getContrasenia());
                 return true;
             } else {
-                LOG.info("Input usuario verificado: {}", usuarioInput);
-                LOG.info("Input contrasenia verificado: {}", contraseniaInput);
-                LOG.info("BD usuario verificado: {}", userVoList.get(0).getUsuario());
-                LOG.info("BD contrasenia verificado: {}", userVoList.get(0).getContrasenia());
                 return false;
             }
         } catch (Exception e) {
+            LOG.error("Error en verifyUser: {}", e.getMessage());
             return false;
         }
     }
