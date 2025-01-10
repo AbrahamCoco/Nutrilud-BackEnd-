@@ -23,6 +23,10 @@ class Tdatos_consulta extends Model
         'circunferencia_brazo',
         'pliegue_bicipital',
         'pliegue_tricipital',
+        'glucosa',
+        'colesterol',
+        'trigliceridos',
+        'presion_arterial',
         'siguiente_consulta',
     ];
 

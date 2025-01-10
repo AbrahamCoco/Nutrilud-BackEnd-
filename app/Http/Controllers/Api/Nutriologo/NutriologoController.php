@@ -14,7 +14,9 @@ class NutriologoController extends Controller
     public function show()
     {
         try {
-            $pacientes = Tusuario_paciente::with('user')->get();
+            $pacientes = Tusuario_paciente::whereHas('user', function ($query) {
+                $query->where('estado', 1);
+            })->with('user')->get();
 
             if ($pacientes->isEmpty()) {
                 return response()->json([
@@ -149,6 +151,10 @@ class NutriologoController extends Controller
                 'circunferencia_brazo' => 'required|numeric',
                 'pliegue_bicipital' => 'required|numeric',
                 'pliegue_tricipital' => 'required|numeric',
+                'glucosa' => 'required|numeric',
+                'colesterol' => 'required|numeric',
+                'trigliceridos' => 'required|numeric',
+                'presion_arterial' => 'required|string',
                 'fecha_medicion' => 'required|date',
                 'siguiente_consulta' => 'required|date',
             ]);
@@ -166,6 +172,10 @@ class NutriologoController extends Controller
                 'circunferencia_brazo' => $validatedData['circunferencia_brazo'],
                 'pliegue_bicipital' => $validatedData['pliegue_bicipital'],
                 'pliegue_tricipital' => $validatedData['pliegue_tricipital'],
+                'glucosa' => $validatedData['glucosa'],
+                'colesterol' => $validatedData['colesterol'],
+                'trigliceridos' => $validatedData['trigliceridos'],
+                'presion_arterial' => $validatedData['presion_arterial'],
                 'fecha_medicion' => $validatedData['fecha_medicion'],
                 'siguiente_consulta' => $validatedData['siguiente_consulta'],
             ]);
@@ -324,6 +334,42 @@ class NutriologoController extends Controller
                 'path' => "/api/v1/nutriologo/recordatorio/{$id}",
                 'timestamp' => now()->toDateTimeString(),
                 'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function deletePaciente($id)
+    {
+        try {
+            $paciente = Tusuario_paciente::find($id);
+
+            if ($paciente === null) {
+                return response()->json([
+                    'message' => 'Paciente no encontrado',
+                    'status' => 404,
+                    'path' => "/api/v1/paciente/{$id}",
+                    'timestamp' => now()->toDateTimeString(),
+                    'paciente' => null
+                ], 404);
+            }
+
+            $paciente->user->estado = 0;
+            $paciente->user->save();
+
+            return response()->json([
+                'message' => 'Paciente eliminado',
+                'status' => 200,
+                'path' => "/api/v1/paciente/{$id}",
+                'timestamp' => now()->toDateTimeString(),
+                'paciente' => $paciente
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al eliminar el paciente',
+                'status' => 500,
+                'path' => "/api/v1/paciente/{$id}",
+                'timestamp' => now()->toDateTimeString(),
+                'error' => $e->getMessage()
             ], 500);
         }
     }

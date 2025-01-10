@@ -38,6 +38,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/nutriologo/articulos', [ArticulosController::class, 'store'])->name('store');
     Route::get('/nutriologo/pacientes', [NutriologoController::class, 'show'])->name('show');
     Route::get('/nutriologo/paciente/{id}', [NutriologoController::class, 'showPaciente'])->name('showPaciente');
+    Route::get('/nutriologo/pacienteDelete/{id}', [NutriologoController::class, 'deletePaciente'])->name('deletePaciente');
     Route::get('/nutriologo/consultadatos/{id}', [NutriologoController::class, 'showAllDatos'])->name('showAllDatos');
     Route::post('/nutriologo/insertardatos/{id}', [NutriologoController::class, 'insertarDatos'])->name('insertarDatos');
     Route::get('/nutriologo/agenda', [NutriologoController::class, 'agenda'])->name('agenda');
