@@ -1,9 +1,11 @@
 package com.devconmx.nutrilud_backend.model;
 
+import java.time.LocalDateTime;
+
 public class Tdatos_consultasDTO {
-    private Integer id;
-    private Integer nutriologo_id;
-    private Integer paciente_id;
+    private Long id;
+    private Long nutriologo_id;
+    private Long paciente_id;
     private double peso;
     private double estatura;
     private double porcentaje_grasa;
@@ -14,19 +16,23 @@ public class Tdatos_consultasDTO {
     private double circunferencia_brazo;
     private double pliegue_bicipital;
     private double pliegue_tricipital;
+    private double glucosa;
+    private double colesterol;
+    private double trigliceridos;
+    private String presion_arterial;
     private String fecha_medicion;
     private String siguiente_consulta;
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public Tdatos_consultasDTO() {
     }
 
-    public Tdatos_consultasDTO(Integer id, Integer nutriologo_id, Integer paciente_id, double peso, double estatura,
+    public Tdatos_consultasDTO(Long id, Long nutriologo_id, Long paciente_id, double peso, double estatura,
             double porcentaje_grasa, double porcentaje_musculo, double imc, double circunferencia_cintura,
             double circunferencia_cadera, double circunferencia_brazo, double pliegue_bicipital,
-            double pliegue_tricipital, String fecha_medicion, String siguiente_consulta, String created_at,
-            String updated_at) {
+            double pliegue_tricipital, double glucosa, double colesterol, double trigliceridos, String presion_arterial,
+            String fecha_medicion, String siguiente_consulta, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.nutriologo_id = nutriologo_id;
         this.paciente_id = paciente_id;
@@ -40,33 +46,37 @@ public class Tdatos_consultasDTO {
         this.circunferencia_brazo = circunferencia_brazo;
         this.pliegue_bicipital = pliegue_bicipital;
         this.pliegue_tricipital = pliegue_tricipital;
+        this.glucosa = glucosa;
+        this.colesterol = colesterol;
+        this.trigliceridos = trigliceridos;
+        this.presion_arterial = presion_arterial;
         this.fecha_medicion = fecha_medicion;
         this.siguiente_consulta = siguiente_consulta;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getNutriologo_id() {
+    public Long getNutriologo_id() {
         return nutriologo_id;
     }
 
-    public void setNutriologo_id(Integer nutriologo_id) {
+    public void setNutriologo_id(Long nutriologo_id) {
         this.nutriologo_id = nutriologo_id;
     }
 
-    public Integer getPaciente_id() {
+    public Long getPaciente_id() {
         return paciente_id;
     }
 
-    public void setPaciente_id(Integer paciente_id) {
+    public void setPaciente_id(Long paciente_id) {
         this.paciente_id = paciente_id;
     }
 
@@ -150,6 +160,38 @@ public class Tdatos_consultasDTO {
         this.pliegue_tricipital = pliegue_tricipital;
     }
 
+    public double getGlucosa() {
+        return glucosa;
+    }
+
+    public void setGlucosa(double glucosa) {
+        this.glucosa = glucosa;
+    }
+
+    public double getColesterol() {
+        return colesterol;
+    }
+
+    public void setColesterol(double colesterol) {
+        this.colesterol = colesterol;
+    }
+
+    public double getTrigliceridos() {
+        return trigliceridos;
+    }
+
+    public void setTrigliceridos(double trigliceridos) {
+        this.trigliceridos = trigliceridos;
+    }
+
+    public String getPresion_arterial() {
+        return presion_arterial;
+    }
+
+    public void setPresion_arterial(String presion_arterial) {
+        this.presion_arterial = presion_arterial;
+    }
+
     public String getFecha_medicion() {
         return fecha_medicion;
     }
@@ -166,19 +208,19 @@ public class Tdatos_consultasDTO {
         this.siguiente_consulta = siguiente_consulta;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

@@ -1,20 +1,20 @@
 package com.devconmx.nutrilud_backend.model;
 
 public class Tusuario_nutriologosDTO {
-    private Integer id;
+    private Long id;
     private String descripcion;
     private String foto;
     private String direccion;
     private String telefono;
-    private Integer cedula_profesional;
+    private Long cedula_profesional;
     private String created_at;
     private String updated_at;
 
     public Tusuario_nutriologosDTO() {
     }
 
-    public Tusuario_nutriologosDTO(Integer id, String descripcion, String foto, String direccion, String telefono,
-            Integer cedula_profesional, String created_at, String updated_at) {
+    public Tusuario_nutriologosDTO(Long id, String descripcion, String foto, String direccion, String telefono,
+            Long cedula_profesional, String created_at, String updated_at) {
         this.id = id;
         this.descripcion = descripcion;
         this.foto = foto;
@@ -25,11 +25,11 @@ public class Tusuario_nutriologosDTO {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,11 +65,11 @@ public class Tusuario_nutriologosDTO {
         this.telefono = telefono;
     }
 
-    public Integer getCedula_profesional() {
+    public Long getCedula_profesional() {
         return cedula_profesional;
     }
 
-    public void setCedula_profesional(Integer cedula_profesional) {
+    public void setCedula_profesional(Long cedula_profesional) {
         this.cedula_profesional = cedula_profesional;
     }
 

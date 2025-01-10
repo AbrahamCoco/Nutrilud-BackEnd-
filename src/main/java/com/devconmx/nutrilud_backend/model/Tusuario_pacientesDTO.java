@@ -1,7 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
 public class Tusuario_pacientesDTO {
-    private Integer id;
+    private Long id;
     private String foto;
     private String telefono;
     private String fecha_nacimiento;
@@ -13,7 +13,7 @@ public class Tusuario_pacientesDTO {
     public Tusuario_pacientesDTO() {
     }
 
-    public Tusuario_pacientesDTO(Integer id, String foto, String telefono, String fecha_nacimiento, String sexo,
+    public Tusuario_pacientesDTO(Long id, String foto, String telefono, String fecha_nacimiento, String sexo,
             String alergias, String created_at, String updated_at) {
         this.id = id;
         this.foto = foto;
@@ -25,11 +25,11 @@ public class Tusuario_pacientesDTO {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

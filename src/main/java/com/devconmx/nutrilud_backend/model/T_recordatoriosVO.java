@@ -1,8 +1,8 @@
 package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +19,7 @@ public class T_recordatoriosVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
@@ -28,21 +28,15 @@ public class T_recordatoriosVO implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
     private UsersVO Tusuario_paciente;
-
-    @Column
     private String recordatorioPdf;
-
-    @Column
-    private String created_at;
-
-    @Column
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public T_recordatoriosVO() {
     }
 
-    public T_recordatoriosVO(Integer id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, String recordatorioPdf,
-            String created_at, String updated_at) {
+    public T_recordatoriosVO(Long id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, String recordatorioPdf,
+            LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         Tusuario_nutriologo = tusuario_nutriologo;
         Tusuario_paciente = tusuario_paciente;
@@ -51,11 +45,11 @@ public class T_recordatoriosVO implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,19 +77,19 @@ public class T_recordatoriosVO implements Serializable {
         this.recordatorioPdf = recordatorioPdf;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

@@ -1,8 +1,8 @@
 package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,40 +17,23 @@ public class Personal_access_tokenVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column
-    private Integer tokenable_type;
-
-    @Column
-    private Integer tokenable_id;
-
-    @Column
+    private Long id;
+    private Long tokenable_type;
+    private Long tokenable_id;
     private String name;
-
-    @Column
     private String token;
-
-    @Column
     private String abilities;
-
-    @Column
     private String last_used_at;
-
-    @Column
     private String expires_at;
-
-    @Column
-    private String created_at;
-
-    @Column
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public Personal_access_tokenVO() {
     }
 
-    public Personal_access_tokenVO(Integer id, Integer tokenable_type, Integer tokenable_id, String name, String token,
-            String abilities, String last_used_at, String expires_at, String created_at, String updated_at) {
+    public Personal_access_tokenVO(Long id, Long tokenable_type, Long tokenable_id, String name, String token,
+            String abilities, String last_used_at, String expires_at, LocalDateTime created_at,
+            LocalDateTime updated_at) {
         this.id = id;
         this.tokenable_type = tokenable_type;
         this.tokenable_id = tokenable_id;
@@ -63,27 +46,27 @@ public class Personal_access_tokenVO implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getTokenable_type() {
+    public Long getTokenable_type() {
         return tokenable_type;
     }
 
-    public void setTokenable_type(Integer tokenable_type) {
+    public void setTokenable_type(Long tokenable_type) {
         this.tokenable_type = tokenable_type;
     }
 
-    public Integer getTokenable_id() {
+    public Long getTokenable_id() {
         return tokenable_id;
     }
 
-    public void setTokenable_id(Integer tokenable_id) {
+    public void setTokenable_id(Long tokenable_id) {
         this.tokenable_id = tokenable_id;
     }
 
@@ -127,19 +110,19 @@ public class Personal_access_tokenVO implements Serializable {
         this.expires_at = expires_at;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

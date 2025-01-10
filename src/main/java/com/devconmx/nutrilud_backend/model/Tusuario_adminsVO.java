@@ -2,7 +2,6 @@ package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,27 +16,17 @@ public class Tusuario_adminsVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column
+    private Long id;
     private String descripcion;
-
-    @Column
     private String foto;
-
-    @Column
     private String telefono;
-
-    @Column
     private String created_at;
-
-    @Column
     private String updated_at;
 
     public Tusuario_adminsVO() {
     }
 
-    public Tusuario_adminsVO(Integer id, String descripcion, String foto, String telefono, String created_at,
+    public Tusuario_adminsVO(Long id, String descripcion, String foto, String telefono, String created_at,
             String updated_at) {
         this.id = id;
         this.descripcion = descripcion;
@@ -47,11 +36,11 @@ public class Tusuario_adminsVO implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

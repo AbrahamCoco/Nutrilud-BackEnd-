@@ -23,7 +23,7 @@ public class UsersVO implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "trol_id", referencedColumnName = "id")
@@ -48,7 +48,7 @@ public class UsersVO implements Serializable {
     private String correo;
     private String email_verified_at;
     private String contrasenia;
-    private Integer estado;
+    private Long estado;
     private String remember_token;
     private String created_at;
     private String updated_at;
@@ -56,10 +56,10 @@ public class UsersVO implements Serializable {
     public UsersVO() {
     }
 
-    public UsersVO(Integer id, TrolsVO trols, Tusuario_adminsVO tusuario_admins,
+    public UsersVO(Long id, TrolsVO trols, Tusuario_adminsVO tusuario_admins,
             Tusuario_nutriologosVO tusuario_nutriologos, Tusuario_pacientesVO tusuario_pacientes, String nombre,
             String primer_apellido, String segundo_apellido, String usuario, String correo, String email_verified_at,
-            String contrasenia, Integer estado, String remember_token, String created_at, String updated_at) {
+            String contrasenia, Long estado, String remember_token, String created_at, String updated_at) {
         this.id = id;
         Trols = trols;
         Tusuario_admins = tusuario_admins;
@@ -78,11 +78,11 @@ public class UsersVO implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -174,11 +174,11 @@ public class UsersVO implements Serializable {
         this.contrasenia = contrasenia;
     }
 
-    public Integer getEstado() {
+    public Long getEstado() {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void setEstado(Long estado) {
         this.estado = estado;
     }
 

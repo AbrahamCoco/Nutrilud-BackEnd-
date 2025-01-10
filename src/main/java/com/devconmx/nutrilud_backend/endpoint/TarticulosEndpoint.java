@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.TarticulosDTO;
 import com.devconmx.nutrilud_backend.model.TarticulosVO;
 import com.devconmx.nutrilud_backend.repository.TarticulosRepository;
 import com.devconmx.nutrilud_backend.service.TarticulosServices;
@@ -18,6 +19,8 @@ import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping("tarticulos")
 @RestController()
@@ -56,6 +59,21 @@ public class TarticulosEndpoint {
             response = Utils.handle(e, "Error al obtener los articulos");
         }
         LOG.info("findById->response: {}", response);
+        return response;
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<ResponseBean<Void>> insert(@RequestBody TarticulosDTO tarticulosDTO) {
+        ResponseEntity<ResponseBean<Void>> response = null;
+        LOG.info("insertEndpoint -> Articulo: {}", tarticulosDTO);
+        try {
+            tarticulosServices.insert(tarticulosDTO.getNutriologo_id(), tarticulosDTO.getContenido(),
+                    tarticulosDTO.getFoto(), tarticulosDTO.getCreated_at(), tarticulosDTO.getUpdated_at());
+            response = Utils.response200OK("Articulo guardado correctamente");
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al guardar el articulo");
+        }
+        LOG.info("insert -> response: {}", response);
         return response;
     }
 }

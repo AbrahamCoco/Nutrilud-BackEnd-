@@ -18,6 +18,10 @@ public class Tdatos_consultasBuilder {
         destin.setCircunferencia_brazo(origin.getCircunferencia_brazo());
         destin.setPliegue_bicipital(origin.getPliegue_bicipital());
         destin.setPliegue_tricipital(origin.getPliegue_tricipital());
+        destin.setGlucosa(origin.getGlucosa());
+        destin.setColesterol(origin.getColesterol());
+        origin.setTrigliceridos(origin.getTrigliceridos());
+        origin.setPresion_arterial(origin.getPresion_arterial());
         destin.setFecha_medicion(origin.getFecha_medicion());
         destin.setSiguiente_consulta(origin.getSiguiente_consulta());
         destin.setCreated_at(origin.getCreated_at());
@@ -43,6 +47,10 @@ public class Tdatos_consultasBuilder {
         destin.setCircunferencia_brazo(origin.getCircunferencia_brazo());
         destin.setPliegue_bicipital(origin.getPliegue_bicipital());
         destin.setPliegue_tricipital(origin.getPliegue_tricipital());
+        destin.setGlucosa(origin.getGlucosa());
+        destin.setColesterol(origin.getColesterol());
+        origin.setTrigliceridos(origin.getTrigliceridos());
+        origin.setPresion_arterial(origin.getPresion_arterial());
         destin.setFecha_medicion(origin.getFecha_medicion());
         destin.setSiguiente_consulta(origin.getSiguiente_consulta());
         destin.setCreated_at(origin.getCreated_at());

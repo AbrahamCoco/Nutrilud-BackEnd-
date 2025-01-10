@@ -1,11 +1,11 @@
 package com.devconmx.nutrilud_backend.model;
 
 public class UsersDTO {
-    private Integer id;
-    private Integer rol_id;
-    private Integer tusuario_admin_id;
-    private Integer tusuario_nutriologo_id;
-    private Integer tusuario_paciente_id;
+    private Long id;
+    private Long rol_id;
+    private Long tusuario_admin_id;
+    private Long tusuario_nutriologo_id;
+    private Long tusuario_paciente_id;
     private String nombre;
     private String primer_apellido;
     private String segundo_apellido;
@@ -13,7 +13,7 @@ public class UsersDTO {
     private String correo;
     private String email_verified_at;
     private String contrasenia;
-    private Integer estado;
+    private Long estado;
     private String remember_token;
     private String created_at;
     private String updated_at;
@@ -21,9 +21,9 @@ public class UsersDTO {
     public UsersDTO() {
     }
 
-    public UsersDTO(Integer id, Integer rol_id, Integer tusuario_admin_id, Integer tusuario_nutriologo_id,
-            Integer tusuario_paciente_id, String nombre, String primer_apellido, String segundo_apellido,
-            String usuario, String correo, String email_verified_at, String contrasenia, Integer estado,
+    public UsersDTO(Long id, Long rol_id, Long tusuario_admin_id, Long tusuario_nutriologo_id,
+            Long tusuario_paciente_id, String nombre, String primer_apellido, String segundo_apellido,
+            String usuario, String correo, String email_verified_at, String contrasenia, Long estado,
             String remember_token, String created_at, String updated_at) {
         this.id = id;
         this.rol_id = rol_id;
@@ -43,43 +43,43 @@ public class UsersDTO {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getRol_id() {
+    public Long getRol_id() {
         return rol_id;
     }
 
-    public void setRol_id(Integer rol_id) {
+    public void setRol_id(Long rol_id) {
         this.rol_id = rol_id;
     }
 
-    public Integer getTusuario_admin_id() {
+    public Long getTusuario_admin_id() {
         return tusuario_admin_id;
     }
 
-    public void setTusuario_admin_id(Integer tusuario_admin_id) {
+    public void setTusuario_admin_id(Long tusuario_admin_id) {
         this.tusuario_admin_id = tusuario_admin_id;
     }
 
-    public Integer getTusuario_nutriologo_id() {
+    public Long getTusuario_nutriologo_id() {
         return tusuario_nutriologo_id;
     }
 
-    public void setTusuario_nutriologo_id(Integer tusuario_nutriologo_id) {
+    public void setTusuario_nutriologo_id(Long tusuario_nutriologo_id) {
         this.tusuario_nutriologo_id = tusuario_nutriologo_id;
     }
 
-    public Integer getTusuario_paciente_id() {
+    public Long getTusuario_paciente_id() {
         return tusuario_paciente_id;
     }
 
-    public void setTusuario_paciente_id(Integer tusuario_paciente_id) {
+    public void setTusuario_paciente_id(Long tusuario_paciente_id) {
         this.tusuario_paciente_id = tusuario_paciente_id;
     }
 
@@ -139,11 +139,11 @@ public class UsersDTO {
         this.contrasenia = contrasenia;
     }
 
-    public Integer getEstado() {
+    public Long getEstado() {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void setEstado(Long estado) {
         this.estado = estado;
     }
 

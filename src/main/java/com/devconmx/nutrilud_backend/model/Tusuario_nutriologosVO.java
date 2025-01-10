@@ -2,7 +2,6 @@ package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,34 +16,20 @@ public class Tusuario_nutriologosVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column
+    private Long id;
     private String descripcion;
-
-    @Column
     private String foto;
-
-    @Column
     private String direccion;
-
-    @Column
     private String telefono;
-
-    @Column
-    private Integer cedula_profesional;
-
-    @Column
+    private Long cedula_profesional;
     private String created_at;
-
-    @Column
     private String updated_at;
 
     public Tusuario_nutriologosVO() {
     }
 
-    public Tusuario_nutriologosVO(Integer id, String descripcion, String foto, String direccion, String telefono,
-            Integer cedula_profesional, String created_at, String updated_at) {
+    public Tusuario_nutriologosVO(Long id, String descripcion, String foto, String direccion, String telefono,
+            Long cedula_profesional, String created_at, String updated_at) {
         this.id = id;
         this.descripcion = descripcion;
         this.foto = foto;
@@ -55,11 +40,11 @@ public class Tusuario_nutriologosVO implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -95,11 +80,11 @@ public class Tusuario_nutriologosVO implements Serializable {
         this.telefono = telefono;
     }
 
-    public Integer getCedula_profesional() {
+    public Long getCedula_profesional() {
         return cedula_profesional;
     }
 
-    public void setCedula_profesional(Integer cedula_profesional) {
+    public void setCedula_profesional(Long cedula_profesional) {
         this.cedula_profesional = cedula_profesional;
     }
 
