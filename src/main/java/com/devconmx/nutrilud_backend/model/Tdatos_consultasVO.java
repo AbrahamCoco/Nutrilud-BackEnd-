@@ -2,7 +2,6 @@ package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +15,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tdatos_consultas")
 @NamedQueries({
-        @NamedQuery(name = "Tdatos_consultasVO.findByNutriologoVO", query = "SELECT t FROM Tdatos_consultasVO t WHERE t.Tusuario_nutriologo = :Tusuario_nutriologo"),
+        @NamedQuery(name = "Tdatos_consultasVO.findByNutriologoVO", query = "SELECT t FROM Tdatos_consultasVO t WHERE t.Tusuario_nutriologo.id = :id"),
 })
 public class Tdatos_consultasVO implements Serializable {
 
@@ -31,47 +30,23 @@ public class Tdatos_consultasVO implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
     private UsersVO Tusuario_paciente;
-
-    @Column
     private double peso;
-
-    @Column
     private double estatura;
-
-    @Column
     private double porcentaje_grasa;
-
-    @Column
     private double porcentaje_musculo;
-
-    @Column
     private double imc;
-
-    @Column
     private double circunferencia_cintura;
-
-    @Column
     private double circunferencia_cadera;
-
-    @Column
     private double circunferencia_brazo;
-
-    @Column
     private double pliegue_bicipital;
-
-    @Column
     private double pliegue_tricipital;
-
-    @Column
+    private double glucosa;
+    private double colesterol;
+    private double trigliceridos;
+    private String presion_arterial;
     private String fecha_medicion;
-
-    @Column
     private String siguiente_consulta;
-
-    @Column
     private String created_at;
-
-    @Column
     private String updated_at;
 
     public Tdatos_consultasVO() {
@@ -80,7 +55,8 @@ public class Tdatos_consultasVO implements Serializable {
     public Tdatos_consultasVO(Integer id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, double peso,
             double estatura, double porcentaje_grasa, double porcentaje_musculo, double imc,
             double circunferencia_cintura, double circunferencia_cadera, double circunferencia_brazo,
-            double pliegue_bicipital, double pliegue_tricipital, String fecha_medicion, String siguiente_consulta,
+            double pliegue_bicipital, double pliegue_tricipital, double glucosa, double colesterol,
+            double trigliceridos, String presion_arterial, String fecha_medicion, String siguiente_consulta,
             String created_at, String updated_at) {
         this.id = id;
         Tusuario_nutriologo = tusuario_nutriologo;
@@ -95,6 +71,10 @@ public class Tdatos_consultasVO implements Serializable {
         this.circunferencia_brazo = circunferencia_brazo;
         this.pliegue_bicipital = pliegue_bicipital;
         this.pliegue_tricipital = pliegue_tricipital;
+        this.glucosa = glucosa;
+        this.colesterol = colesterol;
+        this.trigliceridos = trigliceridos;
+        this.presion_arterial = presion_arterial;
         this.fecha_medicion = fecha_medicion;
         this.siguiente_consulta = siguiente_consulta;
         this.created_at = created_at;
@@ -203,6 +183,38 @@ public class Tdatos_consultasVO implements Serializable {
 
     public void setPliegue_tricipital(double pliegue_tricipital) {
         this.pliegue_tricipital = pliegue_tricipital;
+    }
+
+    public double getGlucosa() {
+        return glucosa;
+    }
+
+    public void setGlucosa(double glucosa) {
+        this.glucosa = glucosa;
+    }
+
+    public double getColesterol() {
+        return colesterol;
+    }
+
+    public void setColesterol(double colesterol) {
+        this.colesterol = colesterol;
+    }
+
+    public double getTrigliceridos() {
+        return trigliceridos;
+    }
+
+    public void setTrigliceridos(double trigliceridos) {
+        this.trigliceridos = trigliceridos;
+    }
+
+    public String getPresion_arterial() {
+        return presion_arterial;
+    }
+
+    public void setPresion_arterial(String presion_arterial) {
+        this.presion_arterial = presion_arterial;
     }
 
     public String getFecha_medicion() {
