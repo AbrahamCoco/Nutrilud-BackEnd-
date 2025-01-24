@@ -17,7 +17,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
     private Tdatos_consultasRepository tdatos_consultasRepository;
 
     @Override
-    public List<Tdatos_consultasVO> findByNutriologo(Integer id) throws AppException {
+    public List<Tdatos_consultasVO> findByNutriologo(int id) throws AppException {
         List<Tdatos_consultasVO> listaAgenda = null;
         try {
             listaAgenda = tdatos_consultasRepository.findByNutriologoVO(id);

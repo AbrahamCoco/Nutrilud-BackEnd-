@@ -32,7 +32,7 @@ public class Tdatos_consultasEndpoint {
     private Tdatos_consultasServices tdatos_consultasServices;
 
     @GetMapping("/findAgendaByNutriologo")
-    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findAgendaByNutriologo(@RequestParam Integer id) {
+    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findAgendaByNutriologo(@RequestParam int id) {
         ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
         List<Tdatos_consultasVO> listaAgenda = null;
         try {
