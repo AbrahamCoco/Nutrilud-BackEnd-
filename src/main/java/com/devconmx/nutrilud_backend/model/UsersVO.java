@@ -16,14 +16,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = "UsersVO.verifyUserRepository", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario AND u.contrasenia = :contrasenia")
+        @NamedQuery(name = "UsersVO.verifyUserRepository", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario AND u.contrasenia = :contrasenia"),
+        @NamedQuery(name = "UsersVO.findByNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id")
 })
 public class UsersVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, name = "id")
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "trol_id", referencedColumnName = "id")
@@ -48,41 +49,16 @@ public class UsersVO implements Serializable {
     private String correo;
     private String email_verified_at;
     private String contrasenia;
-    private Long estado;
+    private int estado;
     private String remember_token;
     private String created_at;
     private String updated_at;
 
-    public UsersVO() {
-    }
-
-    public UsersVO(Long id, TrolsVO trols, Tusuario_adminsVO tusuario_admins,
-            Tusuario_nutriologosVO tusuario_nutriologos, Tusuario_pacientesVO tusuario_pacientes, String nombre,
-            String primer_apellido, String segundo_apellido, String usuario, String correo, String email_verified_at,
-            String contrasenia, Long estado, String remember_token, String created_at, String updated_at) {
-        this.id = id;
-        Trols = trols;
-        Tusuario_admins = tusuario_admins;
-        Tusuario_nutriologos = tusuario_nutriologos;
-        Tusuario_pacientes = tusuario_pacientes;
-        this.nombre = nombre;
-        this.primer_apellido = primer_apellido;
-        this.segundo_apellido = segundo_apellido;
-        this.usuario = usuario;
-        this.correo = correo;
-        this.email_verified_at = email_verified_at;
-        this.contrasenia = contrasenia;
-        this.estado = estado;
-        this.remember_token = remember_token;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -174,11 +150,11 @@ public class UsersVO implements Serializable {
         this.contrasenia = contrasenia;
     }
 
-    public Long getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Long estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 

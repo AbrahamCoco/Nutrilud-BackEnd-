@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.devconmx.nutrilud_backend.model.TarticulosVO;
 
 @Repository
-public interface TarticulosRepository extends JpaRepository<TarticulosVO, Long> {
+public interface TarticulosRepository extends JpaRepository<TarticulosVO, Integer> {
 
 }

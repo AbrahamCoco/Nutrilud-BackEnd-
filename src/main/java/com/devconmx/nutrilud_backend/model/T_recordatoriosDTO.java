@@ -3,47 +3,34 @@ package com.devconmx.nutrilud_backend.model;
 import java.time.LocalDateTime;
 
 public class T_recordatoriosDTO {
-    private Long id;
-    private Long nutriologo_id;
-    private Long paciente_id;
+    private int id;
+    private int nutriologo_id;
+    private int paciente_id;
     private String recordatorioPdf;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public T_recordatoriosDTO() {
-    }
-
-    public T_recordatoriosDTO(Long id, Long nutriologo_id, Long paciente_id, String recordatorioPdf,
-            LocalDateTime created_at, LocalDateTime updated_at) {
-        this.id = id;
-        this.nutriologo_id = nutriologo_id;
-        this.paciente_id = paciente_id;
-        this.recordatorioPdf = recordatorioPdf;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getNutriologo_id() {
+    public int getNutriologo_id() {
         return nutriologo_id;
     }
 
-    public void setNutriologo_id(Long nutriologo_id) {
+    public void setNutriologo_id(int nutriologo_id) {
         this.nutriologo_id = nutriologo_id;
     }
 
-    public Long getPaciente_id() {
+    public int getPaciente_id() {
         return paciente_id;
     }
 
-    public void setPaciente_id(Long paciente_id) {
+    public void setPaciente_id(int paciente_id) {
         this.paciente_id = paciente_id;
     }
 

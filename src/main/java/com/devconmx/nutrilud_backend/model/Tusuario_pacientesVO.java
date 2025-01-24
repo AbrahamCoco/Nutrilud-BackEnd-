@@ -16,7 +16,7 @@ public class Tusuario_pacientesVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String foto;
     private String telefono;
     private String fecha_nacimiento;
@@ -25,26 +25,11 @@ public class Tusuario_pacientesVO implements Serializable {
     private String created_at;
     private String updated_at;
 
-    public Tusuario_pacientesVO() {
-    }
-
-    public Tusuario_pacientesVO(Long id, String foto, String telefono, String fecha_nacimiento, String sexo,
-            String alergias, String created_at, String updated_at) {
-        this.id = id;
-        this.foto = foto;
-        this.telefono = telefono;
-        this.fecha_nacimiento = fecha_nacimiento;
-        this.sexo = sexo;
-        this.alergias = alergias;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

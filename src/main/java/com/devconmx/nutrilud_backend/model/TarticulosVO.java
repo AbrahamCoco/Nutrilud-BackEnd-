@@ -23,7 +23,7 @@ public class TarticulosVO implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, name = "id")
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
@@ -34,24 +34,11 @@ public class TarticulosVO implements Serializable {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public TarticulosVO() {
-    }
-
-    public TarticulosVO(Long id, UsersVO tusuario_nutriologo, String contenido, String foto, LocalDateTime created_at,
-            LocalDateTime updated_at) {
-        this.id = id;
-        Tusuario_nutriologo = tusuario_nutriologo;
-        this.contenido = contenido;
-        this.foto = foto;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

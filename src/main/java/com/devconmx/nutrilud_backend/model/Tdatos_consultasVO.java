@@ -22,7 +22,7 @@ public class Tdatos_consultasVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "nutriologo_id", referencedColumnName = "tusuario_nutriologo_id")
@@ -50,43 +50,11 @@ public class Tdatos_consultasVO implements Serializable {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public Tdatos_consultasVO() {
-    }
-
-    public Tdatos_consultasVO(Long id, UsersVO tusuario_nutriologo, UsersVO tusuario_paciente, double peso,
-            double estatura, double porcentaje_grasa, double porcentaje_musculo, double imc,
-            double circunferencia_cintura, double circunferencia_cadera, double circunferencia_brazo,
-            double pliegue_bicipital, double pliegue_tricipital, double glucosa, double colesterol,
-            double trigliceridos, String presion_arterial, String fecha_medicion, String siguiente_consulta,
-            LocalDateTime created_at, LocalDateTime updated_at) {
-        this.id = id;
-        Tusuario_nutriologo = tusuario_nutriologo;
-        Tusuario_paciente = tusuario_paciente;
-        this.peso = peso;
-        this.estatura = estatura;
-        this.porcentaje_grasa = porcentaje_grasa;
-        this.porcentaje_musculo = porcentaje_musculo;
-        this.imc = imc;
-        this.circunferencia_cintura = circunferencia_cintura;
-        this.circunferencia_cadera = circunferencia_cadera;
-        this.circunferencia_brazo = circunferencia_brazo;
-        this.pliegue_bicipital = pliegue_bicipital;
-        this.pliegue_tricipital = pliegue_tricipital;
-        this.glucosa = glucosa;
-        this.colesterol = colesterol;
-        this.trigliceridos = trigliceridos;
-        this.presion_arterial = presion_arterial;
-        this.fecha_medicion = fecha_medicion;
-        this.siguiente_consulta = siguiente_consulta;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

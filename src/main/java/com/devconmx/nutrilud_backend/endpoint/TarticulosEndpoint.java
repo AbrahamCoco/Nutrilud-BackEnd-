@@ -37,6 +37,7 @@ public class TarticulosEndpoint {
     @GetMapping("/findAllArticles")
     public ResponseEntity<ResponseBean<List<TarticulosVO>>> findAllArticles() {
         ResponseEntity<ResponseBean<List<TarticulosVO>>> response = null;
+        LOG.info("findAllArticlesEndpoint()");
         List<TarticulosVO> articulosVO = null;
         try {
             articulosVO = tarticulosServices.findAll();
@@ -44,13 +45,14 @@ public class TarticulosEndpoint {
         } catch (Exception e) {
             response = Utils.handle(e, "Error al obtener los articulos");
         }
-        LOG.info("findAllArticles->response: {}", response);
+        LOG.info("findAllArticlesEndpoint() -> response: {}", response);
         return response;
     }
 
     @GetMapping("/findById")
-    public ResponseEntity<ResponseBean<List<TarticulosVO>>> findById(@RequestParam Long id) {
+    public ResponseEntity<ResponseBean<List<TarticulosVO>>> findById(@RequestParam int id) {
         ResponseEntity<ResponseBean<List<TarticulosVO>>> response = null;
+        LOG.info("findByIdArticuloEndpoint() -> id: {}", id);
         List<TarticulosVO> articulosVO = null;
         try {
             articulosVO = tarticulosServices.findById(id);
@@ -58,22 +60,21 @@ public class TarticulosEndpoint {
         } catch (Exception e) {
             response = Utils.handle(e, "Error al obtener los articulos");
         }
-        LOG.info("findById->response: {}", response);
+        LOG.info("findByIdArticuloEndpoint() -> response: {}", response);
         return response;
     }
 
     @PostMapping("/insert")
     public ResponseEntity<ResponseBean<Void>> insert(@RequestBody TarticulosDTO tarticulosDTO) {
         ResponseEntity<ResponseBean<Void>> response = null;
-        LOG.info("insertEndpoint -> Articulo: {}", tarticulosDTO);
+        LOG.info("insertArticuloEndpoint() -> TarticulosDTO: {}", tarticulosDTO);
         try {
-            tarticulosServices.insert(tarticulosDTO.getNutriologo_id(), tarticulosDTO.getContenido(),
-                    tarticulosDTO.getFoto(), tarticulosDTO.getCreated_at(), tarticulosDTO.getUpdated_at());
+            tarticulosServices.save(tarticulosDTO);
             response = Utils.response200OK("Articulo guardado correctamente");
         } catch (Exception e) {
             response = Utils.handle(e, "Error al guardar el articulo");
         }
-        LOG.info("insert -> response: {}", response);
+        LOG.info("insertArticuloEndpoint() -> response: {}", response);
         return response;
     }
 }

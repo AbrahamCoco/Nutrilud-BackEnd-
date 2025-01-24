@@ -3,9 +3,9 @@ package com.devconmx.nutrilud_backend.model;
 import java.time.LocalDateTime;
 
 public class Tdatos_consultasDTO {
-    private Long id;
-    private Long nutriologo_id;
-    private Long paciente_id;
+    private int id;
+    private int nutriologo_id;
+    private int paciente_id;
     private double peso;
     private double estatura;
     private double porcentaje_grasa;
@@ -25,58 +25,27 @@ public class Tdatos_consultasDTO {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public Tdatos_consultasDTO() {
-    }
-
-    public Tdatos_consultasDTO(Long id, Long nutriologo_id, Long paciente_id, double peso, double estatura,
-            double porcentaje_grasa, double porcentaje_musculo, double imc, double circunferencia_cintura,
-            double circunferencia_cadera, double circunferencia_brazo, double pliegue_bicipital,
-            double pliegue_tricipital, double glucosa, double colesterol, double trigliceridos, String presion_arterial,
-            String fecha_medicion, String siguiente_consulta, LocalDateTime created_at, LocalDateTime updated_at) {
-        this.id = id;
-        this.nutriologo_id = nutriologo_id;
-        this.paciente_id = paciente_id;
-        this.peso = peso;
-        this.estatura = estatura;
-        this.porcentaje_grasa = porcentaje_grasa;
-        this.porcentaje_musculo = porcentaje_musculo;
-        this.imc = imc;
-        this.circunferencia_cintura = circunferencia_cintura;
-        this.circunferencia_cadera = circunferencia_cadera;
-        this.circunferencia_brazo = circunferencia_brazo;
-        this.pliegue_bicipital = pliegue_bicipital;
-        this.pliegue_tricipital = pliegue_tricipital;
-        this.glucosa = glucosa;
-        this.colesterol = colesterol;
-        this.trigliceridos = trigliceridos;
-        this.presion_arterial = presion_arterial;
-        this.fecha_medicion = fecha_medicion;
-        this.siguiente_consulta = siguiente_consulta;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getNutriologo_id() {
+    public int getNutriologo_id() {
         return nutriologo_id;
     }
 
-    public void setNutriologo_id(Long nutriologo_id) {
+    public void setNutriologo_id(int nutriologo_id) {
         this.nutriologo_id = nutriologo_id;
     }
 
-    public Long getPaciente_id() {
+    public int getPaciente_id() {
         return paciente_id;
     }
 
-    public void setPaciente_id(Long paciente_id) {
+    public void setPaciente_id(int paciente_id) {
         this.paciente_id = paciente_id;
     }
 

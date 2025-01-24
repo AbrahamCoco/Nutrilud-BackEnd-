@@ -16,35 +16,20 @@ public class Tusuario_nutriologosVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String descripcion;
     private String foto;
     private String direccion;
     private String telefono;
-    private Long cedula_profesional;
+    private int cedula_profesional;
     private String created_at;
     private String updated_at;
 
-    public Tusuario_nutriologosVO() {
-    }
-
-    public Tusuario_nutriologosVO(Long id, String descripcion, String foto, String direccion, String telefono,
-            Long cedula_profesional, String created_at, String updated_at) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.cedula_profesional = cedula_profesional;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -80,11 +65,11 @@ public class Tusuario_nutriologosVO implements Serializable {
         this.telefono = telefono;
     }
 
-    public Long getCedula_profesional() {
+    public int getCedula_profesional() {
         return cedula_profesional;
     }
 
-    public void setCedula_profesional(Long cedula_profesional) {
+    public void setCedula_profesional(int cedula_profesional) {
         this.cedula_profesional = cedula_profesional;
     }
 

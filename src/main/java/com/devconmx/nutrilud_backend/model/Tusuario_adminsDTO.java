@@ -3,31 +3,18 @@ package com.devconmx.nutrilud_backend.model;
 import java.time.LocalDateTime;
 
 public class Tusuario_adminsDTO {
-    private Long id;
+    private int id;
     private String descripcion;
     private String foto;
     private String telefono;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public Tusuario_adminsDTO() {
-    }
-
-    public Tusuario_adminsDTO(Long id, String descripcion, String foto, String telefono, LocalDateTime created_at,
-            LocalDateTime updated_at) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.telefono = telefono;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

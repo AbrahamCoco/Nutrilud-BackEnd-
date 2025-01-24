@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devconmx.nutrilud_backend.model.TarticulosBuilder;
+import com.devconmx.nutrilud_backend.model.TarticulosDTO;
 import com.devconmx.nutrilud_backend.model.TarticulosVO;
 import com.devconmx.nutrilud_backend.model.UsersVO;
 import com.devconmx.nutrilud_backend.repository.TarticulosRepository;
@@ -29,44 +30,41 @@ public class TarticulosServiceImpl implements TarticulosServices {
 
     @Override
     public List<TarticulosVO> findAll() throws AppException {
-        LOG.info("FindAll->Articulos");
+        LOG.info("FindAllArticulosService() -> Articulos");
         List<TarticulosVO> listTarticulosVOs = null;
         try {
             listTarticulosVOs = tarticulosRepository.findAll();
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
+        LOG.info("FindAllArticulosService() -> Articulos: {}", listTarticulosVOs);
         return listTarticulosVOs;
     }
 
     @Override
-    public List<TarticulosVO> findById(Long id) throws AppException {
-        LOG.info("FindById->Articulos");
+    public List<TarticulosVO> findById(int id) throws AppException {
+        LOG.info("FindByIdArticulosService() -> Articulos");
         List<TarticulosVO> listTarticulosVOs = null;
         try {
             listTarticulosVOs = tarticulosRepository.findById(id).stream().toList();
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
-        LOG.info("FindById->Articulos: {}", listTarticulosVOs);
+        LOG.info("FindByIdArticulosService() - >Articulos: {}", listTarticulosVOs);
         return listTarticulosVOs;
     }
 
     @Override
-    public void insert(Long nutriologo_id, String contenido, String foto, LocalDateTime created_at,
-            LocalDateTime updated_at)
-            throws AppException {
-        LOG.info("InsertServices -> Articulos: {} {} {} {} {}", nutriologo_id, contenido, foto, created_at, updated_at);
+    public void save(TarticulosDTO tarticulosDTO) throws AppException {
+        LOG.info("insertArticuloService() -> TarticulosVO: {}", tarticulosDTO);
+        TarticulosVO vo = null;
         try {
-            UsersVO usersVO = usersRepository.findById(nutriologo_id).get();
-            TarticulosVO tarticulosVO = new TarticulosVO();
-            tarticulosVO.setTusuario_nutriologo(usersVO);
-            tarticulosVO.setContenido(contenido);
-            tarticulosVO.setFoto(foto);
-            tarticulosVO.setCreated_at(created_at);
-            tarticulosVO.setUpdated_at(created_at);
-            TarticulosVO tarticulosVOInserted = tarticulosRepository.save(tarticulosVO);
-            TarticulosBuilder.fromVO(tarticulosVOInserted);
+            vo = TarticulosBuilder.fromDTO(tarticulosDTO);
+            vo.setCreated_at(LocalDateTime.now());
+            vo.setUpdated_at(LocalDateTime.now());
+            UsersVO user = usersRepository.findByNutriologo(tarticulosDTO.getNutriologo_id());
+            vo.setTusuario_nutriologo(user);
+            tarticulosRepository.save(vo);
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar el articulo");
         }

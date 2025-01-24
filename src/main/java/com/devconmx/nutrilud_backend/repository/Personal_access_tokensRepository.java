@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.devconmx.nutrilud_backend.model.Personal_access_tokenVO;
 
 @Repository
-public interface Personal_access_tokensRepository extends JpaRepository<Personal_access_tokenVO, Long> {
+public interface Personal_access_tokensRepository extends JpaRepository<Personal_access_tokenVO, Integer> {
 
 }

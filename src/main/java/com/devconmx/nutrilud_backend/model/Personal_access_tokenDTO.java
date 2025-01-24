@@ -3,9 +3,9 @@ package com.devconmx.nutrilud_backend.model;
 import java.time.LocalDateTime;
 
 public class Personal_access_tokenDTO {
-    private Long id;
-    private Long tokenable_type;
-    private Long tokenable_id;
+    private int id;
+    private int tokenable_type;
+    private int tokenable_id;
     private String name;
     private String token;
     private String abilities;
@@ -14,45 +14,27 @@ public class Personal_access_tokenDTO {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public Personal_access_tokenDTO() {
-    }
-
-    public Personal_access_tokenDTO(Long id, Long tokenable_type, Long tokenable_id, String name, String token,
-            String abilities, String last_used_at, String expires_at, LocalDateTime created_at,
-            LocalDateTime updated_at) {
-        this.id = id;
-        this.tokenable_type = tokenable_type;
-        this.tokenable_id = tokenable_id;
-        this.name = name;
-        this.token = token;
-        this.abilities = abilities;
-        this.last_used_at = last_used_at;
-        this.expires_at = expires_at;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getTokenable_type() {
+    public int getTokenable_type() {
         return tokenable_type;
     }
 
-    public void setTokenable_type(Long tokenable_type) {
+    public void setTokenable_type(int tokenable_type) {
         this.tokenable_type = tokenable_type;
     }
 
-    public Long getTokenable_id() {
+    public int getTokenable_id() {
         return tokenable_id;
     }
 
-    public void setTokenable_id(Long tokenable_id) {
+    public void setTokenable_id(int tokenable_id) {
         this.tokenable_id = tokenable_id;
     }
 

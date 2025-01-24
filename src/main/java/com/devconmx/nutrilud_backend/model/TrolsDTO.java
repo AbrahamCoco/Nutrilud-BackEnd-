@@ -3,28 +3,17 @@ package com.devconmx.nutrilud_backend.model;
 import java.time.LocalDateTime;
 
 public class TrolsDTO {
-    private Long id;
+    private int id;
     private String rol;
-    private Long estado;
+    private int estado;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public TrolsDTO() {
-    }
-
-    public TrolsDTO(Long id, String rol, Long estado, LocalDateTime created_at, LocalDateTime updated_at) {
-        this.id = id;
-        this.rol = rol;
-        this.estado = estado;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,11 +25,11 @@ public class TrolsDTO {
         this.rol = rol;
     }
 
-    public Long getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Long estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
