@@ -13,4 +13,10 @@ public interface UsersRepository extends JpaRepository<UsersVO, Integer> {
     List<UsersVO> verifyUserRepository(@Param("usuario") String usuario, @Param("contrasenia") String contrasenia);
 
     UsersVO findByNutriologo(int id);
+
+    List<UsersVO> findByPaciente();
+
+    UsersVO findByIdPaciente(int id);
+
+    UsersVO findById(int id);
 }
