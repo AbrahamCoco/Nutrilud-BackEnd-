@@ -28,7 +28,7 @@ public class T_recordatoriosVO implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
     private UsersVO Tusuario_paciente;
-    private String recordatorioPdf;
+    private String recordatorio_pdf;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
@@ -56,12 +56,12 @@ public class T_recordatoriosVO implements Serializable {
         Tusuario_paciente = tusuario_paciente;
     }
 
-    public String getRecordatorioPdf() {
-        return recordatorioPdf;
+    public String getRecordatorio_pdf() {
+        return recordatorio_pdf;
     }
 
-    public void setRecordatorioPdf(String recordatorioPdf) {
-        this.recordatorioPdf = recordatorioPdf;
+    public void setRecordatorio_pdf(String recordatorio_pdf) {
+        this.recordatorio_pdf = recordatorio_pdf;
     }
 
     public LocalDateTime getCreated_at() {
