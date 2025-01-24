@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
         @NamedQuery(name = "UsersVO.findByNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id"),
         @NamedQuery(name = "UsersVO.findByPaciente", query = "SELECT u FROM UsersVO u WHERE u.Trols.id = 3 and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByIdPaciente", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_pacientes.id = :id and u.estado = 1"),
+        @NamedQuery(name = "UsersVO.findByIdNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id and u.estado = 1"),
 })
 public class UsersVO implements Serializable {
 

@@ -18,5 +18,7 @@ public interface UsersRepository extends JpaRepository<UsersVO, Integer> {
 
     UsersVO findByIdPaciente(int id);
 
+    UsersVO findByIdNutriologo(int id);
+
     UsersVO findById(int id);
 }

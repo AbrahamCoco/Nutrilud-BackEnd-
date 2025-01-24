@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,11 +20,11 @@ public class Tusuario_pacientesVO implements Serializable {
     private int id;
     private String foto;
     private String telefono;
-    private String fecha_nacimiento;
+    private LocalDateTime fecha_nacimiento;
     private String sexo;
     private String alergias;
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public int getId() {
         return id;
@@ -49,11 +50,11 @@ public class Tusuario_pacientesVO implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getFecha_nacimiento() {
+    public LocalDateTime getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDateTime fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -73,19 +74,19 @@ public class Tusuario_pacientesVO implements Serializable {
         this.alergias = alergias;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }
