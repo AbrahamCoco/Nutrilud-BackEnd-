@@ -7,4 +7,6 @@ import com.devconmx.nutrilud_backend.utils.exception.AppException;
 
 public interface Tdatos_consultasServices {
     List<Tdatos_consultasVO> findByNutriologo(int id) throws AppException;
+
+    List<Tdatos_consultasVO> findByPaciente(int id) throws AppException;
 }

@@ -34,6 +34,7 @@ public class Tdatos_consultasEndpoint {
     @GetMapping("/findAgendaByNutriologo")
     public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findAgendaByNutriologo(@RequestParam int id) {
         ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+        LOG.info("findAgendaByNutriologoEndpoint() -> id: {}", id);
         List<Tdatos_consultasVO> listaAgenda = null;
         try {
             listaAgenda = tdatos_consultasServices.findByNutriologo(id);
@@ -41,7 +42,22 @@ public class Tdatos_consultasEndpoint {
         } catch (Exception e) {
             response = Utils.handle(e, "Error al recuperar los datos de la agenda");
         }
-        LOG.info("Response findAgendaByNutriologo: {}", response);
+        LOG.info("findAgendaByNutriologoEndpoint() -> response: {}", listaAgenda);
+        return response;
+    }
+
+    @GetMapping("/findConsultasByPaciente")
+    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findConsultasByPaciente(@RequestParam int id) {
+        ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+        LOG.info("findConsultasByPacienteEndpoint() -> id: {}", id);
+        List<Tdatos_consultasVO> listaConsultas = null;
+        try {
+            listaConsultas = tdatos_consultasServices.findByPaciente(id);
+            response = Utils.response200OK("Datos de consultas encontrados", listaConsultas);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al recuperar los datos de las consultas");
+        }
+        LOG.info("findConsultasByPacienteEndpoint() -> response: {}", response);
         return response;
     }
 }

@@ -9,5 +9,7 @@ import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
 
 @Repository
 public interface Tdatos_consultasRepository extends JpaRepository<Tdatos_consultasVO, Integer> {
-    List<Tdatos_consultasVO> findByNutriologoVO(Integer id);
+    List<Tdatos_consultasVO> findByNutriologoVO(int id);
+
+    List<Tdatos_consultasVO> findByPacienteVO(int id);
 }
