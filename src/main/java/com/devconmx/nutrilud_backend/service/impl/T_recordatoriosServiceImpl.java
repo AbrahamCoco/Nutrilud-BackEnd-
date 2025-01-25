@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,6 @@ public class T_recordatoriosServiceImpl implements T_recordatoriosServices {
             UsersVO paciente = usersRepository.findByIdPaciente(t_recordatoriosDTO.getPaciente_id());
             vo.setTusuario_paciente(paciente);
 
-            vo.setRecordatorio_pdf(t_recordatoriosDTO.getRecordatorio_pdf());
             vo.setCreated_at(LocalDateTime.now());
             vo.setUpdated_at(LocalDateTime.now());
             t_recordatoriosRepository.save(vo);
@@ -47,4 +47,18 @@ public class T_recordatoriosServiceImpl implements T_recordatoriosServices {
         }
     }
 
+    @Override
+    public List<T_recordatoriosVO> findRecordatorioByPacienteId(int id) throws AppException {
+        LOG.info("findRecordatorioByPacienteId() -> id: {}", id);
+        List<T_recordatoriosVO> listRecordatorio = null;
+        try {
+            listRecordatorio = t_recordatoriosRepository.findRecordatorioByPacienteId(id);
+            if (listRecordatorio.isEmpty()) {
+                throw new AppException("No se encontraron recordatorios para el paciente con id: " + id);
+            }
+        } catch (Exception e) {
+            Utils.raise(e, "Error al buscar recordatorios por id de paciente");
+        }
+        return listRecordatorio;
+    }
 }
