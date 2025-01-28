@@ -10,7 +10,7 @@ import com.devconmx.nutrilud_backend.model.UsersVO;
 
 @Repository
 public interface UsersRepository extends JpaRepository<UsersVO, Integer> {
-    List<UsersVO> verifyUserRepository(@Param("usuario") String usuario, @Param("contrasenia") String contrasenia);
+    UsersVO login(@Param("usuario") String usuario, @Param("contrasenia") String contrasenia);
 
     UsersVO findByNutriologo(int id);
 
