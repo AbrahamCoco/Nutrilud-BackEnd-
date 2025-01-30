@@ -90,4 +90,19 @@ public class UsersEndpoint {
         LOG.info("insertUserEndpoint() response: {}", response);
         return response;
     }
+
+    @GetMapping("/findById")
+    public ResponseEntity<ResponseBean<UsersVO>> findById(@RequestParam int id) {
+        ResponseEntity<ResponseBean<UsersVO>> response = null;
+        LOG.info("findByIdEndpoint() -> id: {}", id);
+        UsersVO vo = null;
+        try {
+            vo = usersServices.findById(id);
+            response = Utils.response200OK("Usuario encontrado", vo);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al buscar usuario");
+        }
+        LOG.info("findByIdEndpoint() response: {}", response);
+        return response;
+    }
 }

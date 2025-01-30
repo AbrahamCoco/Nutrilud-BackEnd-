@@ -15,4 +15,6 @@ public interface UsersServices {
     void deleteByIdPaciente(int id) throws AppException;
 
     void insert(UsersDTO usersDTO) throws AppException;
+
+    UsersVO findById(int id) throws AppException;
 }

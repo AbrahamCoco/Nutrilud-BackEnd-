@@ -154,6 +154,24 @@ public class UsersServiceImpl implements UsersServices {
         }
     }
 
+    @Override
+    public UsersVO findById(int id) throws AppException {
+        LOG.info("findByIdService() -> id: {}", id);
+        UsersVO vo = null;
+        try {
+            vo = usersRepository.findById(id);
+            if (vo == null) {
+                throw new AppException("No se encontro el usuario");
+            }
+            if (vo.getEstado() == 0) {
+                throw new AppException("El usuario esta deshabilitado");
+            }
+        } catch (Exception e) {
+            Utils.raise(e, "Error al buscar usuario");
+        }
+        return vo;
+    }
+
     public boolean validateUser(String user) throws AppException {
         if (user == null || user.isEmpty()) {
             return false;
