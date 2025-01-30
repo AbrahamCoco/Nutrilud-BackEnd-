@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +23,8 @@ public class Tusuario_nutriologosVO implements Serializable {
     private String direccion;
     private String telefono;
     private int cedula_profesional;
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public int getId() {
         return id;
@@ -73,19 +74,19 @@ public class Tusuario_nutriologosVO implements Serializable {
         this.cedula_profesional = cedula_profesional;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

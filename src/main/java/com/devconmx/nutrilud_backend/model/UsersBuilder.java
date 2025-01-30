@@ -14,6 +14,7 @@ public class UsersBuilder {
         destin.setPrimer_apellido(origin.getPrimer_apellido());
         destin.setSegundo_apellido(origin.getSegundo_apellido());
         destin.setUsuario(origin.getUsuario());
+        destin.setCorreo(origin.getCorreo());
         destin.setContrasenia(origin.getContrasenia());
         destin.setEstado(origin.getEstado());
         destin.setRemember_token(origin.getRemember_token());
@@ -28,14 +29,11 @@ public class UsersBuilder {
         UsersVO destin = new UsersVO();
 
         destin.setId(origin.getId());
-        destin.setTrols(new TrolsVO());
-        destin.setTusuario_admins(new Tusuario_adminsVO());
-        destin.setTusuario_nutriologos(new Tusuario_nutriologosVO());
-        destin.setTusuario_pacientes(new Tusuario_pacientesVO());
         destin.setNombre(origin.getNombre());
         destin.setPrimer_apellido(origin.getPrimer_apellido());
         destin.setSegundo_apellido(origin.getSegundo_apellido());
         destin.setUsuario(origin.getUsuario());
+        destin.setCorreo(origin.getCorreo());
         destin.setContrasenia(origin.getContrasenia());
         destin.setEstado(origin.getEstado());
         destin.setRemember_token(origin.getRemember_token());

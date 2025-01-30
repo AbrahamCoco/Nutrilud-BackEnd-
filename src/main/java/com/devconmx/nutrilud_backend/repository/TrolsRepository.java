@@ -7,5 +7,5 @@ import com.devconmx.nutrilud_backend.model.TrolsVO;
 
 @Repository
 public interface TrolsRepository extends JpaRepository<TrolsVO, Integer> {
-
+    TrolsVO findById(int id);
 }

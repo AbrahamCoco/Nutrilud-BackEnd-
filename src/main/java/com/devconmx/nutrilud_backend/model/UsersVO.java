@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +22,7 @@ import jakarta.persistence.Table;
         @NamedQuery(name = "UsersVO.findByPaciente", query = "SELECT u FROM UsersVO u WHERE u.Trols.id = 3 and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByIdPaciente", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_pacientes.id = :id and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByIdNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id and u.estado = 1"),
+        @NamedQuery(name = "UsersVO.findByUser", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario and u.estado = 1"),
 })
 public class UsersVO implements Serializable {
 
@@ -54,8 +56,8 @@ public class UsersVO implements Serializable {
     private String contrasenia;
     private int estado;
     private String remember_token;
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public int getId() {
         return id;
@@ -169,19 +171,19 @@ public class UsersVO implements Serializable {
         this.remember_token = remember_token;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 }

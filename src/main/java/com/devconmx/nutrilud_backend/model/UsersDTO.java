@@ -1,11 +1,30 @@
 package com.devconmx.nutrilud_backend.model;
 
+import java.time.LocalDateTime;
+
 public class UsersDTO {
     private int id;
     private int rol_id;
+
     private int tusuario_admin_id;
+    private String descripcion_admin;
+    private String foto_admin;
+    private String telefono_admin;
+
     private int tusuario_nutriologo_id;
+    private String descripcion_nutriologo;
+    private String foto_nutriologo;
+    private String direccion_nutriologo;
+    private String telefono_nutriologo;
+    private int cedula_profesional_nutriologo;
+
     private int tusuario_paciente_id;
+    private String foto_paciente;
+    private String telefono_paciente;
+    private LocalDateTime fecha_nacimiento_paciente;
+    private String sexo_paciente;
+    private String alergias_paciente;
+
     private String nombre;
     private String primer_apellido;
     private String segundo_apellido;
@@ -15,8 +34,8 @@ public class UsersDTO {
     private String contrasenia;
     private int estado;
     private String remember_token;
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
     public int getId() {
         return id;
@@ -130,19 +149,123 @@ public class UsersDTO {
         this.remember_token = remember_token;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getDescripcion_admin() {
+        return descripcion_admin;
+    }
+
+    public void setDescripcion_admin(String descripcion_admin) {
+        this.descripcion_admin = descripcion_admin;
+    }
+
+    public String getFoto_admin() {
+        return foto_admin;
+    }
+
+    public void setFoto_admin(String foto_admin) {
+        this.foto_admin = foto_admin;
+    }
+
+    public String getTelefono_admin() {
+        return telefono_admin;
+    }
+
+    public void setTelefono_admin(String telefono_admin) {
+        this.telefono_admin = telefono_admin;
+    }
+
+    public String getDescripcion_nutriologo() {
+        return descripcion_nutriologo;
+    }
+
+    public void setDescripcion_nutriologo(String descripcion_nutriologo) {
+        this.descripcion_nutriologo = descripcion_nutriologo;
+    }
+
+    public String getFoto_nutriologo() {
+        return foto_nutriologo;
+    }
+
+    public void setFoto_nutriologo(String foto_nutriologo) {
+        this.foto_nutriologo = foto_nutriologo;
+    }
+
+    public String getDireccion_nutriologo() {
+        return direccion_nutriologo;
+    }
+
+    public void setDireccion_nutriologo(String direccion_nutriologo) {
+        this.direccion_nutriologo = direccion_nutriologo;
+    }
+
+    public String getTelefono_nutriologo() {
+        return telefono_nutriologo;
+    }
+
+    public void setTelefono_nutriologo(String telefono_nutriologo) {
+        this.telefono_nutriologo = telefono_nutriologo;
+    }
+
+    public int getCedula_profesional_nutriologo() {
+        return cedula_profesional_nutriologo;
+    }
+
+    public void setCedula_profesional_nutriologo(int cedula_profesional_nutriologo) {
+        this.cedula_profesional_nutriologo = cedula_profesional_nutriologo;
+    }
+
+    public String getFoto_paciente() {
+        return foto_paciente;
+    }
+
+    public void setFoto_paciente(String foto_paciente) {
+        this.foto_paciente = foto_paciente;
+    }
+
+    public String getTelefono_paciente() {
+        return telefono_paciente;
+    }
+
+    public void setTelefono_paciente(String telefono_paciente) {
+        this.telefono_paciente = telefono_paciente;
+    }
+
+    public LocalDateTime getFecha_nacimiento_paciente() {
+        return fecha_nacimiento_paciente;
+    }
+
+    public void setFecha_nacimiento_paciente(LocalDateTime fecha_nacimiento_paciente) {
+        this.fecha_nacimiento_paciente = fecha_nacimiento_paciente;
+    }
+
+    public String getSexo_paciente() {
+        return sexo_paciente;
+    }
+
+    public void setSexo_paciente(String sexo_paciente) {
+        this.sexo_paciente = sexo_paciente;
+    }
+
+    public String getAlergias_paciente() {
+        return alergias_paciente;
+    }
+
+    public void setAlergias_paciente(String alergias_paciente) {
+        this.alergias_paciente = alergias_paciente;
     }
 }
