@@ -7,29 +7,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devconmx.nutrilud_backend.model.Tdatos_consultasDTO;
 import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
-import com.devconmx.nutrilud_backend.repository.Tdatos_consultasRepository;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("tdatos_consultas")
 @RestController()
 @CrossOrigin(origins = "*")
 public class Tdatos_consultasEndpoint {
     private static final Logger LOG = LoggerFactory.getLogger(Tdatos_consultasEndpoint.class);
-
-    @Autowired
-    private Tdatos_consultasRepository tdatos_consultasRepository;
 
     @Autowired
     private Tdatos_consultasServices tdatos_consultasServices;

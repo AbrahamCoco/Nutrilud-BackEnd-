@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devconmx.nutrilud_backend.model.T_recordatoriosDTO;
 import com.devconmx.nutrilud_backend.model.T_recordatoriosVO;
-import com.devconmx.nutrilud_backend.repository.T_recordatoriosRepository;
 import com.devconmx.nutrilud_backend.service.T_recordatoriosServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -26,9 +25,6 @@ import com.devconmx.nutrilud_backend.utils.Utils;
 @CrossOrigin(origins = "*")
 public class T_recordatoriosEndpoint {
     private static final Logger LOG = LoggerFactory.getLogger(T_recordatoriosEndpoint.class);
-
-    @Autowired
-    private T_recordatoriosRepository t_recordatoriosRepository;
 
     @Autowired
     private T_recordatoriosServices t_recordatoriosServices;

@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.UsersDTO;
 import com.devconmx.nutrilud_backend.model.UsersVO;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.UsersServices;
@@ -71,6 +74,35 @@ public class UsersEndpoint {
             response = Utils.handle(e, "Error al eliminar paciente");
         }
         LOG.info("deleteByIdPaciente() response: {}", response);
+        return response;
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<ResponseBean<Void>> insert(@RequestBody UsersDTO usersDTO) {
+        ResponseEntity<ResponseBean<Void>> response = null;
+        LOG.info("insertUserEndpoint() -> UsersDTO: {}", usersDTO);
+        try {
+            usersServices.insert(usersDTO);
+            response = Utils.response200OK("Usuario guardado correctamente");
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al guardar el usuario");
+        }
+        LOG.info("insertUserEndpoint() response: {}", response);
+        return response;
+    }
+
+    @GetMapping("/findById")
+    public ResponseEntity<ResponseBean<UsersVO>> findById(@RequestParam int id) {
+        ResponseEntity<ResponseBean<UsersVO>> response = null;
+        LOG.info("findByIdEndpoint() -> id: {}", id);
+        UsersVO vo = null;
+        try {
+            vo = usersServices.findById(id);
+            response = Utils.response200OK("Usuario encontrado", vo);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al buscar usuario");
+        }
+        LOG.info("findByIdEndpoint() response: {}", response);
         return response;
     }
 }
