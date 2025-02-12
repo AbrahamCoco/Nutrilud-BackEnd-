@@ -160,7 +160,7 @@ public class Personal_access_tokensServiceImpl implements Personal_access_tokens
             file.transferTo(dest);
 
             // Construir la ruta relativa que se retornará (usando File.separator)
-            rutaRelativa = relativeUploadDir + File.separator + newFileName;
+            rutaRelativa = relativeUploadDir.replace("uploads" + File.separator, "") + File.separator + newFileName;
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar la imagen");
         }
