@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "t_recordatorios")
 @NamedQueries({
-        @NamedQuery(name = "T_recordatoriosVO.findRecordatorioByPacienteId", query = "SELECT t FROM T_recordatoriosVO t WHERE t.Tusuario_paciente.id = :id")
+        @NamedQuery(name = "T_recordatoriosVO.findRecordatorioByPacienteId", query = "SELECT t FROM T_recordatoriosVO t WHERE t.Tusuario_paciente.Tusuario_pacientes.id = :id")
 })
 public class T_recordatoriosVO implements Serializable {
 

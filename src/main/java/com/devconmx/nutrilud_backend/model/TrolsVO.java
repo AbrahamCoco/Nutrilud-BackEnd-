@@ -8,11 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trols")
-@NamedQueries({})
+@NamedQueries({
+        @NamedQuery(name = "TrolsVO.findAllRols", query = "SELECT t FROM TrolsVO t WHERE t.estado = 1"),
+})
 public class TrolsVO implements Serializable {
 
     @Id

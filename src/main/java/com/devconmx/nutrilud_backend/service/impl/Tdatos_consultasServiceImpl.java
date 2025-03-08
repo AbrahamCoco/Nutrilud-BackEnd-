@@ -81,6 +81,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
                     porcentaje_grasa, sexo);
             vo.setPorcentaje_musculo(area_muscular_brazo);
             vo.setPresion_arterial(tdatos_consultasDTO.getPresion_arterial());
+            vo.setTrigliceridos(tdatos_consultasDTO.getTrigliceridos());
 
             vo.setCreated_at(LocalDateTime.now());
             vo.setUpdated_at(LocalDateTime.now());

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devconmx.nutrilud_backend.model.UsersVO;
 import com.devconmx.nutrilud_backend.service.Personal_access_tokensServices;
@@ -42,7 +44,7 @@ public class Personal_access_tokenEndpoint {
     @GetMapping("/login")
     public ResponseEntity<ResponseBean<String>> login(@RequestParam String usuario, @RequestParam String contrasenia) {
         ResponseEntity<ResponseBean<String>> response = null;
-        LOG.info("login() -> usuario: *********, contrasenia: *********");
+        LOG.info("loginEndpoint() -> usuario: *********, contrasenia: *********");
         UsersVO vo = null;
         String token = null;
         try {
@@ -53,6 +55,23 @@ public class Personal_access_tokenEndpoint {
             response = Utils.handle(e, "Error en inicio de sesion");
         }
         LOG.info("Token Generado");
+        return response;
+    }
+
+    @PostMapping("/insert_archivo")
+    public ResponseEntity<ResponseBean<String>> insertArchivo(@RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam int id, @RequestParam("file") MultipartFile file) {
+        ResponseEntity<ResponseBean<String>> response = null;
+        LOG.info("insertArchivoEndpoint() -> nombre: {}, apellido: {}, id: {}", nombre, apellido, id);
+        String path = null;
+        try {
+            path = personal_access_tokenServices.insertArchivo(file, nombre, apellido, id);
+            response = Utils.response200OK("Imagen insertada", path);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al insertar la imagen");
+        }
+        LOG.info("Archivo insertada");
         return response;
     }
 }
