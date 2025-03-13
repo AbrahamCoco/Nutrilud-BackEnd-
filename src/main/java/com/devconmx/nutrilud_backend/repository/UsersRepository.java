@@ -23,4 +23,6 @@ public interface UsersRepository extends JpaRepository<UsersVO, Integer> {
     UsersVO findById(int id);
 
     UsersVO findByUser(String usuario);
+
+    List<UsersVO> findAllAdminsAndNutris();
 }

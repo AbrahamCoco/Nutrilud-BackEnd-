@@ -105,4 +105,19 @@ public class UsersEndpoint {
         LOG.info("findByIdEndpoint() response: {}", response);
         return response;
     }
+
+    @GetMapping("/findAllAdminsAndNutris")
+    public ResponseEntity<ResponseBean<List<UsersVO>>> findAllAdminsAndNutris() {
+        ResponseEntity<ResponseBean<List<UsersVO>>> response = null;
+        LOG.info("findAllAdminsAndNutrisEndpoint()");
+        List<UsersVO> vo = null;
+        try {
+            vo = usersServices.findAllAdminsAndNutris();
+            response = Utils.response200OK("Usuarios encontrados", vo);
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al buscar usuarios");
+        }
+        LOG.info("findAllAdminsAndNutrisEndpoint() response: {}", response);
+        return response;
+    }
 }

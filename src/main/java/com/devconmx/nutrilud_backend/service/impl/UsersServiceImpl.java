@@ -182,4 +182,20 @@ public class UsersServiceImpl implements UsersServices {
         }
         return false;
     }
+
+    @Override
+    public List<UsersVO> findAllAdminsAndNutris() throws AppException {
+        LOG.info("findAllAdminsAndNutrisService()");
+        List<UsersVO> vo = null;
+        try {
+            vo = usersRepository.findAllAdminsAndNutris();
+            if (vo == null) {
+                throw new AppException("No se encontraron administradores y nutriologos");
+            }
+        } catch (Exception e) {
+            Utils.raise(e, "Error al buscar administradores y nutriologos");
+        }
+        LOG.info("findAllAdminsAndNutrisService() -> vo: {}", vo);
+        return vo;
+    }
 }
