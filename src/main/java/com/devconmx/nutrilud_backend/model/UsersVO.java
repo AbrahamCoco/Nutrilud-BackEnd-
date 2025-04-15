@@ -24,6 +24,7 @@ import jakarta.persistence.Table;
         @NamedQuery(name = "UsersVO.findByIdNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByUser", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findAllAdminsAndNutris", query = "SELECT u FROM UsersVO u WHERE (u.Trols.id = 1 OR u.Trols.id = 2) AND u.estado = 1")
+})
 public class UsersVO implements Serializable {
 
     @Id
