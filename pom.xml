@@ -12,7 +12,7 @@
 	<artifactId>nutrilud_backend</artifactId>
 	<version>0.0.1</version>
 	<name>nutrilud_backend</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Backend para un consultorio medico</description>
 	<url/>
 	<licenses>
 		<license/>
