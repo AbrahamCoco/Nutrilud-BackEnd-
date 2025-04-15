@@ -17,4 +17,6 @@ public interface UsersServices {
     void insert(UsersDTO usersDTO) throws AppException;
 
     UsersVO findById(int id) throws AppException;
+
+    List<UsersVO> findAllAdminsAndNutris() throws AppException;
 }

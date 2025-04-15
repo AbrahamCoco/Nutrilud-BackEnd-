@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.2</version>
+		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devconmx</groupId>
 	<artifactId>nutrilud_backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>nutrilud_backend</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -58,10 +58,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
-			<scope>runtime</scope>
+    		<groupId>com.mysql</groupId>
+    		<artifactId>mysql-connector-j</artifactId>
+    		<version>8.2.0</version>
 		</dependency>
 
 	    <dependency>
