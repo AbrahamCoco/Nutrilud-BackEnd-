@@ -1,4 +1,8 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 
 public class Tdatos_consultasBuilder {
     public static Tdatos_consultasDTO fromVO(Tdatos_consultasVO Tdatos_consultasVO) {

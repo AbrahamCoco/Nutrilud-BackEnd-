@@ -1,4 +1,8 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.TarticulosDTO;
+import com.devconmx.nutrilud_backend.model.vos.TarticulosVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 
 public class TarticulosBuilder {
     public static TarticulosDTO fromVO(TarticulosVO TarticulosVO) {

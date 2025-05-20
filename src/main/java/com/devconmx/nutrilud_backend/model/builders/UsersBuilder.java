@@ -1,4 +1,7 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 
 public class UsersBuilder {
     public static UsersDTO fromVO(UsersVO UsersVO) {

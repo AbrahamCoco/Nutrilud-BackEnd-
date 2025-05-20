@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.T_recordatoriosDTO;
-import com.devconmx.nutrilud_backend.model.T_recordatoriosVO;
+import com.devconmx.nutrilud_backend.model.dtos.T_recordatoriosDTO;
+import com.devconmx.nutrilud_backend.model.vos.T_recordatoriosVO;
 import com.devconmx.nutrilud_backend.service.T_recordatoriosServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;

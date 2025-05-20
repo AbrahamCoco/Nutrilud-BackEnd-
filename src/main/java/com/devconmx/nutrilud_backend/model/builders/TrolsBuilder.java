@@ -1,4 +1,7 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.TrolsDTO;
+import com.devconmx.nutrilud_backend.model.vos.TrolsVO;
 
 public class TrolsBuilder {
     public static TrolsDTO fromVO(TrolsVO TrolsVO) {

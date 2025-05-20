@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.Personal_access_tokensServices;
 import com.devconmx.nutrilud_backend.utils.Utils;

@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devconmx.nutrilud_backend.model.Tusuario_adminsBuilder;
-import com.devconmx.nutrilud_backend.model.Tusuario_adminsDTO;
-import com.devconmx.nutrilud_backend.model.Tusuario_adminsVO;
+import com.devconmx.nutrilud_backend.model.builders.Tusuario_adminsBuilder;
+import com.devconmx.nutrilud_backend.model.dtos.Tusuario_adminsDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tusuario_adminsVO;
 import com.devconmx.nutrilud_backend.repository.Tusuario_adminsRepository;
 import com.devconmx.nutrilud_backend.service.Tusuario_adminsServices;
 import com.devconmx.nutrilud_backend.utils.Utils;

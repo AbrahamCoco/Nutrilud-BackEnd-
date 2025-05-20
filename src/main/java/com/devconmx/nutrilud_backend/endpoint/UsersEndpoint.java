@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.UsersDTO;
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.UsersServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;

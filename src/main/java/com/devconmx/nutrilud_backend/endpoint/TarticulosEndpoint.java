@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.TarticulosDTO;
-import com.devconmx.nutrilud_backend.model.TarticulosVO;
+import com.devconmx.nutrilud_backend.model.dtos.TarticulosDTO;
+import com.devconmx.nutrilud_backend.model.vos.TarticulosVO;
 import com.devconmx.nutrilud_backend.service.TarticulosServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;

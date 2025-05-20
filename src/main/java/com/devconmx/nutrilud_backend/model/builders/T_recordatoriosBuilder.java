@@ -1,4 +1,8 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.T_recordatoriosDTO;
+import com.devconmx.nutrilud_backend.model.vos.T_recordatoriosVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 
 public class T_recordatoriosBuilder {
     public static T_recordatoriosDTO fromVO(T_recordatoriosVO T_recordatoriosVO) {

@@ -1,4 +1,7 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.Tusuario_adminsDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tusuario_adminsVO;
 
 public class Tusuario_adminsBuilder {
     public static Tusuario_adminsDTO fromVO(Tusuario_adminsVO Tusuario_adminsVO) {

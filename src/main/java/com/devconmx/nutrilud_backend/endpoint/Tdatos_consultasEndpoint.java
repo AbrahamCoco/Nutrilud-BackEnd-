@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasDTO;
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
+import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;

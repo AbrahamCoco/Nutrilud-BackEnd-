@@ -1,4 +1,7 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.builders;
+
+import com.devconmx.nutrilud_backend.model.dtos.Personal_access_tokenDTO;
+import com.devconmx.nutrilud_backend.model.vos.Personal_access_tokenVO;
 
 public class Personal_access_tokenBuilder {
     public static Personal_access_tokenDTO fromVO(Personal_access_tokenVO Personal_access_tokenVO) {

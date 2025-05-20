@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devconmx.nutrilud_backend.model.TarticulosBuilder;
-import com.devconmx.nutrilud_backend.model.TarticulosDTO;
-import com.devconmx.nutrilud_backend.model.TarticulosVO;
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.builders.TarticulosBuilder;
+import com.devconmx.nutrilud_backend.model.dtos.TarticulosDTO;
+import com.devconmx.nutrilud_backend.model.vos.TarticulosVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.TarticulosRepository;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.TarticulosServices;

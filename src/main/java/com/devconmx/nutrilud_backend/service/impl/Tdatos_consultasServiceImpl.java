@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasBuilder;
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasDTO;
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.builders.Tdatos_consultasBuilder;
+import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.Tdatos_consultasRepository;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;

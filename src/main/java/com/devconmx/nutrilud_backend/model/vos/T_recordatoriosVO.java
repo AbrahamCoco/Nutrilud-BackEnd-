@@ -1,4 +1,4 @@
-package com.devconmx.nutrilud_backend.model;
+package com.devconmx.nutrilud_backend.model.vos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,12 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "t_recordatorios")
 @NamedQueries({
         @NamedQuery(name = "T_recordatoriosVO.findRecordatorioByPacienteId", query = "SELECT t FROM T_recordatoriosVO t WHERE t.Tusuario_paciente.Tusuario_pacientes.id = :id")
 })
+@Data
 public class T_recordatoriosVO implements Serializable {
 
     @Id
@@ -34,52 +36,4 @@ public class T_recordatoriosVO implements Serializable {
     private String recordatorio_pdf;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public UsersVO getTusuario_nutriologo() {
-        return Tusuario_nutriologo;
-    }
-
-    public void setTusuario_nutriologo(UsersVO tusuario_nutriologo) {
-        Tusuario_nutriologo = tusuario_nutriologo;
-    }
-
-    public UsersVO getTusuario_paciente() {
-        return Tusuario_paciente;
-    }
-
-    public void setTusuario_paciente(UsersVO tusuario_paciente) {
-        Tusuario_paciente = tusuario_paciente;
-    }
-
-    public String getRecordatorio_pdf() {
-        return recordatorio_pdf;
-    }
-
-    public void setRecordatorio_pdf(String recordatorio_pdf) {
-        this.recordatorio_pdf = recordatorio_pdf;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
-    }
 }
