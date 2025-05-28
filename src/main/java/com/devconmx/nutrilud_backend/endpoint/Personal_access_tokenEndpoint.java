@@ -67,9 +67,9 @@ public class Personal_access_tokenEndpoint {
         String path = null;
         try {
             path = personal_access_tokenServices.insertArchivo(file, nombre, apellido, id);
-            response = Utils.response200OK("Imagen insertada", path);
+            response = Utils.response200OK("Archivo insertado", path);
         } catch (Exception e) {
-            response = Utils.handle(e, "Error al insertar la imagen");
+            response = Utils.handle(e, "Error al insertar el archivo");
         }
         LOG.info("Archivo insertada");
         return response;
