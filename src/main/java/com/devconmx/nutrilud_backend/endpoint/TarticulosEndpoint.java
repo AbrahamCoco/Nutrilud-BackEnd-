@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.beans.ArticulosBean;
 import com.devconmx.nutrilud_backend.model.dtos.TarticulosDTO;
-import com.devconmx.nutrilud_backend.model.vos.TarticulosVO;
 import com.devconmx.nutrilud_backend.service.TarticulosServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -30,13 +30,13 @@ public class TarticulosEndpoint {
     private TarticulosServices tarticulosServices;
 
     @GetMapping("/findAllArticles")
-    public ResponseEntity<ResponseBean<List<TarticulosVO>>> findAllArticles() {
-        ResponseEntity<ResponseBean<List<TarticulosVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<ArticulosBean>>> findAllArticles() {
+        ResponseEntity<ResponseBean<List<ArticulosBean>>> response = null;
         LOG.info("findAllArticlesEndpoint()");
-        List<TarticulosVO> articulosVO = null;
+        List<ArticulosBean> articulos = null;
         try {
-            articulosVO = tarticulosServices.findAll();
-            response = Utils.response200OK("Articulos encontrados", articulosVO);
+            articulos = tarticulosServices.findAll();
+            response = Utils.response200OK("Articulos encontrados", articulos);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al obtener los articulos");
         }
@@ -45,13 +45,13 @@ public class TarticulosEndpoint {
     }
 
     @GetMapping("/findById")
-    public ResponseEntity<ResponseBean<List<TarticulosVO>>> findById(@RequestParam int id) {
-        ResponseEntity<ResponseBean<List<TarticulosVO>>> response = null;
+    public ResponseEntity<ResponseBean<ArticulosBean>> findById(@RequestParam int id) {
+        ResponseEntity<ResponseBean<ArticulosBean>> response = null;
         LOG.info("findByIdArticuloEndpoint() -> id: {}", id);
-        List<TarticulosVO> articulosVO = null;
+        ArticulosBean articulos = null;
         try {
-            articulosVO = tarticulosServices.findById(id);
-            response = Utils.response200OK("Articulos encontrados", articulosVO);
+            articulos = tarticulosServices.findById(id);
+            response = Utils.response200OK("Articulos encontrados", articulos);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al obtener los articulos");
         }

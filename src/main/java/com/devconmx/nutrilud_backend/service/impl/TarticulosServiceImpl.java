@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devconmx.nutrilud_backend.model.beans.ArticulosBean;
 import com.devconmx.nutrilud_backend.model.builders.TarticulosBuilder;
 import com.devconmx.nutrilud_backend.model.dtos.TarticulosDTO;
 import com.devconmx.nutrilud_backend.model.vos.TarticulosVO;
@@ -29,29 +31,48 @@ public class TarticulosServiceImpl implements TarticulosServices {
     private UsersRepository usersRepository;
 
     @Override
-    public List<TarticulosVO> findAll() throws AppException {
+    public List<ArticulosBean> findAll() throws AppException {
         LOG.info("FindAllArticulosService() -> Articulos");
         List<TarticulosVO> listTarticulosVOs = null;
+        List<ArticulosBean> articulosBeans = new ArrayList<>();
         try {
             listTarticulosVOs = tarticulosRepository.findAll();
+            listTarticulosVOs.forEach(articulo -> {
+                ArticulosBean bean = new ArticulosBean();
+                bean.setId(articulo.getId());
+                bean.setContenido(articulo.getContenido());
+                bean.setFoto(articulo.getFoto());
+                bean.setNameNutriologo(articulo.getTusuario_nutriologo().getNombre() + " " + articulo.getTusuario_nutriologo().getPrimer_apellido() + " " + articulo.getTusuario_nutriologo().getSegundo_apellido());
+                bean.setArticulocreated(articulo.getCreated_at());
+                articulosBeans.add(bean);
+            });
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
-        LOG.info("FindAllArticulosService() -> Articulos: {}", listTarticulosVOs);
-        return listTarticulosVOs;
+        LOG.info("FindAllArticulosService() -> Articulos: {}", articulosBeans);
+        return articulosBeans;
     }
 
     @Override
-    public List<TarticulosVO> findById(int id) throws AppException {
+    public ArticulosBean findById(int id) throws AppException {
         LOG.info("FindByIdArticulosService() -> Articulos");
-        List<TarticulosVO> listTarticulosVOs = null;
+        TarticulosVO listTarticulosVOs = null;
+        ArticulosBean articulo = null;
         try {
-            listTarticulosVOs = tarticulosRepository.findById(id).stream().toList();
+            listTarticulosVOs = tarticulosRepository.findById(id);
+            if (listTarticulosVOs != null) {
+                articulo = new ArticulosBean();
+                articulo.setId(listTarticulosVOs.getId());
+                articulo.setContenido(listTarticulosVOs.getContenido());
+                articulo.setFoto(listTarticulosVOs.getFoto());
+                articulo.setNameNutriologo(listTarticulosVOs.getTusuario_nutriologo().getNombre() + " " + listTarticulosVOs.getTusuario_nutriologo().getPrimer_apellido() + " " + listTarticulosVOs.getTusuario_nutriologo().getSegundo_apellido());
+                articulo.setArticulocreated(listTarticulosVOs.getCreated_at());
+            }
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
-        LOG.info("FindByIdArticulosService() - >Articulos: {}", listTarticulosVOs);
-        return listTarticulosVOs;
+        LOG.info("FindByIdArticulosService() - >Articulos: {}", articulo);
+        return articulo;
     }
 
     @Override
