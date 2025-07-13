@@ -2,13 +2,14 @@ package com.devconmx.nutrilud_backend.service;
 
 import java.util.List;
 
+import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
 import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.utils.exception.AppException;
 
 public interface UsersServices {
 
-    List<UsersVO> findAllPacientes() throws AppException;
+    List<PacientesBean> findAllPacientes() throws AppException;
 
     UsersVO findByIdPaciente(int id) throws AppException;
 

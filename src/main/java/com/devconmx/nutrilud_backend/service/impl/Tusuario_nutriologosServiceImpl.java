@@ -34,6 +34,7 @@ public class Tusuario_nutriologosServiceImpl implements Tusuario_nutriologosServ
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar el nutriologo");
         }
+        LOG.info("insertTusuario_nutriologosService() -> Nutriologo insertado");
         return vo;
     }
 }

@@ -34,6 +34,7 @@ public class Tusuario_adminsServiceImpl implements Tusuario_adminsServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar el administrador");
         }
+        LOG.info("insertTusuario_adminService() -> Admin insertado");
         return vo;
     }
 

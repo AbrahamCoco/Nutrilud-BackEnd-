@@ -40,6 +40,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar la agenda del nutriologo");
         }
+        LOG.info("findByNutriologoService() -> Agenda encontrada");
         return listaAgenda;
     }
 
@@ -55,6 +56,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar la agenda del paciente");
         }
+        LOG.info("findByPacienteService() -> Agenda encontrada");
         return listaAgenda;
     }
 

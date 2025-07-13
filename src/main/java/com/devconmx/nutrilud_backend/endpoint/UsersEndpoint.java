@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
 import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
@@ -34,12 +35,12 @@ public class UsersEndpoint {
     private UsersServices usersServices;
 
     @GetMapping("/findAllPacientes")
-    public ResponseEntity<ResponseBean<List<UsersVO>>> findAllPacientes() {
-        ResponseEntity<ResponseBean<List<UsersVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<PacientesBean>>> findAllPacientes() {
+        ResponseEntity<ResponseBean<List<PacientesBean>>> response = null;
         LOG.info("findAllPacientes()");
-        List<UsersVO> vo = null;
+        List<PacientesBean> vo = null;
         try {
-            vo = usersRepository.findByPaciente();
+            vo = usersServices.findAllPacientes();
             response = Utils.response200OK("Pacientes encontrados", vo);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al buscar pacientes");

@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
 import com.devconmx.nutrilud_backend.model.builders.UsersBuilder;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_adminsDTO;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_nutriologosDTO;
@@ -47,18 +49,31 @@ public class UsersServiceImpl implements UsersServices {
     private TrolsRepository trolsRepository;
 
     @Override
-    public List<UsersVO> findAllPacientes() throws AppException {
+    public List<PacientesBean> findAllPacientes() throws AppException {
         LOG.info("findAllPacientes()");
         List<UsersVO> vo = null;
+        List<PacientesBean> pacientes = new ArrayList<>();
         try {
             vo = usersRepository.findByPaciente();
             if (vo == null) {
                 throw new AppException("No se encontraron pacientes");
             }
+
+            vo.forEach(user -> {
+                PacientesBean bean = new PacientesBean();
+                bean.setId(user.getId());
+                bean.setId_paciente(user.getTusuario_pacientes().getId());
+                bean.setNombrePaciente(user.getNombre() + " " + user.getPrimer_apellido() + " " + user.getSegundo_apellido());
+                bean.setSexo(user.getTusuario_pacientes().getSexo());
+                bean.setCorreo(user.getCorreo());
+                bean.setTelefono(user.getTusuario_pacientes().getTelefono());
+                pacientes.add(bean);
+            });
+            LOG.info("findAllPacientes() -> Listado de pacientes");
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar pacientes");
         }
-        return vo;
+        return pacientes;
     }
 
     @Override
@@ -73,6 +88,7 @@ public class UsersServiceImpl implements UsersServices {
             if (vo.getEstado() == 0) {
                 throw new AppException("El paciente esta deshabilitado");
             }
+            LOG.info("findByIdPaciente() -> Paciente encontrado");
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar paciente");
         }
@@ -169,6 +185,7 @@ public class UsersServiceImpl implements UsersServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar usuario");
         }
+        LOG.info("findByIdService() -> Usuario encontrado");
         return vo;
     }
 
@@ -195,7 +212,7 @@ public class UsersServiceImpl implements UsersServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar administradores y nutriologos");
         }
-        LOG.info("findAllAdminsAndNutrisService() -> vo: {}", vo);
+        LOG.info("findAllAdminsAndNutrisService() -> Listado de administradores y nutriologos");
         return vo;
     }
 }

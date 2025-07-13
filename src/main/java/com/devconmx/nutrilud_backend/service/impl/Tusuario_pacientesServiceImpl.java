@@ -34,6 +34,7 @@ public class Tusuario_pacientesServiceImpl implements Tusuario_pacientesServices
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar el paciente");
         }
+        LOG.info("insertTusuario_pacientesService() -> Paciente insertado");
         return vo;
     }
 }

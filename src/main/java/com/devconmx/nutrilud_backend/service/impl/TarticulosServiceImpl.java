@@ -49,7 +49,7 @@ public class TarticulosServiceImpl implements TarticulosServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
-        LOG.info("FindAllArticulosService() -> Articulos: {}", articulosBeans);
+        LOG.info("FindAllArticulosService() -> Articulos cargados correctamente");
         return articulosBeans;
     }
 
@@ -71,7 +71,7 @@ public class TarticulosServiceImpl implements TarticulosServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al obtener los articulos");
         }
-        LOG.info("FindByIdArticulosService() - >Articulos: {}", articulo);
+        LOG.info("FindByIdArticulosService() -> Articulo cargado correctamente");
         return articulo;
     }
 

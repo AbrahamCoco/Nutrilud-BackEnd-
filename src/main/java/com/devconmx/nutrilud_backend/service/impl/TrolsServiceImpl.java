@@ -95,6 +95,7 @@ public class TrolsServiceImpl implements TrolsServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar el rol");
         }
+        LOG.info("findRolByIdService() -> Rol encontrado");
         return vo;
     }
 
@@ -107,6 +108,7 @@ public class TrolsServiceImpl implements TrolsServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar los roles");
         }
+        LOG.info("findAllRolService() -> Roles encontrados");
         return list;
     }
 
