@@ -11,7 +11,7 @@ public interface UsersServices {
 
     List<PacientesBean> findAllPacientes() throws AppException;
 
-    UsersVO findByIdPaciente(int id) throws AppException;
+    PacientesBean findByIdPaciente(int id) throws AppException;
 
     void deleteByIdPaciente(int id) throws AppException;
 

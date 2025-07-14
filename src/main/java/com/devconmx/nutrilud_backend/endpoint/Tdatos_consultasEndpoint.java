@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devconmx.nutrilud_backend.model.beans.ConsultasBean;
 import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
 import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;
@@ -45,10 +46,10 @@ public class Tdatos_consultasEndpoint {
     }
 
     @GetMapping("/findConsultasByPaciente")
-    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findConsultasByPaciente(@RequestParam int id) {
-        ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<ConsultasBean>>> findConsultasByPaciente(@RequestParam int id) {
+        ResponseEntity<ResponseBean<List<ConsultasBean>>> response = null;
         LOG.info("findConsultasByPacienteEndpoint() -> id: {}", id);
-        List<Tdatos_consultasVO> listaConsultas = null;
+        List<ConsultasBean> listaConsultas = null;
         try {
             listaConsultas = tdatos_consultasServices.findByPaciente(id);
             response = Utils.response200OK("Datos de consultas encontrados", listaConsultas);

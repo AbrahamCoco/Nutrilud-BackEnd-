@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devconmx.nutrilud_backend.model.beans.ConsultasBean;
 import com.devconmx.nutrilud_backend.model.builders.Tdatos_consultasBuilder;
 import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
 import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
@@ -45,19 +47,41 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
     }
 
     @Override
-    public List<Tdatos_consultasVO> findByPaciente(int id) throws AppException {
+    public List<ConsultasBean> findByPaciente(int id) throws AppException {
         LOG.info("findByPacienteService() -> Paciente: {}", id);
         List<Tdatos_consultasVO> listaAgenda = null;
+        List<ConsultasBean> consultas = new ArrayList<>();
         try {
             listaAgenda = tdatos_consultasRepository.findByPacienteVO(id);
             if (listaAgenda == null) {
                 throw new AppException("No se encontraron datos de la agenda");
             }
+
+            listaAgenda.forEach(consulta -> {
+                ConsultasBean bean = new ConsultasBean();
+                bean.setId(consulta.getId());
+                bean.setPeso(consulta.getPeso());
+                bean.setEstatura(consulta.getEstatura());
+                bean.setPorcentaje_grasa(consulta.getPorcentaje_grasa());
+                bean.setPorcentaje_musculo(consulta.getPorcentaje_musculo());
+                bean.setImc(consulta.getImc());
+                bean.setCircunferencia_cintura(consulta.getCircunferencia_cintura());
+                bean.setCircunferencia_cadera(consulta.getCircunferencia_cadera());
+                bean.setCircunferencia_brazo(consulta.getCircunferencia_brazo());
+                bean.setPliegue_bicipital(consulta.getPliegue_bicipital());
+                bean.setPliegue_tricipital(consulta.getPliegue_tricipital());
+                bean.setGlucosa(consulta.getGlucosa());
+                bean.setColesterol(consulta.getColesterol());
+                bean.setTrigliceridos(consulta.getTrigliceridos());
+                bean.setPresion_arterial(consulta.getPresion_arterial());
+                bean.setFecha_medicion(consulta.getFecha_medicion());
+                consultas.add(bean);
+            });
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar la agenda del paciente");
         }
         LOG.info("findByPacienteService() -> Agenda encontrada");
-        return listaAgenda;
+        return consultas;
     }
 
     @Override

@@ -77,9 +77,10 @@ public class UsersServiceImpl implements UsersServices {
     }
 
     @Override
-    public UsersVO findByIdPaciente(int id) throws AppException {
+    public PacientesBean findByIdPaciente(int id) throws AppException {
         LOG.info("findByIdPaciente() -> id: {}", id);
         UsersVO vo = null;
+        PacientesBean paciente = null;
         try {
             vo = usersRepository.findByIdPaciente(id);
             if (vo == null) {
@@ -88,11 +89,22 @@ public class UsersServiceImpl implements UsersServices {
             if (vo.getEstado() == 0) {
                 throw new AppException("El paciente esta deshabilitado");
             }
+
+            paciente = new PacientesBean();
+            paciente.setId(vo.getId());
+            paciente.setId_paciente(vo.getTusuario_pacientes().getId());
+            paciente.setNombrePaciente(vo.getNombre() + " " + vo.getPrimer_apellido() + " " + vo.getSegundo_apellido());
+            paciente.setSexo(vo.getTusuario_pacientes().getSexo());
+            paciente.setCorreo(vo.getCorreo());
+            paciente.setTelefono(vo.getTusuario_pacientes().getTelefono());
+            paciente.setFechaNacimiento(vo.getTusuario_pacientes().getFecha_nacimiento());
+            paciente.setAlergias(vo.getTusuario_pacientes().getAlergias());
+
             LOG.info("findByIdPaciente() -> Paciente encontrado");
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar paciente");
         }
-        return vo;
+        return paciente;
     }
 
     @Override

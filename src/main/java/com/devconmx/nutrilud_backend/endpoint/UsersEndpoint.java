@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
 import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
-import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.UsersServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -27,9 +26,6 @@ import com.devconmx.nutrilud_backend.utils.Utils;
 @CrossOrigin(origins = "*")
 public class UsersEndpoint {
     private static final Logger LOG = LoggerFactory.getLogger(UsersEndpoint.class);
-
-    @Autowired
-    private UsersRepository usersRepository;
 
     @Autowired
     private UsersServices usersServices;
@@ -50,12 +46,12 @@ public class UsersEndpoint {
     }
 
     @GetMapping("/findByIdPaciente")
-    public ResponseEntity<ResponseBean<UsersVO>> findByIdPaciente(@RequestParam int id) {
-        ResponseEntity<ResponseBean<UsersVO>> response = null;
+    public ResponseEntity<ResponseBean<PacientesBean>> findByIdPaciente(@RequestParam int id) {
+        ResponseEntity<ResponseBean<PacientesBean>> response = null;
         LOG.info("findByIdPaciente() -> id: {}", id);
-        UsersVO vo = null;
+        PacientesBean vo = null;
         try {
-            vo = usersRepository.findByIdPaciente(id);
+            vo = usersServices.findByIdPaciente(id);
             response = Utils.response200OK("Paciente encontrado", vo);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al buscar paciente");
