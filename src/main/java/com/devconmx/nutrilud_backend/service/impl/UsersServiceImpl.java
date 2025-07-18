@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
+import com.devconmx.nutrilud_backend.model.beans.UserBean;
 import com.devconmx.nutrilud_backend.model.builders.UsersBuilder;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_adminsDTO;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_nutriologosDTO;
@@ -183,9 +184,10 @@ public class UsersServiceImpl implements UsersServices {
     }
 
     @Override
-    public UsersVO findById(int id) throws AppException {
+    public UserBean findById(int id) throws AppException {
         LOG.info("findByIdService() -> id: {}", id);
         UsersVO vo = null;
+        UserBean userBean = null;
         try {
             vo = usersRepository.findById(id);
             if (vo == null) {
@@ -194,11 +196,22 @@ public class UsersServiceImpl implements UsersServices {
             if (vo.getEstado() == 0) {
                 throw new AppException("El usuario esta deshabilitado");
             }
+
+            userBean = new UserBean();
+            userBean.setId(vo.getId());
+            userBean.setNombre(vo.getNombre() + " " + vo.getPrimer_apellido() + " " + vo.getSegundo_apellido());
+            userBean.setFoto(vo.getTusuario_nutriologos().getFoto());
+            userBean.setCorreo(vo.getCorreo());
+            userBean.setTelefono(vo.getTusuario_nutriologos().getTelefono());
+            userBean.setDireccion(vo.getTusuario_nutriologos().getDireccion());
+            userBean.setCedula(vo.getTusuario_nutriologos().getCedula_profesional());
+            userBean.setDescripcion(vo.getTusuario_nutriologos().getDescripcion());
+
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar usuario");
         }
         LOG.info("findByIdService() -> Usuario encontrado");
-        return vo;
+        return userBean;
     }
 
     public boolean validateUser(String user) throws AppException {

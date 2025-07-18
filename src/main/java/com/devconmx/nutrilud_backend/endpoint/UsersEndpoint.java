@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
+import com.devconmx.nutrilud_backend.model.beans.UserBean;
 import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.service.UsersServices;
@@ -89,10 +90,10 @@ public class UsersEndpoint {
     }
 
     @GetMapping("/findById")
-    public ResponseEntity<ResponseBean<UsersVO>> findById(@RequestParam int id) {
-        ResponseEntity<ResponseBean<UsersVO>> response = null;
+    public ResponseEntity<ResponseBean<UserBean>> findById(@RequestParam int id) {
+        ResponseEntity<ResponseBean<UserBean>> response = null;
         LOG.info("findByIdEndpoint() -> id: {}", id);
-        UsersVO vo = null;
+        UserBean vo = null;
         try {
             vo = usersServices.findById(id);
             response = Utils.response200OK("Usuario encontrado", vo);
