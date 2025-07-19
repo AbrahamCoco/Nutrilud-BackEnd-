@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('nutriologo_id');
             $table->unsignedBigInteger('paciente_id');
+            $table->string("otros")->nullable();
+            $table->string("observaciones")->nullable();
             $table->foreign('nutriologo_id')->references('id')->on('tusuario_nutriologos');
             $table->foreign('paciente_id')->references('id')->on('tusuario_pacientes');
             $table->timestamps();
