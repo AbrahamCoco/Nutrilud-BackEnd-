@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'segundo_apellido' => 'Acoltzi',
             'usuario' => 'karina',
             'correo' => 'karina@gmail.com',
-            'contrasenia' => Hash::make('karina1994'),
+            'contrasenia' => 'karina1994',
             'estado' => 1,
         ]);
 
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'segundo_apellido' => 'Zempoalteca',
             'usuario' => 'abraham',
             'correo' => 'abraham@gmail.com',
-            'contrasenia' => Hash::make('abraham1995'),
+            'contrasenia' => 'abraham1995',
             'estado' => 1,
         ]);
 
@@ -190,7 +190,7 @@ class DatabaseSeeder extends Seeder
             'segundo_apellido' => 'Gonzalez',
             'usuario' => 'juan',
             'correo' => 'juan@gmail.com',
-            'contrasenia' => Hash::make('juan1996'),
+            'contrasenia' => 'juan1996',
             'estado' => 1,
         ]);
 

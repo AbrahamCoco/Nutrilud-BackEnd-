@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'segundo_apellido' => $this->faker->lastName(),
             'usuario' => $this->faker->userName(),
             'correo' => $this->faker->unique()->safeEmail(),
-            'contrasenia' => Hash::make('password'), // Contraseña por defecto
+            'contrasenia' => 'password', // Contraseña por defecto
             'estado' => 1, // Estado por defecto
         ];
     }
