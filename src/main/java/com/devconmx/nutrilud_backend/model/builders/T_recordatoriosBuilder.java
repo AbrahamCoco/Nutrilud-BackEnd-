@@ -12,7 +12,8 @@ public class T_recordatoriosBuilder {
         destin.setId(origin.getId());
         destin.setNutriologo_id(origin.getTusuario_nutriologo().getId());
         destin.setPaciente_id(origin.getTusuario_paciente().getId());
-        destin.setRecordatorio_pdf(origin.getRecordatorio_pdf());
+        destin.setOtros(origin.getOtros());
+        destin.setObservaciones(origin.getObservaciones());
         destin.setCreated_at(origin.getCreated_at());
         destin.setUpdated_at(origin.getUpdated_at());
 
@@ -26,7 +27,8 @@ public class T_recordatoriosBuilder {
         destin.setId(origin.getId());
         destin.setTusuario_nutriologo(new UsersVO());
         destin.setTusuario_paciente(new UsersVO());
-        destin.setRecordatorio_pdf(origin.getRecordatorio_pdf());
+        destin.setOtros(origin.getOtros());
+        destin.setObservaciones(origin.getObservaciones());
         destin.setCreated_at(origin.getCreated_at());
         destin.setUpdated_at(origin.getUpdated_at());
 

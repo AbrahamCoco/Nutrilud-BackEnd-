@@ -32,7 +32,7 @@ public class T_recordatoriosEndpoint {
     @PostMapping("/insert")
     public ResponseEntity<ResponseBean<Void>> insert(@RequestBody T_recordatoriosDTO t_recordatoriosDTO) {
         ResponseEntity<ResponseBean<Void>> response = null;
-        LOG.info("insertRecordatorioEndpoint() -> T_recordatoriosDTO: {}", t_recordatoriosDTO);
+        LOG.info("insertRecordatorioEndpoint() -> T_recordatoriosDTO");
         try {
             t_recordatoriosServices.insert(t_recordatoriosDTO);
             response = Utils.response200OK("Recordatorio guardado correctamente");

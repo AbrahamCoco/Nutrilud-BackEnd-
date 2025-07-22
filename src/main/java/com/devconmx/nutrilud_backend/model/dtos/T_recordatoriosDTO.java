@@ -9,7 +9,9 @@ public class T_recordatoriosDTO {
     private int id;
     private int nutriologo_id;
     private int paciente_id;
-    private String recordatorio_pdf;
+    private String otros;
+    private String observaciones;
+    private TdataRecordatorioListDTO tdata_recordatorio;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 }

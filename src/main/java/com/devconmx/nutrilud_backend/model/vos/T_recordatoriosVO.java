@@ -33,7 +33,8 @@ public class T_recordatoriosVO implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
     private UsersVO Tusuario_paciente;
-    private String recordatorio_pdf;
+    private String otros;
+    private String observaciones;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 }
