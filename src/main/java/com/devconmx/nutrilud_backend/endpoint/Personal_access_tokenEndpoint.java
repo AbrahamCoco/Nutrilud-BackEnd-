@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devconmx.nutrilud_backend.model.beans.LoginBean;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.service.Personal_access_tokensServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
@@ -41,14 +43,14 @@ public class Personal_access_tokenEndpoint {
         return response;
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<ResponseBean<String>> login(@RequestParam String usuario, @RequestParam String contrasenia) {
+    @PostMapping("/login")
+    public ResponseEntity<ResponseBean<String>> login(@RequestBody LoginBean loginBean) {
         ResponseEntity<ResponseBean<String>> response = null;
         LOG.info("loginEndpoint() -> usuario: *********, contrasenia: *********");
         UsersVO vo = null;
         String token = null;
         try {
-            vo = personal_access_tokenServices.login(usuario, contrasenia);
+            vo = personal_access_tokenServices.login(loginBean.getUsuario(), loginBean.getContrasenia());
             token = personal_access_tokenServices.generateToken(vo);
             response = Utils.response200OK("Inicio de sesion exitoso", token);
         } catch (Exception e) {

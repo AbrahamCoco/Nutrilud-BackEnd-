@@ -74,30 +74,30 @@ public class ArchivosEndpoint {
     @GetMapping("/view/**")
     public ResponseEntity<Resource> viewFile(HttpServletRequest request) {
         LOG.info("viewFileEndpoint()");
-    try {
-        // CORREGIDO: +13 para eliminar "/api/v1/view/"
-        String fullPath = request.getRequestURI().substring(request.getRequestURI().indexOf("/api/v1/view/") + 13);
-        
-        Path filePath = fileStorageLocation.resolve(fullPath).normalize();
-        Resource resource = new UrlResource(filePath.toUri());
+        try {
+            // CORREGIDO: +13 para eliminar "/api/v1/view/"
+            String fullPath = request.getRequestURI().substring(request.getRequestURI().indexOf("/api/v1/view/") + 13);
+            
+            Path filePath = fileStorageLocation.resolve(fullPath).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
 
-        if (!resource.exists() || !resource.isReadable()) {
-            LOG.warn("Archivo no encontrado: {}", filePath);
-            return ResponseEntity.notFound().build();
+            if (!resource.exists() || !resource.isReadable()) {
+                LOG.warn("Archivo no encontrado: {}", filePath);
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, contentType)
+                    .body(resource);
+
+        } catch (Exception e) {
+            LOG.error("Error al visualizar archivo", e);
+            return ResponseEntity.internalServerError().build();
         }
-
-        String contentType = Files.probeContentType(filePath);
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, contentType)
-                .body(resource);
-
-    } catch (Exception e) {
-        LOG.error("Error al visualizar archivo", e);
-        return ResponseEntity.internalServerError().build();
-    }
     }
 }

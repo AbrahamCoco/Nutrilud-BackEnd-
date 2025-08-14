@@ -12,6 +12,7 @@ public class PacientesBean {
   private String sexo;
   private String correo;
   private String telefono;
+  private String usuario;
   private LocalDateTime fechaNacimiento;
   private String alergias;
 }

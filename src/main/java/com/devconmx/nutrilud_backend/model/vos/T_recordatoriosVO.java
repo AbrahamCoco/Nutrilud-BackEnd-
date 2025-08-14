@@ -2,6 +2,9 @@ package com.devconmx.nutrilud_backend.model.vos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,13 +14,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Table(name = "t_recordatorios")
 @NamedQueries({
-        @NamedQuery(name = "T_recordatoriosVO.findRecordatorioByPacienteId", query = "SELECT t FROM T_recordatoriosVO t WHERE t.Tusuario_paciente.Tusuario_pacientes.id = :id")
+        @NamedQuery(
+        name = "T_recordatoriosVO.findRecordatorioByPacienteId",
+        query = "SELECT DISTINCT t FROM T_recordatoriosVO t JOIN FETCH t.tdata_recordatorio td WHERE t.Tusuario_paciente.Tusuario_pacientes.id = :id"
+    )
 })
 @Data
 public class T_recordatoriosVO implements Serializable {
@@ -33,8 +40,13 @@ public class T_recordatoriosVO implements Serializable {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "tusuario_paciente_id")
     private UsersVO Tusuario_paciente;
+
     private String otros;
     private String observaciones;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+    @OneToMany(mappedBy = "t_recordatorio")
+    @JsonManagedReference
+    private List<TdataRecordatoriosVO> tdata_recordatorio;
 }

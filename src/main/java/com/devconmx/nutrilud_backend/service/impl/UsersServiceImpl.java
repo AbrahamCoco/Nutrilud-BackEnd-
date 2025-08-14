@@ -16,11 +16,13 @@ import com.devconmx.nutrilud_backend.model.dtos.Tusuario_adminsDTO;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_nutriologosDTO;
 import com.devconmx.nutrilud_backend.model.dtos.Tusuario_pacientesDTO;
 import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tdatos_consultasVO;
 import com.devconmx.nutrilud_backend.model.vos.TrolsVO;
 import com.devconmx.nutrilud_backend.model.vos.Tusuario_adminsVO;
 import com.devconmx.nutrilud_backend.model.vos.Tusuario_nutriologosVO;
 import com.devconmx.nutrilud_backend.model.vos.Tusuario_pacientesVO;
 import com.devconmx.nutrilud_backend.model.vos.UsersVO;
+import com.devconmx.nutrilud_backend.repository.Tdatos_consultasRepository;
 import com.devconmx.nutrilud_backend.repository.TrolsRepository;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.Tusuario_adminsServices;
@@ -49,6 +51,9 @@ public class UsersServiceImpl implements UsersServices {
     @Autowired
     private TrolsRepository trolsRepository;
 
+    @Autowired
+    private Tdatos_consultasRepository consultasRepository;
+
     @Override
     public List<PacientesBean> findAllPacientes() throws AppException {
         LOG.info("findAllPacientes()");
@@ -68,6 +73,8 @@ public class UsersServiceImpl implements UsersServices {
                 bean.setSexo(user.getTusuario_pacientes().getSexo());
                 bean.setCorreo(user.getCorreo());
                 bean.setTelefono(user.getTusuario_pacientes().getTelefono());
+                bean.setFechaNacimiento(user.getTusuario_pacientes().getFecha_nacimiento());
+                bean.setAlergias(user.getTusuario_pacientes().getAlergias());
                 pacientes.add(bean);
             });
             LOG.info("findAllPacientes() -> Listado de pacientes");
@@ -98,6 +105,7 @@ public class UsersServiceImpl implements UsersServices {
             paciente.setSexo(vo.getTusuario_pacientes().getSexo());
             paciente.setCorreo(vo.getCorreo());
             paciente.setTelefono(vo.getTusuario_pacientes().getTelefono());
+            paciente.setUsuario(vo.getUsuario());
             paciente.setFechaNacimiento(vo.getTusuario_pacientes().getFecha_nacimiento());
             paciente.setAlergias(vo.getTusuario_pacientes().getAlergias());
 
@@ -187,9 +195,11 @@ public class UsersServiceImpl implements UsersServices {
     public UserBean findById(int id) throws AppException {
         LOG.info("findByIdService() -> id: {}", id);
         UsersVO vo = null;
+        List<Tdatos_consultasVO> consultas = null;
         UserBean userBean = null;
         try {
             vo = usersRepository.findById(id);
+            consultas = consultasRepository.findByPacienteVO(id);
             if (vo == null) {
                 throw new AppException("No se encontro el usuario");
             }
@@ -200,12 +210,36 @@ public class UsersServiceImpl implements UsersServices {
             userBean = new UserBean();
             userBean.setId(vo.getId());
             userBean.setNombre(vo.getNombre() + " " + vo.getPrimer_apellido() + " " + vo.getSegundo_apellido());
-            userBean.setFoto(vo.getTusuario_nutriologos().getFoto());
             userBean.setCorreo(vo.getCorreo());
-            userBean.setTelefono(vo.getTusuario_nutriologos().getTelefono());
-            userBean.setDireccion(vo.getTusuario_nutriologos().getDireccion());
-            userBean.setCedula(vo.getTusuario_nutriologos().getCedula_profesional());
-            userBean.setDescripcion(vo.getTusuario_nutriologos().getDescripcion());
+
+            if (vo.getTusuario_admins() != null) {
+                userBean.setFoto(vo.getTusuario_admins().getFoto());
+                userBean.setTelefono(vo.getTusuario_admins().getTelefono());
+                userBean.setDescripcion(vo.getTusuario_admins().getDescripcion());
+            }
+
+            if (vo.getTusuario_nutriologos() != null) {
+                userBean.setFoto(vo.getTusuario_nutriologos().getFoto());
+                userBean.setTelefono(vo.getTusuario_nutriologos().getTelefono());
+                userBean.setDireccion(vo.getTusuario_nutriologos().getDireccion());
+                userBean.setCedula(vo.getTusuario_nutriologos().getCedula_profesional());
+                userBean.setDescripcion(vo.getTusuario_nutriologos().getDescripcion());
+            }
+
+            if (vo.getTusuario_pacientes() != null) {
+                userBean.setFoto(vo.getTusuario_pacientes().getFoto());
+                userBean.setAlergias(vo.getTusuario_pacientes().getAlergias());
+                userBean.setFechaNacimiento(vo.getTusuario_pacientes().getFecha_nacimiento());
+                userBean.setSexo(vo.getTusuario_pacientes().getSexo());
+                userBean.setTelefono(vo.getTusuario_pacientes().getTelefono());
+                
+                if (consultas != null && !consultas.isEmpty()) {
+                    Tdatos_consultasVO ultimaConsulta = consultas.get(consultas.size() - 1);
+                    userBean.setPeso(ultimaConsulta.getPeso());
+                    userBean.setEstatura(ultimaConsulta.getEstatura());
+                    userBean.setImc(ultimaConsulta.getImc());
+                }
+            }
 
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar usuario");
@@ -239,5 +273,49 @@ public class UsersServiceImpl implements UsersServices {
         }
         LOG.info("findAllAdminsAndNutrisService() -> Listado de administradores y nutriologos");
         return vo;
+    }
+
+    @Override
+    public void updatePaciente(int id, UsersDTO usersDTO) throws AppException {
+        LOG.info("updatePaciente() -> id: {}, UsersDTO: {}", id, usersDTO);
+        UsersVO vo = null;
+        Tusuario_pacientesVO pacienteVO = null;
+
+        try {
+            vo = usersRepository.findById(id);
+            if (vo == null) {
+                throw new AppException("No se encontro el usuario");
+            }
+            if (vo.getEstado() == 0) {
+                throw new AppException("El usuario esta deshabilitado");
+            }
+
+            pacienteVO = vo.getTusuario_pacientes();
+            if (pacienteVO == null) {
+                throw new AppException("El usuario no es un paciente");
+            }
+
+            vo.setNombre(usersDTO.getNombre());
+            vo.setPrimer_apellido(usersDTO.getPrimer_apellido());
+            vo.setSegundo_apellido(usersDTO.getSegundo_apellido());
+            vo.setUsuario(usersDTO.getUsuario());
+            vo.setCorreo(usersDTO.getCorreo());
+
+            pacienteVO.setTelefono(usersDTO.getTelefono_paciente());
+            pacienteVO.setFecha_nacimiento(usersDTO.getFecha_nacimiento_paciente());
+            pacienteVO.setSexo(usersDTO.getSexo_paciente());
+            pacienteVO.setAlergias(usersDTO.getAlergias_paciente());
+            pacienteVO.setFoto(usersDTO.getFoto_paciente());
+            pacienteVO.setUpdated_at(LocalDateTime.now());
+            
+            vo.setUpdated_at(LocalDateTime.now());
+
+            vo.setTusuario_pacientes(pacienteVO);
+
+            usersRepository.save(vo);
+            LOG.info("updatePacienteService() -> Paciente actualizado correctamente");
+        } catch (Exception e) {
+            Utils.raise(e, "Error al actualizar el paciente");
+        }
     }
 }

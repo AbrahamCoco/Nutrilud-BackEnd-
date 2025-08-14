@@ -118,4 +118,19 @@ public class UsersEndpoint {
         LOG.info("findAllAdminsAndNutrisEndpoint() response: {}", response);
         return response;
     }
+
+    @PostMapping("/updatePaciente")
+    public ResponseEntity<ResponseBean<Void>> updatePaciente(@RequestParam int id, @RequestBody UsersDTO usersDTO) {
+        ResponseEntity<ResponseBean<Void>> response = null;
+        LOG.info("updatePaciente() -> id: {}, UsersDTO: {}", id, usersDTO);
+        try {
+            usersServices.updatePaciente(id, usersDTO);
+            response = Utils.response200OK("Paciente actualizado correctamente");
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al actualizar el paciente");
+        }
+        LOG.info("updatePaciente() response: {}", response);
+        return response;
+    }
+    
 }

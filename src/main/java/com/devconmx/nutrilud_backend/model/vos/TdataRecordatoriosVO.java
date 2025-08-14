@@ -3,6 +3,8 @@ package com.devconmx.nutrilud_backend.model.vos;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class TdataRecordatoriosVO implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "t_recordatorio_id", referencedColumnName = "id")
+  @JsonBackReference
   private T_recordatoriosVO t_recordatorio;
 
   private String comida;

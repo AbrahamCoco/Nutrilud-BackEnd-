@@ -21,4 +21,6 @@ public interface UsersServices {
     UserBean findById(int id) throws AppException;
 
     List<UsersVO> findAllAdminsAndNutris() throws AppException;
+
+    void updatePaciente(int id, UsersDTO usersDTO) throws AppException;
 }
