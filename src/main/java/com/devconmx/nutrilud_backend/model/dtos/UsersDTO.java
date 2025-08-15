@@ -1,5 +1,6 @@
 package com.devconmx.nutrilud_backend.model.dtos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Data;
@@ -24,7 +25,7 @@ public class UsersDTO {
     private int tusuario_paciente_id;
     private String foto_paciente;
     private String telefono_paciente;
-    private LocalDateTime fecha_nacimiento_paciente;
+    private LocalDate fecha_nacimiento_paciente;
     private String sexo_paciente;
     private String alergias_paciente;
 

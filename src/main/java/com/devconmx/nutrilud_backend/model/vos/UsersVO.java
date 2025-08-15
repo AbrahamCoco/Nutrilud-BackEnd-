@@ -24,7 +24,8 @@ import lombok.Data;
         @NamedQuery(name = "UsersVO.findByIdPaciente", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_pacientes.id = :id and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByIdNutriologo", query = "SELECT u FROM UsersVO u WHERE u.Tusuario_nutriologos.id = :id and u.estado = 1"),
         @NamedQuery(name = "UsersVO.findByUser", query = "SELECT u FROM UsersVO u WHERE u.usuario = :usuario and u.estado = 1"),
-        @NamedQuery(name = "UsersVO.findAllAdminsAndNutris", query = "SELECT u FROM UsersVO u WHERE (u.Trols.id = 1 OR u.Trols.id = 2) AND u.estado = 1")
+        @NamedQuery(name = "UsersVO.findAllAdminsAndNutris", query = "SELECT u FROM UsersVO u WHERE (u.Trols.id = 1 OR u.Trols.id = 2) AND u.estado = 1"),
+        @NamedQuery(name = "UsersVO.findAllPacientes", query = "SELECT u FROM UsersVO u WHERE u.Trols.id = 3 AND u.estado = 1"),
 })
 @Data
 public class UsersVO implements Serializable {

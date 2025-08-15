@@ -1,6 +1,7 @@
 package com.devconmx.nutrilud_backend.model.vos;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ public class Tusuario_pacientesVO implements Serializable {
     private int id;
     private String foto;
     private String telefono;
-    private LocalDateTime fecha_nacimiento;
+    private LocalDate fecha_nacimiento;
     private String sexo;
     private String alergias;
     private LocalDateTime created_at;

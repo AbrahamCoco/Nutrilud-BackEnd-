@@ -60,7 +60,7 @@ public class UsersServiceImpl implements UsersServices {
         List<UsersVO> vo = null;
         List<PacientesBean> pacientes = new ArrayList<>();
         try {
-            vo = usersRepository.findByPaciente();
+            vo = usersRepository.findAllPacientes();
             if (vo == null) {
                 throw new AppException("No se encontraron pacientes");
             }
@@ -121,7 +121,7 @@ public class UsersServiceImpl implements UsersServices {
         LOG.info("deleteByIdPaciente() -> id: {}", id);
         UsersVO vo = null;
         try {
-            vo = usersRepository.findByIdPaciente(id);
+            vo = usersRepository.findById(id);
             if (vo == null) {
                 throw new AppException("No se encontro el paciente");
             }

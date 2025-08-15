@@ -1,6 +1,8 @@
 package com.devconmx.nutrilud_backend.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devconmx.nutrilud_backend.model.beans.AgendaBean;
 import com.devconmx.nutrilud_backend.model.beans.ConsultasBean;
 import com.devconmx.nutrilud_backend.model.builders.Tdatos_consultasBuilder;
 import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
@@ -31,19 +34,43 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
     private UsersRepository usersRepository;
 
     @Override
-    public List<Tdatos_consultasVO> findByNutriologo(int id) throws AppException {
+    public List<AgendaBean> findByNutriologo(int id) throws AppException {
         LOG.info("findByNutriologoService() -> Nutriologo: {}", id);
-        List<Tdatos_consultasVO> listaAgenda = null;
+        List<Tdatos_consultasVO> listaAgenda;
+        List<AgendaBean> agendaBeans = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         try {
             listaAgenda = tdatos_consultasRepository.findByNutriologoVO(id);
             if (listaAgenda == null) {
                 throw new AppException("No se encontraron datos de la agenda");
             }
+
+            listaAgenda.forEach(consulta -> {
+                LocalDateTime hoy = LocalDateTime.now();
+                LocalDateTime fechaConsulta = LocalDateTime.parse(consulta.getSiguiente_consulta(), formatter);
+
+                if (fechaConsulta.isBefore(hoy)) {
+                    return;
+                }
+
+                AgendaBean bean = new AgendaBean();
+                bean.setSiguiente_consulta(consulta.getSiguiente_consulta());
+                bean.setNombre(consulta.getTusuario_paciente().getNombre());
+                bean.setPrimer_apellido(consulta.getTusuario_paciente().getPrimer_apellido());
+                bean.setSegundo_apellido(consulta.getTusuario_paciente().getSegundo_apellido());
+                agendaBeans.add(bean);
+            });
+
+            if (agendaBeans.isEmpty()) {
+                throw new AppException("No hay consultas pendientes.");
+            }
+
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar la agenda del nutriologo");
         }
         LOG.info("findByNutriologoService() -> Agenda encontrada");
-        return listaAgenda;
+        return agendaBeans;
     }
 
     @Override
@@ -143,7 +170,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
         return area_muscular_brazo;
     }
 
-    public int edad(LocalDateTime fecha_nacimiento) {
+    public int edad(LocalDate fecha_nacimiento) {
         LocalDateTime fecha_actual = LocalDateTime.now();
         return fecha_actual.getYear() - fecha_nacimiento.getYear();
     }

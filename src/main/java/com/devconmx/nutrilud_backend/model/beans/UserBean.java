@@ -1,6 +1,6 @@
 package com.devconmx.nutrilud_backend.model.beans;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -20,5 +20,5 @@ public class UserBean {
   private double estatura;
   private double peso;
   private double imc;
-  private LocalDateTime fechaNacimiento;
+  private LocalDate fechaNacimiento;
 }
