@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasDTO;
-import com.devconmx.nutrilud_backend.model.Tdatos_consultasVO;
+import com.devconmx.nutrilud_backend.model.beans.AgendaBean;
+import com.devconmx.nutrilud_backend.model.beans.ConsultasBean;
+import com.devconmx.nutrilud_backend.model.dtos.Tdatos_consultasDTO;
 import com.devconmx.nutrilud_backend.service.Tdatos_consultasServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -30,10 +31,10 @@ public class Tdatos_consultasEndpoint {
     private Tdatos_consultasServices tdatos_consultasServices;
 
     @GetMapping("/findAgendaByNutriologo")
-    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findAgendaByNutriologo(@RequestParam int id) {
-        ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<AgendaBean>>> findAgendaByNutriologo(@RequestParam int id) {
+        ResponseEntity<ResponseBean<List<AgendaBean>>> response = null;
         LOG.info("findAgendaByNutriologoEndpoint() -> id: {}", id);
-        List<Tdatos_consultasVO> listaAgenda = null;
+        List<AgendaBean> listaAgenda = null;
         try {
             listaAgenda = tdatos_consultasServices.findByNutriologo(id);
             response = Utils.response200OK("Datos de agenda encontrados", listaAgenda);
@@ -45,10 +46,10 @@ public class Tdatos_consultasEndpoint {
     }
 
     @GetMapping("/findConsultasByPaciente")
-    public ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> findConsultasByPaciente(@RequestParam int id) {
-        ResponseEntity<ResponseBean<List<Tdatos_consultasVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<ConsultasBean>>> findConsultasByPaciente(@RequestParam int id) {
+        ResponseEntity<ResponseBean<List<ConsultasBean>>> response = null;
         LOG.info("findConsultasByPacienteEndpoint() -> id: {}", id);
-        List<Tdatos_consultasVO> listaConsultas = null;
+        List<ConsultasBean> listaConsultas = null;
         try {
             listaConsultas = tdatos_consultasServices.findByPaciente(id);
             response = Utils.response200OK("Datos de consultas encontrados", listaConsultas);

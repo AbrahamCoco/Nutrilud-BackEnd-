@@ -2,6 +2,7 @@ package com.devconmx.nutrilud_backend.service.impl;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.repository.UsersRepository;
 import com.devconmx.nutrilud_backend.service.Personal_access_tokensServices;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -102,65 +103,59 @@ public class Personal_access_tokensServiceImpl implements Personal_access_tokens
 
     @Override
     public String insertArchivo(MultipartFile file, String nombre, String apellido, int id) throws AppException {
-        LOG.info("insertImagenService() -> nombre: {}, apellido: {}, id: {}", nombre, apellido, id);
+        LOG.info("insertArchivoService() -> nombre: {}, apellido: {}, id: {}", nombre, apellido, id);
         String rutaRelativa = null;
         try {
             if (file.isEmpty()) {
                 throw new AppException("Archivo vacío");
             }
 
-            LocalDateTime now = LocalDateTime.now();
             String contentType = file.getContentType();
             if (contentType == null) {
                 throw new AppException("Tipo de contenido nulo");
             }
 
-            // Directorio relativo para guardar el archivo
-            String relativeUploadDir;
+            // **Ruta base fija en el servidor**
+            String baseDir = "/home/ubuntu/uploads"; // Ajustado para que use la carpeta 'uploads' en tu servidor
+
+            // **Definir la subcarpeta según el tipo de archivo**
+            String subDir;
             if (contentType.equals("image/jpeg") || contentType.equals("image/png")) {
-                relativeUploadDir = "uploads" + File.separator + "images" + File.separator + id + "_" + nombre + "_"
-                        + apellido;
+                subDir = "images";
             } else if (contentType.equals("application/pdf")) {
-                relativeUploadDir = "uploads" + File.separator + "pdf" + File.separator + id + "_" + nombre + "_"
-                        + apellido;
+                subDir = "pdf";
             } else {
                 throw new AppException("Formato de archivo no permitido");
             }
 
-            // Directorio absoluto en el servidor
-            String baseDir = System.getProperty("user.dir");
-            String uploadDir = baseDir + File.separator + relativeUploadDir;
+            // **Estructura de carpetas (uploads/images/nombre_apellido_id o
+            // uploads/pdf/nombre_apellido_id)**
+            String uploadDir = baseDir + File.separator + subDir + File.separator + id + "_" + nombre + "_" + apellido;
 
-            // Crear el directorio si no existe
-            File uploadDirFile = new File(uploadDir);
-            if (!uploadDirFile.exists()) {
-                uploadDirFile.mkdirs();
-            }
-
-            String fileName = file.getOriginalFilename();
-            if (fileName == null) {
-                throw new AppException("Nombre de archivo nulo");
-            }
-
-            String[] extension = fileName.split("\\.");
-            if (extension.length < 2) {
-                throw new AppException("Nombre de archivo sin extensión");
-            }
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-            String formattedNow = now.format(formatter);
-            String newFileName = nombre + "_" + apellido + "_" + formattedNow + "." + extension[extension.length - 1];
-            // Ruta absoluta para guardar el archivo
-            String rutaAbsoluta = uploadDir + File.separator + newFileName;
-
-            // Asegurarse de que la ruta completa existe
+            // **Crear la carpeta si no existe**
             Files.createDirectories(Paths.get(uploadDir));
 
-            File dest = new File(rutaAbsoluta);
-            file.transferTo(dest);
+            // **Validar el nombre del archivo**
+            String fileName = file.getOriginalFilename();
+            if (fileName == null || !fileName.contains(".")) {
+                throw new AppException("Nombre de archivo inválido");
+            }
 
-            // Construir la ruta relativa que se retornará (usando File.separator)
-            rutaRelativa = relativeUploadDir.replace("uploads" + File.separator, "") + File.separator + newFileName;
+            // **Obtener la extensión del archivo**
+            String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+            // **Generar nuevo nombre de archivo**
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            String formattedNow = LocalDateTime.now().format(formatter);
+            String newFileName = nombre + "_" + apellido + "_" + formattedNow + "." + extension;
+
+            // **Ruta final del archivo**
+            Path rutaAbsoluta = Paths.get(uploadDir, newFileName);
+            file.transferTo(rutaAbsoluta.toFile());
+
+            // **Ruta relativa que se devuelve (sin incluir 'uploads')**
+            rutaRelativa = subDir + File.separator + id + "_" + nombre + "_" + apellido + File.separator + newFileName;
+
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar la imagen");
         }

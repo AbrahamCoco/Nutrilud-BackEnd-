@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devconmx.nutrilud_backend.model.TrolsBuilder;
-import com.devconmx.nutrilud_backend.model.TrolsDTO;
-import com.devconmx.nutrilud_backend.model.TrolsVO;
+import com.devconmx.nutrilud_backend.model.builders.TrolsBuilder;
+import com.devconmx.nutrilud_backend.model.dtos.TrolsDTO;
+import com.devconmx.nutrilud_backend.model.vos.TrolsVO;
 import com.devconmx.nutrilud_backend.repository.TrolsRepository;
 import com.devconmx.nutrilud_backend.service.TrolsServices;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -95,6 +95,7 @@ public class TrolsServiceImpl implements TrolsServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar el rol");
         }
+        LOG.info("findRolByIdService() -> Rol encontrado");
         return vo;
     }
 
@@ -107,6 +108,7 @@ public class TrolsServiceImpl implements TrolsServices {
         } catch (Exception e) {
             Utils.raise(e, "Error al buscar los roles");
         }
+        LOG.info("findAllRolService() -> Roles encontrados");
         return list;
     }
 

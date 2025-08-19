@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.UsersDTO;
-import com.devconmx.nutrilud_backend.model.UsersVO;
-import com.devconmx.nutrilud_backend.repository.UsersRepository;
+import com.devconmx.nutrilud_backend.model.beans.PacientesBean;
+import com.devconmx.nutrilud_backend.model.beans.UserBean;
+import com.devconmx.nutrilud_backend.model.dtos.UsersDTO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.service.UsersServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -28,18 +29,15 @@ public class UsersEndpoint {
     private static final Logger LOG = LoggerFactory.getLogger(UsersEndpoint.class);
 
     @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
     private UsersServices usersServices;
 
     @GetMapping("/findAllPacientes")
-    public ResponseEntity<ResponseBean<List<UsersVO>>> findAllPacientes() {
-        ResponseEntity<ResponseBean<List<UsersVO>>> response = null;
+    public ResponseEntity<ResponseBean<List<PacientesBean>>> findAllPacientes() {
+        ResponseEntity<ResponseBean<List<PacientesBean>>> response = null;
         LOG.info("findAllPacientes()");
-        List<UsersVO> vo = null;
+        List<PacientesBean> vo = null;
         try {
-            vo = usersRepository.findByPaciente();
+            vo = usersServices.findAllPacientes();
             response = Utils.response200OK("Pacientes encontrados", vo);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al buscar pacientes");
@@ -49,12 +47,12 @@ public class UsersEndpoint {
     }
 
     @GetMapping("/findByIdPaciente")
-    public ResponseEntity<ResponseBean<UsersVO>> findByIdPaciente(@RequestParam int id) {
-        ResponseEntity<ResponseBean<UsersVO>> response = null;
+    public ResponseEntity<ResponseBean<PacientesBean>> findByIdPaciente(@RequestParam int id) {
+        ResponseEntity<ResponseBean<PacientesBean>> response = null;
         LOG.info("findByIdPaciente() -> id: {}", id);
-        UsersVO vo = null;
+        PacientesBean vo = null;
         try {
-            vo = usersRepository.findByIdPaciente(id);
+            vo = usersServices.findByIdPaciente(id);
             response = Utils.response200OK("Paciente encontrado", vo);
         } catch (Exception e) {
             response = Utils.handle(e, "Error al buscar paciente");
@@ -92,10 +90,10 @@ public class UsersEndpoint {
     }
 
     @GetMapping("/findById")
-    public ResponseEntity<ResponseBean<UsersVO>> findById(@RequestParam int id) {
-        ResponseEntity<ResponseBean<UsersVO>> response = null;
+    public ResponseEntity<ResponseBean<UserBean>> findById(@RequestParam int id) {
+        ResponseEntity<ResponseBean<UserBean>> response = null;
         LOG.info("findByIdEndpoint() -> id: {}", id);
-        UsersVO vo = null;
+        UserBean vo = null;
         try {
             vo = usersServices.findById(id);
             response = Utils.response200OK("Usuario encontrado", vo);
@@ -120,4 +118,19 @@ public class UsersEndpoint {
         LOG.info("findAllAdminsAndNutrisEndpoint() response: {}", response);
         return response;
     }
+
+    @PostMapping("/updatePaciente")
+    public ResponseEntity<ResponseBean<Void>> updatePaciente(@RequestParam int id, @RequestBody UsersDTO usersDTO) {
+        ResponseEntity<ResponseBean<Void>> response = null;
+        LOG.info("updatePaciente() -> id: {}, UsersDTO: {}", id, usersDTO);
+        try {
+            usersServices.updatePaciente(id, usersDTO);
+            response = Utils.response200OK("Paciente actualizado correctamente");
+        } catch (Exception e) {
+            response = Utils.handle(e, "Error al actualizar el paciente");
+        }
+        LOG.info("updatePaciente() response: {}", response);
+        return response;
+    }
+    
 }
