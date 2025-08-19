@@ -55,6 +55,7 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
                 }
 
                 AgendaBean bean = new AgendaBean();
+                bean.setId_paciente(consulta.getTusuario_paciente().getTusuario_pacientes().getId());
                 bean.setSiguiente_consulta(consulta.getSiguiente_consulta());
                 bean.setNombre(consulta.getTusuario_paciente().getNombre());
                 bean.setPrimer_apellido(consulta.getTusuario_paciente().getPrimer_apellido());
@@ -122,17 +123,16 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
             UsersVO paciente = usersRepository.findByIdPaciente(tdatos_consultasDTO.getPaciente_id());
             vo.setTusuario_paciente(paciente);
 
-            double imc = imc(tdatos_consultasDTO.getPeso(), tdatos_consultasDTO.getEstatura());
+            double imc = dosdecimales(imc(tdatos_consultasDTO.getPeso(), tdatos_consultasDTO.getEstatura()));
             vo.setImc(imc);
 
             String sexo = paciente.getTusuario_pacientes().getSexo();
             int edad = edad(paciente.getTusuario_pacientes().getFecha_nacimiento());
-            double porcentaje_grasa = porcentaje_grasa(sexo, imc, edad);
+            double porcentaje_grasa = dosdecimales(porcentaje_grasa(sexo, imc, edad));
             vo.setPorcentaje_grasa(porcentaje_grasa);
 
-            double area_muscular_brazo = area_muscular_brazo(tdatos_consultasDTO.getCircunferencia_brazo(),
-                    porcentaje_grasa, sexo);
-            vo.setPorcentaje_musculo(area_muscular_brazo);
+            double masa_muscular = dosdecimales(masaMuscularTotal(tdatos_consultasDTO.getPeso(), porcentaje_grasa, tdatos_consultasDTO.getCircunferencia_brazo(), tdatos_consultasDTO.getPliegue_tricipital(), sexo));
+            vo.setPorcentaje_musculo(masa_muscular);
             vo.setPresion_arterial(tdatos_consultasDTO.getPresion_arterial());
             vo.setTrigliceridos(tdatos_consultasDTO.getTrigliceridos());
 
@@ -158,20 +158,34 @@ public class Tdatos_consultasServiceImpl implements Tdatos_consultasServices {
         return porcentaje_grasa;
     }
 
-    public double area_muscular_brazo(double circunferencia_brazo, double pliegue_tricipital, String sexo) {
-        double area_muscular_brazo = 0;
-        if (sexo.equals("Masculino")) {
-            area_muscular_brazo = (Math.pow(circunferencia_brazo - area_muscular_brazo * Math.PI, 2) / (4 * Math.PI)
-                    - 10);
+    public double masaMuscularTotal(double peso, double porcentajeGrasa, double circunferenciaBrazo, double pliegueTricipital, String sexo) {
+        double grasaKg = peso * (porcentajeGrasa / 100.0);
+
+        double lbm = peso - grasaKg;
+
+        double masaMuscular = lbm * 0.55;
+
+        double pliegueCm = pliegueTricipital / 10.0;
+        double cmac = circunferenciaBrazo - Math.PI * pliegueCm;
+        double areaMuscularBrazo = Math.pow(cmac, 2) / (4 * Math.PI);
+
+        if (sexo.equalsIgnoreCase("Masculino")) {
+            areaMuscularBrazo -= 10;
         } else {
-            area_muscular_brazo = (Math.pow(circunferencia_brazo - area_muscular_brazo * Math.PI, 2) / (4 * Math.PI)
-                    - 6.5);
+            areaMuscularBrazo -= 6.5;
         }
-        return area_muscular_brazo;
+        double factorAjuste = 1 + (areaMuscularBrazo / 1000.0);
+        masaMuscular *= factorAjuste;
+
+        return masaMuscular;
     }
 
     public int edad(LocalDate fecha_nacimiento) {
         LocalDateTime fecha_actual = LocalDateTime.now();
         return fecha_actual.getYear() - fecha_nacimiento.getYear();
+    }
+
+    public static double dosdecimales(double valor) {
+        return Math.round(valor * 100.0) / 100.0;
     }
 }
