@@ -42,10 +42,10 @@ public class Utils {
 		} else {
 			if (o instanceof String) {
 				valid = StringUtils.isNotBlank((String) o);
-			} else if (o instanceof Map) {
-				valid = !((Map) o).isEmpty();
-			} else if (o instanceof List) {
-				valid = !((List) o).isEmpty();
+			} else if (o instanceof Map<?, ?>) {
+				valid = !((Map<?, ?>) o).isEmpty();
+			} else if (o instanceof List<?>) {
+				valid = !((List<?>) o).isEmpty();
 			}
 		}
 		return valid;
@@ -81,7 +81,7 @@ public class Utils {
 	public static void validateComplex400BadRequest(Object... args) throws AppException400BadRequest {
 		List<String> invalids = new ArrayList<>();
 		Object value;
-		Class clazz;
+		Class<?> clazz;
 		Boolean required;
 		Object min;
 		Object max;
@@ -97,7 +97,7 @@ public class Utils {
 
 		for (int i = 0; i < args.length; i = i + 7) {
 			value = args[i];
-			clazz = (Class) args[i + 1];
+			clazz = (Class<?>) args[i + 1];
 			required = args[i + 2] != null ? (Boolean) args[i + 2] : null;
 			min = args[i + 3];
 			max = args[i + 4];
@@ -134,7 +134,7 @@ public class Utils {
 				// min
 				if (min != null) {
 					if (min instanceof String) { // length (min is String)
-						if (sVal.length() < Integer.parseInt((String) min)) {
+						if (sVal != null && sVal.length() < Integer.parseInt((String) min)) {
 							invalids.add(name + " (longitud m\u00ednima: " + ((String) min) + ")");
 						}
 					} else { // value (min is double, long, or int)
@@ -151,7 +151,7 @@ public class Utils {
 								invalids.add(name + " (valor m\u00ednimo: " + String.valueOf(min) + ")");
 							}
 						} else if (clazz.equals(String.class)) { // length (min is int)
-							if (sVal.length() < (int) min) {
+							if (sVal != null && sVal.length() < (int) min) {
 								invalids.add(name + " (longitud m\u00ednima: " + String.valueOf(min) + ")");
 							}
 						}
@@ -161,7 +161,7 @@ public class Utils {
 				// max
 				if (max != null) {
 					if (max instanceof String) { // length (max is String)
-						if (sVal.length() > Integer.parseInt((String) max)) {
+						if (sVal != null && sVal.length() > Integer.parseInt((String) max)) {
 							invalids.add(name + " (longitud m\u00e1xima: " + ((String) max) + ")");
 						}
 					} else { // value (max is double, long, or int)
@@ -178,7 +178,7 @@ public class Utils {
 								invalids.add(name + " (valor m\u00e1ximo: " + String.valueOf(max) + ")");
 							}
 						} else if (clazz.equals(String.class)) { // length (max is int)
-							if (sVal.length() > (int) max) {
+							if (sVal != null && sVal.length() > (int) max) {
 								invalids.add(name + " (longitud m\u00e1xima: " + String.valueOf(max) + ")");
 							}
 						}

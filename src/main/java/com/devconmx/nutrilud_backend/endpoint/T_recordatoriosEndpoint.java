@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devconmx.nutrilud_backend.model.T_recordatoriosDTO;
-import com.devconmx.nutrilud_backend.model.T_recordatoriosVO;
+import com.devconmx.nutrilud_backend.model.dtos.T_recordatoriosDTO;
+import com.devconmx.nutrilud_backend.model.vos.T_recordatoriosVO;
 import com.devconmx.nutrilud_backend.service.T_recordatoriosServices;
 import com.devconmx.nutrilud_backend.utils.ResponseBean;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -32,7 +32,7 @@ public class T_recordatoriosEndpoint {
     @PostMapping("/insert")
     public ResponseEntity<ResponseBean<Void>> insert(@RequestBody T_recordatoriosDTO t_recordatoriosDTO) {
         ResponseEntity<ResponseBean<Void>> response = null;
-        LOG.info("insertRecordatorioEndpoint() -> T_recordatoriosDTO: {}", t_recordatoriosDTO);
+        LOG.info("insertRecordatorioEndpoint() -> T_recordatoriosDTO");
         try {
             t_recordatoriosServices.insert(t_recordatoriosDTO);
             response = Utils.response200OK("Recordatorio guardado correctamente");

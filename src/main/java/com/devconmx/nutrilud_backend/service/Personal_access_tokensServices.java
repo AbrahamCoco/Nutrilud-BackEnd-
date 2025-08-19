@@ -2,7 +2,7 @@ package com.devconmx.nutrilud_backend.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.devconmx.nutrilud_backend.model.UsersVO;
+import com.devconmx.nutrilud_backend.model.vos.UsersVO;
 import com.devconmx.nutrilud_backend.utils.exception.AppException;
 
 public interface Personal_access_tokensServices {

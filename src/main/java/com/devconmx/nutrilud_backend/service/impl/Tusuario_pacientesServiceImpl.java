@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devconmx.nutrilud_backend.model.Tusuario_pacientesBuilder;
-import com.devconmx.nutrilud_backend.model.Tusuario_pacientesDTO;
-import com.devconmx.nutrilud_backend.model.Tusuario_pacientesVO;
+import com.devconmx.nutrilud_backend.model.builders.Tusuario_pacientesBuilder;
+import com.devconmx.nutrilud_backend.model.dtos.Tusuario_pacientesDTO;
+import com.devconmx.nutrilud_backend.model.vos.Tusuario_pacientesVO;
 import com.devconmx.nutrilud_backend.repository.Tusuario_pacientesRepository;
 import com.devconmx.nutrilud_backend.service.Tusuario_pacientesServices;
 import com.devconmx.nutrilud_backend.utils.Utils;
@@ -34,6 +34,7 @@ public class Tusuario_pacientesServiceImpl implements Tusuario_pacientesServices
         } catch (Exception e) {
             Utils.raise(e, "Error al insertar el paciente");
         }
+        LOG.info("insertTusuario_pacientesService() -> Paciente insertado");
         return vo;
     }
 }
