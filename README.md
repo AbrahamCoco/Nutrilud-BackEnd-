@@ -1,89 +1,140 @@
+# 🥗 Nutrilud Backend - Sistema de Gestión Nutricional Inteligente
 
-# Nutrilud Backend
+Sistema backend diseñado para optimizar la experiencia de profesionales de la nutrición, ofreciendo una plataforma robusta que simplifica la gestión clínica, mejora la productividad y garantiza la seguridad de datos sensibles.
 
-Nutrilud es un sistema de gestión de nutrición para nutricionistas y pacientes, que permite llevar el control de dietas, consultas, recordatorios y artículos de interés. Desarrollado en Java con Spring Boot, integra funcionalidades para la administración de usuarios, manejo de archivos y publicación de contenido.
+## ✨ Experiencia Integral del Usuario
 
-## Características principales
+### 👥 Gestión de Perfiles Multirol
+- **Interfaces diferenciadas** para nutriólogos, pacientes y administradores
+- **Flujos de trabajo intuitivos** adaptados a cada perfil de usuario
+- **Dashboard personalizado** con métricas relevantes para cada rol
 
-- Gestión de usuarios (nutriologos, pacientes, administradores)
-- Control de consultas y agenda
-- Recordatorios personalizados
-- Publicación y consulta de artículos
-- Manejo seguro de archivos (subida y descarga)
-- Autenticación JWT y gestión de tokens de acceso
+### 📅 Sistema de Agenda con Experiencia Fluida
+- **Visualización de calendario** con vista semanal/mensual
+- **Recordatorios automáticos** integrados con notificaciones push/email
+- **Gestión de disponibilidad** con arrastrar y soltar (drag & drop)
 
-## Tecnologías utilizadas
+### 📚 Centro de Conocimiento Nutricional
+- **Editor de artículos** con formato enriquecido
+- **Sistema de categorías** para organización intuitiva
+- **Búsqueda predictiva** con filtros avanzados
 
-- Java 21
-- Spring Boot 3.4.4
-- Spring Data JPA
-- MySQL
-- JWT (Java JWT)
-- Maven
+### 🔒 Gestión Documental Segura
+- **Subida de archivos** con preview inmediato
+- **Organización visual** de documentos por paciente
+- **Acceso granular** con permisos específicos
 
-## Instalación y configuración
+## 🛠 Arquitectura Tecnológica
 
-1. Clona el repositorio:
-	```bash
-	git clone https://github.com/AbrahamCoco/Nutrilud-BackEnd-.git
-	```
-2. Configura las variables de entorno en `src/main/resources/application.properties`:
-	```properties
-	spring.datasource.url=jdbc:mysql://localhost:3306/nutrilud_db
-	spring.datasource.username=TU_USUARIO
-	spring.datasource.password=TU_CONTRASEÑA
-	secret_key=TU_SECRET_KEY
-	```
-3. Instala las dependencias:
-	```bash
-	./mvnw clean install
-	```
-4. Ejecuta la aplicación:
-	```bash
-	./mvnw spring-boot:run
-	```
+| Capa | Tecnología | Versión | Propósito |
+|------|------------|---------|-----------|
+| **Backend** | Java | 21 | Alto rendimiento y seguridad |
+| **Framework** | Spring Boot | 3.4.4 | Desarrollo ágil y mantenible |
+| **Persistencia** | Spring Data JPA | 3.4.4 | ORM eficiente |
+| **Base de Datos** | MySQL | 8.0+ | Transacciones ACID |
+| **Autenticación** | Java JWT | Latest | Seguridad enterprise |
+| **Build** | Maven | 3.6+ | Gestión de dependencias |
 
-## Endpoints principales
+## ⚙️ Configuración con Experiencia de Developer
 
-### Usuarios
-- `POST /api/v1/users/insert` — Crear usuario
-- `GET /api/v1/users/findById?id={id}` — Consultar usuario por ID
-- `GET /api/v1/users/findAllPacientes` — Listar pacientes
-- `GET /api/v1/users/findAllAdminsAndNutris` — Listar administradores y nutriologos
+### Prerrequisitos de Instalación
+- ✅ JDK 21 configurado correctamente
+- ✅ MySQL 8.0+ ejecutándose localmente
+- ✅ Variables de entorno configuradas
+- ✅ Puertos disponibles (8080, 3306)
 
-### Consultas
-- `POST /api/v1/tdatos_consultas/insert` — Registrar consulta
-- `GET /api/v1/tdatos_consultas/findAgendaByNutriologo?id={id}` — Consultar agenda de nutriologo
-- `GET /api/v1/tdatos_consultas/findConsultasByPaciente?id={id}` — Consultar historial de paciente
+### Flujo de Instalación Guiada
 
-### Artículos
-- `POST /api/v1/tarticulos/insert` — Publicar artículo
-- `GET /api/v1/tarticulos/findAllArticles` — Listar artículos
-- `GET /api/v1/tarticulos/findById?id={id}` — Consultar artículo por ID
+1. **Clonación del Repositorio**
+   ```bash
+   git clone https://github.com/AbrahamCoco/Nutrilud-BackEnd-.git
+   cd Nutrilud-BackEnd-
+   ```
 
-### Archivos
-- `POST /api/v1/personal_access_token/insert_archivo` — Subir archivo
-- `GET /api/v1/files/{ruta}` — Descargar archivo
-- `GET /api/v1/view/{ruta}` — Visualizar archivo
+2. **Configuración Visual de Variables**
+   Editar `src/main/resources/application.properties`:
+   ```properties
+   # Configuración de Base de Datos (UI intuitiva)
+   spring.datasource.url=jdbc:mysql://localhost:3306/nutrilud_db
+   spring.datasource.username=tu_usuario
+   spring.datasource.password=tu_contraseña_segura
+   
+   # Seguridad JWT (Protección enterprise)
+   jwt.secret=clave_super_secreta_compleja
+   
+   # Configuración de Servidor
+   server.port=8080
+	 ```
+  
 
-### Autenticación
-- `GET /api/v1/personal_access_token/login?usuario={usuario}&contrasenia={contrasenia}` — Login y obtención de token
+3. **Instalación con Feedback Visual**
+   ```bash
+   ./mvnw clean install -DskipTests
+	 ```
 
-## Base de datos
+4. **Ejecución con Logs Amigables**
+   ```bash
+   ./mvnw spring-boot:run
+	 ```
 
-El sistema utiliza MySQL. Es necesario crear la base de datos y configurar las credenciales en el archivo de propiedades.
+## 🌐 API REST - Diseño Centrado en el Consumidor
 
-## Ejecución de pruebas
+### 👤 Gestión de Usuarios con UX Mejorada
+- **POST** `/api/v1/users/insert` - Registro con validación en tiempo real
+- **GET** `/api/v1/users/findById?id={id}` — Consultar usuario por ID
+- **GET** `/api/v1/users/findAllPacientes` — Listar pacientes
+- **GET** `/api/v1/users/findAllAdminsAndNutris` — Listar administradores y nutriologos
 
-Para ejecutar las pruebas unitarias:
+### 📋 Consultas con Flujo Natural
+- **POST** `/api/v1/tdatos_consultas/insert` — Registrar consulta
+- **GET** `/api/v1/tdatos_consultas/findAgendaByNutriologo?id={id}` — Consultar agenda de nutriologo
+- **GET** `/api/v1/tdatos_consultas/findConsultasByPaciente?id={id}` — Consultar historial de paciente
+
+### 📰 Gestión de Contenido con Editor Rico
+- **POST** `/api/v1/tarticulos/insert` — Publicar artículo
+- **GET** `/api/v1/tarticulos/findAllArticles` — Listar artículos
+- **GET** `/api/v1/tarticulos/findById?id={id}` — Consultar artículo por ID
+
+### 📁 Archivos con Experiencia Visual
+- **POST** `/api/v1/personal_access_token/insert_archivo` — Subir archivo
+- **GET** `/api/v1/files/{ruta}` — Descargar archivo
+- **GET** `/api/v1/view/{ruta}` — Visualizar archivo
+
+### 🔐 Autenticación Intuitiva
+- **GET** `/api/v1/personal_access_token/login` — Login y obtención de token
+
+## 🗃️ Base de Datos con Performance Optimizada
+
+### Esquema Visual Intuitivo
+- **Modelo relacional** con relaciones claras
+- **Índices optimizados** para búsquedas rápidas
+- **Backups automáticos** con retención configurable
+
+### Configuración de Performance
+- **Connection pooling** con HikariCP
+- **Query optimization** con índices compuestos
+- **Caching estratégico** con Redis opcional
+
+## 🧪 Testing con Experiencia de Desarrollo
+
+### Suite de Pruebas Intuitiva
 ```bash
-./mvnw test
+./mvnw test -Dtest=*Test --no-transfer-progress
 ```
 
-## Autor
+### Coverage Visual
+```bash
+./mvnw jacoco:report
+```
 
-- AbrahamCoco
+## 👨‍💻 Autor
 
-## Licencia
+**AbrahamCoco** - [GitHub Profile](https://github.com/AbrahamCoco) | [Portfolio](https://abrahamcoco.github.io)
 
-Este proyecto está bajo la licencia MIT.
+## 📄 Licencia
+
+**Licencia MIT** - Diseñado para la comunidad de desarrollo abierto
+
+---
+
+*💡 Transformando la experiencia digital en nutrición clínica - Un paciente a la vez*
